@@ -45,3 +45,10 @@ body{background:radial-gradient(ellipse at 70% 12%,#101c38 0,transparent 43%),ra
 footer{color:#53798b}
 @media(max-width:760px){.spatial-scene{opacity:.62}.sidebar{background:#050a15ed}.panel,.stat{transform:none!important;will-change:auto}.content{position:relative}}
 @media(prefers-reduced-motion:reduce){.panel,.stat{transition:none;transform:none!important}.orb{animation:none}}
+
+/* Spatial depth and responsive hologram controls */
+body{perspective:1200px;transform-style:preserve-3d}
+button,.nav-item{transition:transform .2s cubic-bezier(.03,.98,.52,.99),box-shadow .2s,border-color .2s}
+button:hover{transform:translateY(-1px) translateZ(5px)}
+.panel,.stat{transform-origin:center;transition:transform .2s cubic-bezier(.03,.98,.52,.99),border-color .2s,box-shadow .2s}
+@media(prefers-reduced-motion:reduce){button,.nav-item{transition:none}button:hover{transform:none}}
