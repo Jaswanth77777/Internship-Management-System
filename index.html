@@ -97,10 +97,10 @@ body:after{background:transparent!important}
 <h1>Welcome back</h1><p>Sign in to continue to your workspace.</p>
 
 <div class="portal-picker" role="group" aria-label="Choose demo portal">
-<button class="portal-choice" type="button" data-email="student@internhub.demo">🎓 Student</button>
-<button class="portal-choice" type="button" data-email="faculty@internhub.demo">👨‍🏫 Faculty</button>
-<button class="portal-choice" type="button" data-email="company@internhub.demo">🏢 Company</button>
-<button class="portal-choice" type="button" data-email="admin@internhub.demo">🛡️ Admin</button>
+<button class="portal-choice" type="button" data-email="student@internhub.demo" onclick="document.getElementById('email').value='student@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🎓 Student</button>
+<button class="portal-choice" type="button" data-email="faculty@internhub.demo" onclick="document.getElementById('email').value='faculty@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">👨‍🏫 Faculty</button>
+<button class="portal-choice" type="button" data-email="company@internhub.demo" onclick="document.getElementById('email').value='company@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🏢 Company</button>
+<button class="portal-choice" type="button" data-email="admin@internhub.demo" onclick="document.getElementById('email').value='admin@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🛡️ Admin</button>
 </div><form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
 <div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
 <label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label>
@@ -127,19 +127,6 @@ function login(email){
  showApp();
  toast('Welcome '+current.name+' · Opening '+current.role.toLowerCase()+' portal');
 }
-
-// Clicking a role shortcut fills its matching demo email and password.
-document.querySelectorAll('.portal-choice').forEach(button=>{
- button.addEventListener('click',()=>{
-  const emailField=document.getElementById('email');
-  const passwordField=document.getElementById('password');
-  emailField.value=button.dataset.email;
-  passwordField.value='demo123';
-  document.querySelectorAll('.portal-choice').forEach(item=>item.setAttribute('aria-pressed','false'));
-  button.setAttribute('aria-pressed','true');
-  emailField.focus();
- });
-});
 
 $('#loginForm').addEventListener('submit',e=>{
  e.preventDefault();
