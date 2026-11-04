@@ -88,6 +88,8 @@ app.post("/api/applications", authenticate, allow("STUDENT"), asyncRoute(async (
   const internship = await prisma.internship.findUnique({ where: { id: input.internshipId } });
   if (!student || !internship || internship.status !== "OPEN") return res.status(400).json({ error: "Internship is not available" });
   const application = await prisma.application.create({ data: { ...input, studentId: student.id } });
+  const company = await prisma.company.findUnique({ where: { id: internship.companyId } });
+  if (company) await prisma.notification.create({ data: { userId: company.userId, title: "New internship application", body: `${req.user.name} applied for ${internship.title}.` } });
   res.status(201).json(application);
 }));
 
