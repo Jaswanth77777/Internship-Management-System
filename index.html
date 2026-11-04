@@ -105,10 +105,39 @@ const defaults={logs:[],applications:[],tasks:[{title:'Update resume',due:'This 
 function db(){try{return JSON.parse(localStorage.getItem('internhub_standalone')||'{}')}catch{return {}}}function save(k,v){let d=db();d[k]=v;localStorage.setItem('internhub_standalone',JSON.stringify(d))}
 function get(k){return db()[k]??defaults[k]}
 function toast(s){$('#toast').textContent=s;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),2600)}
-function login(email){current={email,name:accounts[email]?.[0]||email.split('@')[0],role:accounts[email]?.[1]||'STUDENT'};const value=JSON.stringify(current);sessionStorage.setItem('ih_user',value);if($('#rememberMe').checked)localStorage.setItem('ih_user',value);else localStorage.removeItem('ih_user');showApp()}
-
-$('#loginForm').addEventListener('submit',e=>{e.preventDefault();let email=$('#email').value.trim().toLowerCase();if($('#password').value!=='demo123'){toast('For demo access, use password demo123');return}if(!accounts[email]){toast('Use one of the demo emails shown below');return}login(email)});
-function showApp(){if(!current)return;$('#loginView').classList.add('hidden');$('#app').classList.remove('hidden');$('#userName').textContent=current.name;$('#userRole').textContent=current.role;$('#roleLabel').textContent=current.role+' WORKSPACE';$('#avatar').textContent=current.name[0].toUpperCase();$('#today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});buildNav();render()}
+function login(email){
+ const account=accounts[email];
+ if(!account){toast('Account not found. Open Demo access to view test accounts.');return}
+ current={email,name:account[0],role:account[1]};
+ section='dashboard';
+ const value=JSON.stringify(current);
+ sessionStorage.setItem('ih_user',value);
+ if($('#rememberMe').checked)localStorage.setItem('ih_user',value);
+ else localStorage.removeItem('ih_user');
+ showApp();
+ toast('Welcome '+current.name+' · Opening '+current.role.toLowerCase()+' portal');
+}
+$('#loginForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const email=$('#email').value.trim().toLowerCase();
+ const password=$('#password').value;
+ if(!email||!password){toast('Enter your email and password to continue');return}
+ if(password!=='demo123'){toast('Incorrect demo password. Please try again.');return}
+ if(!accounts[email]){toast('Email not recognized. Click Demo access to view test accounts.');return}
+ login(email);
+});
+function showApp(){
+ if(!current||!['STUDENT','FACULTY','COMPANY','ADMIN'].includes(current.role)){current=null;return}
+ $('#loginView').classList.add('hidden');
+ $('#app').classList.remove('hidden');
+ $('#userName').textContent=current.name;
+ $('#userRole').textContent=current.role;
+ $('#roleLabel').textContent=current.role+' WORKSPACE';
+ $('#avatar').textContent=current.name[0].toUpperCase();
+ $('#today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+ buildNav();
+ render();
+}
 function buildNav(){let groups={STUDENT:[['dashboard','⌂','Dashboard'],['opportunities','⌕','Find internships'],['applications','▤','My applications'],['logbook','▧','Weekly logbook'],['tasks','✓','Tasks & attendance'],['documents','▣','Documents & NOC'],['announcements','◉','Announcements']],FACULTY:[['dashboard','⌂','Dashboard'],['students','♙','My students'],['approvals','✓','Approvals'],['logbook','▧','Logbook reviews'],['announcements','◉','Announcements']],COMPANY:[['dashboard','⌂','Dashboard'],['postings','＋','My internships'],['applications','▤','Applicants'],['logbook','▧','Progress reviews'],['announcements','◉','Announcements']],ADMIN:[['dashboard','⌂','Dashboard'],['users','♙','User management'],['opportunities','⌕','Internships'],['applications','▤','Applications'],['reports','▥','Reports & analytics'],['announcements','◉','Announcements']]};let items=groups[current.role]||groups.STUDENT;$('#nav').innerHTML='<div class="navlabel">WORKSPACE</div>'+items.map(([id,ic,n])=>'<button data-section="'+id+'" class="'+(section===id?'active':'')+'"><span class="ico">'+ic+'</span>'+n+'</button>').join('');$('#nav').querySelectorAll('button').forEach(b=>b.onclick=()=>{section=b.dataset.section;$('#sidebar').classList.remove('open');buildNav();render()})}
 function stat(label,num,sub){return '<div class="card stat"><div class="muted">'+label+'</div><div class="num">'+num+'</div><div class="tag">'+sub+'</div></div>'}
 function dashboard(){let role=current.role;let apps=get('applications'),logs=get('logs'),tasks=get('tasks');let stats=role==='STUDENT'?[['Applications',apps.length,'Your submitted applications'],['Logbook entries',logs.length,'Weekly progress records'],['Tasks',tasks.length,'Assigned activities'],['Profile completion','75%','Keep your profile updated']]:role==='COMPANY'?[['Active postings',get('internships').length,'Internship opportunities'],['Applicants',apps.length,'Applications received'],['Reviews due',logs.length,'Student progress entries'],['Shortlisted',0,'Candidates shortlisted']]:[['Students',12,'In your workspace'],['Pending reviews',logs.length,'Items awaiting attention'],['Applications',apps.length,'Applications tracked'],['Announcements',get('notices').length,'Portal updates']];return '<div class="grid">'+stats.map(x=>stat(...x)).join('')+'<div class="card wide"><div class="cardhead"><h2>Recent activity</h2><span class="pill good">Live workspace</span></div>'+ (role==='STUDENT'?'<div class="item"><b>Explore opportunities</b><p class="muted">Find internships that match your skills and interests.</p><button class="btn secondary" onclick="go(\'opportunities\')">Browse internships</button></div><div class="item"><b>Weekly logbook</b><p class="muted">Record your work, learning and progress for this week.</p><button class="btn secondary" onclick="go(\'logbook\')">Open logbook</button></div>':'<div class="item"><b>Workspace overview</b><p class="muted">Manage internship activity, student progress and portal updates from the navigation.</p></div>')+'</div><div class="card narrow"><div class="cardhead"><h2>Announcements</h2></div>'+get('notices').map(n=>'<div class="item">◈ '+esc(n)+'</div>').join('')+'</div></div>'}
@@ -124,7 +153,7 @@ if(['students','approvals','users','reports'].includes(section)){c.innerHTML='<d
 function jobs(list){return list.map((j,i)=>'<div class="item row between"><div><b>'+esc(j.title)+'</b><div class="muted">'+esc(j.company)+' · '+esc(j.location)+' · '+esc(j.stipend)+'</div></div><button class="btn secondary" onclick="applyJob('+i+')">Apply</button></div>').join('')||'<div class="empty">No matching internships found.</div>'}
 function applyJob(i){let j=get('internships')[i],a=get('applications');if(a.some(x=>x.title===j.title&&x.company===j.company)){toast('You already applied to this role');return}a.push({title:j.title,company:j.company,date:new Date().toLocaleDateString()});save('applications',a);toast('Application submitted');}
 $('#logout').onclick=()=>{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user');$('#app').classList.add('hidden');$('#loginView').classList.remove('hidden')};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
-try{current=JSON.parse(sessionStorage.getItem('ih_user')||localStorage.getItem('ih_user')||'null')}catch{current=null}if(current)showApp();
+try{current=JSON.parse(sessionStorage.getItem('ih_user')||localStorage.getItem('ih_user')||'null')}catch{current=null}if(current&&['STUDENT','FACULTY','COMPANY','ADMIN'].includes(current.role)){section='dashboard';showApp()}else{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user')}
 </script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>(()=>{const canvas=document.getElementById('scene');if(!canvas||!window.THREE||matchMedia('(prefers-reduced-motion: reduce)').matches)return;try{
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
