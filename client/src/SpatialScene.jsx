@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 
 const ROLE_COLORS = {
   STUDENT: 0x527fff,
@@ -198,7 +202,7 @@ export default function SpatialScene({ role = "STUDENT" }) {
           scene.remove(old.mesh); old.mesh.geometry.dispose(); old.mesh.material.dispose();
         }
       }
-      renderer.render(scene, camera);
+      composer.render();
       frame += 1;
     };
     animate();
@@ -208,7 +212,7 @@ export default function SpatialScene({ role = "STUDENT" }) {
       const height = Math.max(1, root.clientHeight);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
+      renderer.setSize(width, height);\n      composer.setSize(width, height);
     };
     const observer = new ResizeObserver(resize);
     observer.observe(root);
@@ -226,7 +230,7 @@ export default function SpatialScene({ role = "STUDENT" }) {
           materials.forEach(material => material.dispose());
         }
       });
-      renderer.dispose();
+      composer.dispose();\n      renderer.dispose();
       if (renderer.domElement.parentNode === root) root.removeChild(renderer.domElement);
     };
   }, []);
