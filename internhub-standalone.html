@@ -85,13 +85,23 @@ body:after{background:transparent!important}
 .login .demo-access summary{background:#0c1730;color:#4bd7e6;border:1px solid #2b3d60;border-radius:12px;padding:13px 14px;font-size:11px}
 .login .demo-access .hint{background:#0c1730;color:#b9c5dc;border:1px solid #2b3d60}
 @media(max-width:520px){.login{padding:30px 28px}.login h1{font-size:27px}}
+
+/* Role shortcuts fill the demo sign-in fields */
+.login .portal-picker{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
+.login .portal-choice{border:1px solid #30466f;border-radius:10px;background:#0c1730;color:#dce6ff;padding:10px 8px;font-size:12px;font-weight:750;cursor:pointer;transition:background .16s,border-color .16s,transform .16s}
+.login .portal-choice:hover,.login .portal-choice[aria-pressed=true]{background:#253b66;border-color:#55d7e6;transform:translateY(-1px)}
 </style></head>
 <body><canvas id="scene" aria-hidden="true"></canvas><div class="orb"></div>
 <div id="loginView" class="loginwrap"><div class="card login">
 <div class="brand">InternHub ✦</div><div class="eyebrow">Internship management portal</div>
 <h1>Welcome back</h1><p>Sign in to continue to your workspace.</p>
 
-<form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
+<div class="portal-picker" role="group" aria-label="Choose demo portal">
+<button class="portal-choice" type="button" data-email="student@internhub.demo">🎓 Student</button>
+<button class="portal-choice" type="button" data-email="faculty@internhub.demo">👨‍🏫 Faculty</button>
+<button class="portal-choice" type="button" data-email="company@internhub.demo">🏢 Company</button>
+<button class="portal-choice" type="button" data-email="admin@internhub.demo">🛡️ Admin</button>
+</div><form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
 <div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
 <label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label>
 <button class="btn" style="width:100%;margin-top:8px">Sign in →</button></form>
@@ -117,6 +127,20 @@ function login(email){
  showApp();
  toast('Welcome '+current.name+' · Opening '+current.role.toLowerCase()+' portal');
 }
+
+// Clicking a role shortcut fills its matching demo email and password.
+document.querySelectorAll('.portal-choice').forEach(button=>{
+ button.addEventListener('click',()=>{
+  const emailField=document.getElementById('email');
+  const passwordField=document.getElementById('password');
+  emailField.value=button.dataset.email;
+  passwordField.value='demo123';
+  document.querySelectorAll('.portal-choice').forEach(item=>item.setAttribute('aria-pressed','false'));
+  button.setAttribute('aria-pressed','true');
+  emailField.focus();
+ });
+});
+
 $('#loginForm').addEventListener('submit',e=>{
  e.preventDefault();
  const email=$('#email').value.trim().toLowerCase();
