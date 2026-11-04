@@ -71,7 +71,7 @@ app.get("/api/auth/me", authenticate, (req, res) => res.json({ id: req.user.id, 
 app.get("/api/internships", asyncRoute(async (req, res) => {
   const q = String(req.query.q || "");
   const rows = await prisma.internship.findMany({
-    where: { status: "OPEN", OR: [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }] },
+    where: { status: "OPEN", company: { verified: true }, OR: [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }] },
     include: { company: { select: { legalName: true, verified: true } } }, orderBy: { createdAt: "desc" }, take: 50
   });
   res.json(rows);
@@ -81,6 +81,7 @@ app.post("/api/internships", authenticate, allow("COMPANY"), asyncRoute(async (r
   const input = z.object({ title: z.string().min(3), description: z.string().min(10), department: z.string().optional(), skills: z.array(z.string()).default([]), eligibility: z.string().optional(), stipend: z.string().optional(), durationWeeks: z.number().int().positive().optional(), location: z.string().optional(), applicationDeadline: z.string().datetime().optional() }).parse(req.body);
   const company = await prisma.company.findUnique({ where: { userId: req.user.id } });
   if (!company) return res.status(404).json({ error: "Company profile not found" });
+  if (!company.verified) return res.status(403).json({ error: "Your company must be verified by an administrator before posting internships" });
   const internship = await prisma.internship.create({ data: { ...input, applicationDeadline: input.applicationDeadline ? new Date(input.applicationDeadline) : null, companyId: company.id, status: "PENDING_APPROVAL" } });
   res.status(201).json(internship);
 }));
