@@ -1,0 +1,234 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role { STUDENT FACULTY COMPANY ADMIN }
+enum ApplicationStatus { SUBMITTED UNDER_REVIEW SHORTLISTED INTERVIEW OFFERED REJECTED ACCEPTED WITHDRAWN }
+enum InternshipStatus { DRAFT PENDING APPROVAL OPEN CLOSED }
+enum ApprovalStatus { PENDING APPROVED REJECTED }
+enum LogStatus { PENDING REVIEW APPROVED REVISION_REQUIRED }
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  student      Student?
+  faculty      Faculty?
+  company      Company?
+  notifications Notification[]
+  auditEvents  AuditLog[] @relation("Actor")
+}
+
+model Student {
+  id             String @id @default(cuid())
+  userId         String @unique
+  registerNumber String? @unique
+  department     String?
+  year           Int?
+  phone          String?
+  resumeUrl      String?
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications   Application[]
+  weeklyLogs     WeeklyLog[]
+  attendance     Attendance[]
+  tasks          Task[]
+  documents      Document[]
+  evaluations    Evaluation[]
+}
+
+model Faculty {
+  id         String @id @default(cuid())
+  userId     String @unique
+  department String?
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  allocations FacultyAllocation[]
+  reviews    WeeklyLog[] @relation("LogReviewer")
+}
+
+model Company {
+  id             String @id @default(cuid())
+  userId         String @unique
+  legalName      String
+  website        String?
+  description    String?
+  verified       Boolean @default(false)
+  approvalStatus ApprovalStatus @default(PENDING)
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  internships   Internship[]
+}
+
+model Internship {
+  id               String @id @default(cuid())
+  companyId        String
+  title            String
+  department       String?
+  description      String
+  skills           String[]
+  eligibility      String?
+  stipend          String?
+  durationWeeks    Int?
+  location         String?
+  startDate        DateTime?
+  endDate          DateTime?
+  applicationDeadline DateTime?
+  status           InternshipStatus @default(PENDING_APPROVAL)
+  createdAt        DateTime @default(now())
+  company          Company @relation(fields: [companyId], references: [id])
+  applications     Application[]
+}
+
+model Application {
+  id           String @id @default(cuid())
+  studentId    String
+  internshipId String
+  coverLetter  String?
+  resumeUrl    String?
+  status       ApplicationStatus @default(SUBMITTED)
+  appliedAt    DateTime @default(now())
+  student      Student @relation(fields: [studentId], references: [id])
+  internship   Internship @relation(fields: [internshipId], references: [id])
+  interview    Interview?
+  offer        Offer?
+  @@unique([studentId, internshipId])
+}
+
+model Interview {
+  id            String @id @default(cuid())
+  applicationId String @unique
+  scheduledAt   DateTime
+  mode          String?
+  meetingUrl    String?
+  notes         String?
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model Offer {
+  id            String @id @default(cuid())
+  applicationId String @unique
+  documentUrl   String?
+  issuedAt      DateTime @default(now())
+  acceptedAt    DateTime?
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model NocRequest {
+  id          String @id @default(cuid())
+  studentId   String
+  purpose     String
+  status      ApprovalStatus @default(PENDING)
+  remarks     String?
+  createdAt   DateTime @default(now())
+}
+
+model FacultyAllocation {
+  id        String @id @default(cuid())
+  facultyId String
+  studentId String
+  assignedAt DateTime @default(now())
+  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  @@unique([facultyId, studentId])
+}
+
+model WeeklyLog {
+  id          String @id @default(cuid())
+  studentId   String
+  weekStart   DateTime
+  weekEnd     DateTime
+  summary     String
+  hours       Float @default(0)
+  status      LogStatus @default(PENDING_REVIEW)
+  feedback    String?
+  reviewerId  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  student     Student @relation(fields: [studentId], references: [id])
+  reviewer    Faculty? @relation("LogReviewer", fields: [reviewerId], references: [id])
+}
+
+model Attendance {
+  id        String @id @default(cuid())
+  studentId String
+  date      DateTime
+  status    String
+  note      String?
+  student   Student @relation(fields: [studentId], references: [id])
+  @@unique([studentId, date])
+}
+
+model Task {
+  id          String @id @default(cuid())
+  studentId   String
+  title       String
+  description String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  student     Student @relation(fields: [studentId], references: [id])
+}
+
+model Evaluation {
+  id          String @id @default(cuid())
+  studentId   String
+  evaluatorId String?
+  score       Float?
+  comments    String?
+  createdAt   DateTime @default(now())
+  student     Student @relation(fields: [studentId], references: [id])
+}
+
+model Document {
+  id        String @id @default(cuid())
+  studentId String
+  kind      String
+  fileUrl   String
+  createdAt DateTime @default(now())
+  student   Student @relation(fields: [studentId], references: [id])
+}
+
+model Announcement {
+  id        String @id @default(cuid())
+  title     String
+  body      String
+  audience  String @default("ALL")
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String @id @default(cuid())
+  userId    String
+  title     String
+  body      String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id        String @id @default(cuid())
+  actorId   String?
+  action    String
+  entity    String?
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  actor     User? @relation("Actor", fields: [actorId], references: [id])
+}
+
+model SupportTicket {
+  id        String @id @default(cuid())
+  email     String
+  subject   String
+  message   String
+  status    String @default("OPEN")
+  createdAt DateTime @default(now())
+}
