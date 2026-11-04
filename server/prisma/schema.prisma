@@ -44,6 +44,8 @@ model Student {
   tasks          Task[]
   documents      Document[]
   evaluations    Evaluation[]
+  allocations    FacultyAllocation[]
+  nocRequests    NocRequest[]
 }
 
 model Faculty {
