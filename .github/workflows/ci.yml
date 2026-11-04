@@ -1,0 +1,27 @@
+name: InternHub CI
+
+on:
+  push:
+    branches: [internhub-fullstack]
+  pull_request:
+    branches: [internhub-fullstack]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/internhub?schema=public
+      JWT_SECRET: ci-only-secret-not-used-for-deployment
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npm run db:generate
+      - run: npx prisma validate --schema=server/prisma/schema.prisma
+      - run: node --check server/src/index.js
+      - run: node --check server/src/workflows.js
+      - run: node --check server/prisma/seed-admin.js
+      - run: npm run build
