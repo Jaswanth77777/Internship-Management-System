@@ -7,11 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role { STUDENT FACULTY COMPANY ADMIN }
-enum ApplicationStatus { SUBMITTED UNDER_REVIEW SHORTLISTED INTERVIEW OFFERED REJECTED ACCEPTED WITHDRAWN }
-enum InternshipStatus { DRAFT PENDING APPROVAL OPEN CLOSED }
-enum ApprovalStatus { PENDING APPROVED REJECTED }
-enum LogStatus { PENDING REVIEW APPROVED REVISION_REQUIRED }
+enum Role {
+  STUDENT
+  FACULTY
+  COMPANY
+  ADMIN
+}
+enum ApplicationStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  SHORTLISTED
+  INTERVIEW
+  OFFERED
+  REJECTED
+  ACCEPTED
+  WITHDRAWN
+}
+enum InternshipStatus {
+  DRAFT
+  PENDING_APPROVAL
+  OPEN
+  CLOSED
+}
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+enum LogStatus {
+  PENDING_REVIEW
+  APPROVED
+  REVISION_REQUIRED
+}
 
 model User {
   id           String   @id @default(cuid())
