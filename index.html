@@ -32,10 +32,51 @@ body{background:radial-gradient(ellipse at 12% 8%,rgba(76,103,210,.28),transpare
 @media(max-width:480px){.login{padding:24px}.login h1{font-size:27px}}
 
 .demo-quick{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:12px 0 2px;color:var(--muted);font-size:11px}.demo-quick button{border:1px solid var(--line);border-radius:8px;background:rgba(37,54,86,.7);color:var(--text);padding:6px 9px;font-size:11px}.demo-quick button:hover{border-color:var(--cyan);color:var(--cyan)}
- .demo-access{margin-top:16px}.demo-access summary{cursor:pointer;list-style:none;text-align:center;color:var(--cyan);font-size:12px;font-weight:700;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(10,21,43,.72)}.demo-access summary::-webkit-details-marker{display:none}.demo-access summary:after{content:"＋";float:right}.demo-access[open] summary:after{content:"−"}.demo-access .hint{margin-top:8px}</style></head>
+ .demo-access{margin-top:16px}.demo-access summary{cursor:pointer;list-style:none;text-align:center;color:var(--cyan);font-size:12px;font-weight:700;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(10,21,43,.72)}.demo-access summary::-webkit-details-marker{display:none}.demo-access summary:after{content:"＋";float:right}.demo-access[open] summary:after{content:"−"}.demo-access .hint{margin-top:8px}
+/* Pastel 3D portal landing page */
+body{background:#eef0fb!important;color:#20263b!important;overflow-x:hidden}
+body:after{background:transparent!important}
+#scene{z-index:0!important;opacity:1!important}
+.orb{display:none}
+.loginwrap{position:relative;z-index:1;min-height:100vh;padding:28px 18px}
+.login{width:min(430px,100%);padding:28px;border:1px solid rgba(255,255,255,.72);border-radius:22px;background:linear-gradient(135deg,rgba(116,169,255,.82),rgba(105,230,210,.82) 48%,rgba(255,151,185,.88) 100%);box-shadow:0 28px 75px rgba(58,70,120,.28),0 0 35px rgba(94,220,220,.28);backdrop-filter:blur(22px);color:#20263b}
+.login .brand{font-size:27px;color:#4568c9;margin:0 0 2px}
+.login .brand span{color:#3159b5}
+.login .eyebrow{color:#425d99;margin:0;font-size:12px;letter-spacing:.2px;text-transform:none}
+.login h1{font-size:29px;color:#20263b;margin:13px 0 3px}
+.login>p{color:#45516c;margin:0 0 16px}
+.login .field{margin:12px 0}
+.login .field label{color:#43516e;font-size:12px}
+.login input:not([type=checkbox]){background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.8);color:#20263b;border-radius:12px;padding:12px}
+.login input::placeholder{color:#8790a5}
+.login input:focus{border-color:#6262ef;box-shadow:0 0 0 3px rgba(98,98,239,.15)}
+.login .remember-row{color:#45516c}
+.login .btn{background:#5b5bed;color:white;border:0;border-radius:12px;box-shadow:0 5px 0 #3d3dc2;padding:12px;font-weight:800}
+.portal-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0 16px}
+.portal-choice{border:1px solid rgba(255,255,255,.9);border-radius:12px;background:#fff;color:#20263b;padding:11px 9px;font-weight:750;box-shadow:0 5px 0 rgba(49,63,125,.13);transition:.18s}
+.portal-choice:hover,.portal-choice[aria-pressed=true]{background:#5b5bed;color:#fff;transform:translateY(-1px);box-shadow:0 5px 0 #3d3dc2}
+.demo-access{margin-top:15px}
+.demo-access summary{background:rgba(255,255,255,.55);color:#334c91;border-color:rgba(255,255,255,.7)}
+.demo-access .hint{background:rgba(255,255,255,.7);color:#303b58}
+@media(max-width:520px){.login{padding:23px}.login h1{font-size:26px}}
+@media(prefers-reduced-motion:reduce){#scene{display:none!important}}
+</style></head>
 <body><canvas id="scene" aria-hidden="true"></canvas><div class="orb"></div>
-<div id="loginView" class="loginwrap"><div class="card login"><div class="brand">Intern<span>Hub</span> ✦</div><div class="eyebrow">Internship management portal</div><h1>Welcome back</h1><p class="muted">Sign in to continue to your workspace.</p><form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div><div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div><label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label><button class="btn" style="width:100%;margin-top:8px">Sign in →</button></form><details class="demo-access"><summary>Demo access · Click to view credentials</summary><div class="hint"><b>Demo access</b><br>Student: student@internhub.demo<br>Faculty: faculty@internhub.demo<br>Company: company@internhub.demo<br>Admin: admin@internhub.demo<br>Password for all: <b>demo123</b></div></details></div></div>
-<div id="app" class="shell hidden"><aside class="side" id="sidebar"><div class="brand">Intern<span>Hub</span> ✦</div><div class="nav" id="nav"></div><div class="sidefoot">InternHub Portal · Standalone demo<br>Data is saved in this browser</div></aside><div class="mobilebar"><b>Intern<span style="color:var(--cyan)">Hub</span> ✦</b><button class="btn secondary" id="menuBtn">☰ Menu</button></div><main class="main"><header class="top"><div><div class="eyebrow" id="roleLabel">STUDENT WORKSPACE</div><h1 class="h1" id="pageTitle">Dashboard</h1><div class="muted" id="today"></div></div><div class="userpill"><div class="avatar" id="avatar">S</div><div class="who"><b id="userName">Student</b><div class="muted" style="font-size:11px" id="userRole">Student</div></div><button class="btn ghost" id="logout">Log out</button></div></header><div id="content"></div></main></div><div id="toast" class="toast hidden"></div>
+<div id="loginView" class="loginwrap"><div class="card login">
+<div class="brand">InternHub ✦</div><div class="eyebrow">Internship management portal</div>
+<h1>Welcome back</h1><p>Sign in to continue to your workspace.</p>
+<div class="portal-picker" role="group" aria-label="Choose your portal">
+<button class="portal-choice" type="button" data-role="student" aria-pressed="true">🎓 Student</button>
+<button class="portal-choice" type="button" data-role="faculty" aria-pressed="false">👨‍🏫 Faculty</button>
+<button class="portal-choice" type="button" data-role="company" aria-pressed="false">🏢 Company</button>
+<button class="portal-choice" type="button" data-role="admin" aria-pressed="false">🛡️ Admin</button>
+</div>
+<form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
+<div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
+<label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label>
+<button class="btn" style="width:100%;margin-top:8px">Sign in →</button></form>
+<details class="demo-access"><summary>Demo access · Click to view credentials</summary><div class="hint"><b>Demo accounts</b><br>Student: student@internhub.demo<br>Faculty: faculty@internhub.demo<br>Company: company@internhub.demo<br>Admin: admin@internhub.demo<br>Password for all: <b>demo123</b></div></details>
+</div></div><div id="app" class="shell hidden"><aside class="side" id="sidebar"><div class="brand">Intern<span>Hub</span> ✦</div><div class="nav" id="nav"></div><div class="sidefoot">InternHub Portal · Standalone demo<br>Data is saved in this browser</div></aside><div class="mobilebar"><b>Intern<span style="color:var(--cyan)">Hub</span> ✦</b><button class="btn secondary" id="menuBtn">☰ Menu</button></div><main class="main"><header class="top"><div><div class="eyebrow" id="roleLabel">STUDENT WORKSPACE</div><h1 class="h1" id="pageTitle">Dashboard</h1><div class="muted" id="today"></div></div><div class="userpill"><div class="avatar" id="avatar">S</div><div class="who"><b id="userName">Student</b><div class="muted" style="font-size:11px" id="userRole">Student</div></div><button class="btn ghost" id="logout">Log out</button></div></header><div id="content"></div></main></div><div id="toast" class="toast hidden"></div>
 <script>
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const accounts={ 'student@internhub.demo':['Student','STUDENT'], 'faculty@internhub.demo':['Faculty Mentor','FACULTY'], 'company@internhub.demo':['Company Partner','COMPANY'], 'admin@internhub.demo':['Administrator','ADMIN']};
@@ -64,4 +105,20 @@ function jobs(list){return list.map((j,i)=>'<div class="item row between"><div><
 function applyJob(i){let j=get('internships')[i],a=get('applications');if(a.some(x=>x.title===j.title&&x.company===j.company)){toast('You already applied to this role');return}a.push({title:j.title,company:j.company,date:new Date().toLocaleDateString()});save('applications',a);toast('Application submitted');}
 $('#logout').onclick=()=>{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user');$('#app').classList.add('hidden');$('#loginView').classList.remove('hidden')};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
 try{current=JSON.parse(sessionStorage.getItem('ih_user')||localStorage.getItem('ih_user')||'null')}catch{current=null}if(current)showApp();
-</script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>\n<script>(()=>{const canvas=document.getElementById("scene");if(!canvas||!window.THREE||matchMedia("(prefers-reduced-motion: reduce)").matches)return;try{const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,100);camera.position.z=9;const globe=new THREE.Group();scene.add(globe);globe.add(new THREE.Mesh(new THREE.IcosahedronGeometry(2.25,2),new THREE.MeshBasicMaterial({color:0x718cff,wireframe:true,transparent:true,opacity:.22})));const p=[];for(let i=0;i<420;i++){const v=new THREE.Vector3().randomDirection().multiplyScalar(2.28);p.push(v.x,v.y,v.z)}const pg=new THREE.BufferGeometry();pg.setAttribute("position",new THREE.Float32BufferAttribute(p,3));globe.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x55dce9,size:.025,transparent:true,opacity:.8})));const ring=new THREE.Mesh(new THREE.TorusGeometry(2.75,.008,8,180),new THREE.MeshBasicMaterial({color:0x50d9e8,transparent:true,opacity:.32}));ring.rotation.set(1.05,.4,.3);globe.add(ring);const stars=[];for(let i=0;i<700;i++)stars.push((Math.random()-.5)*24,(Math.random()-.5)*15,(Math.random()-.5)*12-3);const sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.Float32BufferAttribute(stars,3));const dust=new THREE.Points(sg,new THREE.PointsMaterial({color:0xa7b7ff,size:.012,transparent:true,opacity:.55}));scene.add(dust);function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();globe.position.set(innerWidth<700?1.6:3.5,.1,-1);globe.scale.setScalar(innerWidth<700?.68:1)}addEventListener("resize",resize);resize();function tick(){requestAnimationFrame(tick);globe.rotation.y+=.0018;globe.rotation.x=Math.sin(Date.now()*.0002)*.08;dust.rotation.y-=.00012;renderer.render(scene,camera)}tick()}catch(e){canvas.style.display="none"}})();document.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const card=e.target.closest(".card:not(.login)");if(!card)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform="perspective(1000px) rotateY("+(x*3)+"deg) rotateX("+(-y*3)+"deg) translateY(-1px)"});document.addEventListener("pointerout",e=>{const card=e.target.closest(".card");if(card&&!card.contains(e.relatedTarget))card.style.transform=""});</script></body></html>
+</script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>(()=>{const canvas=document.getElementById('scene');if(!canvas||!window.THREE||matchMedia('(prefers-reduced-motion: reduce)').matches)return;try{
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,100);camera.position.z=10;
+const group=new THREE.Group();scene.add(group);
+const ringColors=[0xffc66e,0xff7fae,0x50ddc8];[2.0,1.55,1.1].forEach((r,i)=>{const m=new THREE.Mesh(new THREE.TorusGeometry(r,.018,8,180),new THREE.MeshBasicMaterial({color:ringColors[i],transparent:true,opacity:.95}));m.position.set(-3.0,0,0);m.rotation.y=-.2;group.add(m)});
+const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1.05,.34,120,16,2,3),new THREE.MeshStandardMaterial({color:0x8d72ef,roughness:.25,metalness:.12,transparent:true,opacity:.86}));knot.position.set(3.05,-.15,-.3);knot.scale.set(1.2,.72,.65);group.add(knot);
+scene.add(new THREE.HemisphereLight(0xffffff,0x8b9bd8,2));const light=new THREE.PointLight(0xffffff,35);light.position.set(2,4,7);scene.add(light);
+const geo=new THREE.IcosahedronGeometry(.42,0),wire=new THREE.EdgesGeometry(geo);
+const colors=[0x53d9d0,0xff83ae,0xffbd62,0x8b83ff];const shapes=[];
+for(let i=0;i<18;i++){const mat=new THREE.LineBasicMaterial({color:colors[i%4],transparent:true,opacity:.8});const mesh=new THREE.LineSegments(wire,mat);mesh.position.set((Math.random()-.5)*11,(Math.random()-.5)*6,(Math.random()-.5)*2);mesh.scale.setScalar(.55+Math.random()*.8);group.add(mesh);shapes.push(mesh)}
+const pts=[];for(let i=0;i<650;i++)pts.push((Math.random()-.5)*22,(Math.random()-.5)*13,-2-Math.random()*7);const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.025,transparent:true,opacity:.9})));
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();group.scale.setScalar(innerWidth<650?.72:1);group.position.x=innerWidth<650?0:0}
+addEventListener('resize',resize);resize();function tick(){requestAnimationFrame(tick);knot.rotation.x+=.002;knot.rotation.y+=.004;shapes.forEach((s,i)=>{s.rotation.x+=.001+(i%3)*.0005;s.rotation.y+=.0015});renderer.render(scene,camera)}tick();
+}catch(e){canvas.style.display='none'}})();
+document.querySelectorAll('.portal-choice').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.portal-choice').forEach(b=>b.setAttribute('aria-pressed','false'));btn.setAttribute('aria-pressed','true')}));
+</script></body></html>
