@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import { registerWorkflowRoutes } from "./workflows.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -34,6 +35,8 @@ async function authenticate(req, res, next) {
 const allow = (...roles) => (req, res, next) => roles.includes(req.user.role) ? next() : res.status(403).json({ error: "You do not have permission" });
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", service: "InternHub API" }));
+
+registerWorkflowRoutes(app, { prisma, authenticate, allow, asyncRoute });
 
 app.post("/api/auth/register", asyncRoute(async (req, res) => {
   const input = z.object({
