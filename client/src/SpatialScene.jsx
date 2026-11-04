@@ -236,7 +236,8 @@ export default function SpatialScene({ role = "STUDENT" }) {
           materials.forEach(material => material.dispose());
         }
       });
-      composer.dispose();\n      renderer.dispose();
+      composer.dispose();
+      renderer.dispose();
       if (renderer.domElement.parentNode === root) root.removeChild(renderer.domElement);
     };
   }, []);
