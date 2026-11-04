@@ -60,17 +60,37 @@ body:after{background:transparent!important}
 .demo-access .hint{background:rgba(255,255,255,.7);color:#303b58}
 @media(max-width:520px){.login{padding:23px}.login h1{font-size:26px}}
 @media(prefers-reduced-motion:reduce){#scene{display:none!important}}
+
+/* Clean dark login refresh matching the supplied reference */
+body{background:#0b142b!important;color:#f4f6ff!important}
+body:after{background:transparent!important}
+#scene{display:none!important}
+.loginwrap{position:relative;z-index:1;min-height:100vh;padding:28px 18px}
+.login{width:min(438px,100%);padding:40px;border:1px solid #30466f;border-radius:22px;background:#14213d;box-shadow:none;backdrop-filter:none;color:#f4f6ff}
+.login .brand{font-size:26px;font-weight:850;letter-spacing:-1.2px;color:#f4f6ff;margin:0 0 24px}
+.login .brand span{color:#4bd7e6}
+.login .eyebrow{color:#4bd7e6;font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase;margin:0 0 22px}
+.login h1{font-size:29px;letter-spacing:-1px;color:#f4f6ff;margin:0 0 14px}
+.login>p{color:#aab8d1;margin:0 0 16px}
+.login .field{gap:7px;margin:12px 0}
+.login .field label{color:#aab8d1;font-size:11px}
+.login input:not([type=checkbox]){background:#0c1730;border:1px solid #2b3d60;color:#f4f6ff;border-radius:11px;padding:14px}
+.login input:not([type=checkbox])::placeholder{color:#687792}
+.login input:not([type=checkbox]):focus{border-color:#7188ff;box-shadow:0 0 0 3px rgba(113,136,255,.13)}
+.login .remember-row{color:#aab8d1;margin:12px 0}
+.login .remember-row input{accent-color:#7188ff}
+.login .btn{background:linear-gradient(100deg,#7b87ff,#4bd2e3);color:#071329;border:0;border-radius:12px;box-shadow:none;padding:13px;font-weight:800}
+.login .btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(83,142,255,.18)}
+.login .demo-access{margin-top:17px}
+.login .demo-access summary{background:#0c1730;color:#4bd7e6;border:1px solid #2b3d60;border-radius:12px;padding:13px 14px;font-size:11px}
+.login .demo-access .hint{background:#0c1730;color:#b9c5dc;border:1px solid #2b3d60}
+@media(max-width:520px){.login{padding:30px 28px}.login h1{font-size:27px}}
 </style></head>
 <body><canvas id="scene" aria-hidden="true"></canvas><div class="orb"></div>
 <div id="loginView" class="loginwrap"><div class="card login">
 <div class="brand">InternHub ✦</div><div class="eyebrow">Internship management portal</div>
 <h1>Welcome back</h1><p>Sign in to continue to your workspace.</p>
-<div class="portal-picker" role="group" aria-label="Choose your portal">
-<button class="portal-choice" type="button" data-role="student" aria-pressed="true">🎓 Student</button>
-<button class="portal-choice" type="button" data-role="faculty" aria-pressed="false">👨‍🏫 Faculty</button>
-<button class="portal-choice" type="button" data-role="company" aria-pressed="false">🏢 Company</button>
-<button class="portal-choice" type="button" data-role="admin" aria-pressed="false">🛡️ Admin</button>
-</div>
+
 <form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
 <div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
 <label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label>
