@@ -157,14 +157,14 @@ export default function SpatialScene({ role = "STUDENT" }) {
         scene.remove(old.mesh); old.mesh.geometry.dispose(); old.mesh.material.dispose();
       }
     }
-    renderer.domElement.addEventListener("pointerdown", spawnRipple);
+    window.addEventListener("pointerdown", spawnRipple);
 
     const pointerMove = (event) => {
       const rect = root.getBoundingClientRect();
       pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     };
-    root.addEventListener("pointermove", pointerMove);
+    window.addEventListener("pointermove", pointerMove);
 
     let frame = 0;
     let raf = 0;
@@ -217,8 +217,8 @@ export default function SpatialScene({ role = "STUDENT" }) {
     return () => {
       cancelAnimationFrame(raf);
       observer.disconnect();
-      root.removeEventListener("pointermove", pointerMove);
-      renderer.domElement.removeEventListener("pointerdown", spawnRipple);
+      window.removeEventListener("pointermove", pointerMove);
+      window.removeEventListener("pointerdown", spawnRipple);
       scene.traverse((object) => {
         if (object.geometry) object.geometry.dispose();
         if (object.material) {
