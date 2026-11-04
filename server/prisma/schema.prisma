@@ -55,6 +55,7 @@ model Faculty {
   user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
   allocations FacultyAllocation[]
   reviews    WeeklyLog[] @relation("LogReviewer")
+  reviewedNocs NocRequest[] @relation("NocReviewer")
 }
 
 model Company {
@@ -129,7 +130,11 @@ model NocRequest {
   purpose     String
   status      ApprovalStatus @default(PENDING)
   remarks     String?
+  reviewerId  String?
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  student     Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  reviewer    Faculty? @relation("NocReviewer", fields: [reviewerId], references: [id])
 }
 
 model FacultyAllocation {
@@ -137,7 +142,8 @@ model FacultyAllocation {
   facultyId String
   studentId String
   assignedAt DateTime @default(now())
-  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  faculty   Faculty @relation(fields: [facultyId], references: [id], onDelete: Cascade)
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   @@unique([facultyId, studentId])
 }
 
