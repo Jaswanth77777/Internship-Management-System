@@ -90,6 +90,13 @@ body:after{background:transparent!important}
 .login .portal-picker{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
 .login .portal-choice{border:1px solid #30466f;border-radius:10px;background:#0c1730;color:#dce6ff;padding:10px 8px;font-size:12px;font-weight:750;cursor:pointer;transition:background .16s,border-color .16s,transform .16s}
 .login .portal-choice:hover,.login .portal-choice[aria-pressed=true]{background:#253b66;border-color:#55d7e6;transform:translateY(-1px)}
+
+/* Animated 3D background layer: keep the existing dark login and portal UI */
+body{background:radial-gradient(ellipse at 12% 8%,#263a75 0,transparent 34%),radial-gradient(ellipse at 88% 20%,#12485a 0,transparent 28%),#0b142b!important;position:relative}
+#scene{display:block!important;position:fixed;inset:0;width:100%;height:100%;z-index:0!important;pointer-events:none;opacity:.88!important}
+.loginwrap,.shell{position:relative;z-index:1}
+.orb{z-index:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){#scene{display:none!important}}
 </style></head>
 <body><canvas id="scene" aria-hidden="true"></canvas><div class="orb"></div>
 <div id="loginView" class="loginwrap"><div class="card login">
