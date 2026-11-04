@@ -30,6 +30,9 @@ export function registerWorkflowRoutes(app, { prisma, authenticate, allow, async
     const rows=await prisma.facultyAllocation.findMany({where:{facultyId:f.id},include:{student:{include:{user:true,weeklyLogs:true,nocRequests:true,applications:true}}}});
     res.json(rows.map(x=>x.student));
   }));
+  app.get("/api/faculty/available-students", authenticate, allow("FACULTY"), asyncRoute(async(_req,res)=>{
+    res.json(await prisma.student.findMany({include:{user:{select:{name:true,email:true}}},orderBy:{user:{name:"asc"}}}));
+  }));
   app.post("/api/faculty/allocations", authenticate, allow("FACULTY"), asyncRoute(async(req,res)=>{
     const input=z.object({studentId:z.string()}).parse(req.body);
     const f=await prisma.faculty.findUnique({where:{userId:req.user.id}});
