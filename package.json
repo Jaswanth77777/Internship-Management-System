@@ -1,0 +1,13 @@
+{
+  "name": "internhub",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "db:generate": "npm run db:generate -w server",
+    "db:migrate": "npm run db:migrate -w server"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}
