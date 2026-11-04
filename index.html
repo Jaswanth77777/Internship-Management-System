@@ -105,7 +105,6 @@
       isLoggedIn: false,
       currentUserToken: null,
       currentUser: null,
-      /* Default account data remains available after demo sign-in. */
       _defaultCurrentUser: {
         id: "2024BTCY017",
         name: "UTUKURU MASTAN REDDY",
@@ -180,6 +179,10 @@
   class ApplicationStore {
     constructor() {
       this.data = this.load();
+      // Always start at the login screen; preserve stored portal data but not an old session.
+      this.data.auth.isLoggedIn = false;
+      this.data.auth.currentUserToken = null;
+      this.data.auth.currentUser = null;
       this.currentView = 'dashboard';
       this.filterMode = '';
       this.minStipendFilter = 0;
