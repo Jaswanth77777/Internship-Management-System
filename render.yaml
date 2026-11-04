@@ -1,0 +1,30 @@
+databases:
+  - name: internhub-postgres
+    databaseName: internhub
+    user: internhub
+    plan: free
+
+services:
+  - type: web
+    name: internhub-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run db:generate -w server && npm run db:push -w server
+    startCommand: npm run start -w server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: internhub-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        value: InternHub Administrator
