@@ -6,10 +6,10 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 
 const ROLE_COLORS = {
-  STUDENT: 0x527fff,
+  STUDENT: 0x00f3ff,
   FACULTY: 0x9d4edd,
-  COMPANY: 0x00d9ff,
-  ADMIN: 0x00ff66
+  COMPANY: 0x00ff66,
+  ADMIN: 0xff0055
 };
 
 export default function SpatialScene({ role = "STUDENT" }) {
@@ -157,7 +157,7 @@ export default function SpatialScene({ role = "STUDENT" }) {
       raycaster.setFromCamera(pointer, camera);
       const hit = raycaster.intersectObject(interactionPlane)[0];
       if (!hit) return;
-      const ripple = new THREE.Mesh(new THREE.RingGeometry(0.08, 0.13, 64), new THREE.MeshBasicMaterial({ color: 0x00efff, transparent: true, opacity: 0.78, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false }));
+      const ripple = new THREE.Mesh(new THREE.RingGeometry(0.08, 0.13, 64), new THREE.MeshBasicMaterial({ color: ROLE_COLORS[roleRef.current] || ROLE_COLORS.STUDENT, transparent: true, opacity: 0.78, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false }));
       ripple.position.copy(hit.point);
       ripple.position.z = -1.96;
       scene.add(ripple);
@@ -183,8 +183,12 @@ export default function SpatialScene({ role = "STUDENT" }) {
       raf = requestAnimationFrame(animate);
       const elapsed = clock.getElapsedTime();
       gridMaterial.uniforms.uTime.value = elapsed;
+      grid.position.z = -8 + ((elapsed * 0.35) % 2);
       gridMaterial.uniforms.uColor.value.setHex(0x00dff5);
       const activeColor = ROLE_COLORS[roleRef.current] || ROLE_COLORS.STUDENT;
+      ambient.color.setHex(activeColor);
+      point.color.setHex(activeColor);
+      gridMaterial.uniforms.uColor.value.setHex(activeColor);
       inner.material.color.setHex(activeColor);
       plasma.material.color.setHex(activeColor);
       shell.rotation.y = elapsed * 0.075;
