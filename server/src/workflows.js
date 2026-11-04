@@ -104,7 +104,9 @@ export function registerWorkflowRoutes(app, { prisma, authenticate, allow, async
   }));
   app.patch("/api/admin/internships/:id/status", authenticate, allow("ADMIN"), asyncRoute(async(req,res)=>{
     const input=z.object({status:z.enum(["OPEN","CLOSED","PENDING_APPROVAL"])}).parse(req.body);
-    res.json(await prisma.internship.update({where:{id:req.params.id},data:{status:input.status}}));
+    const internship=await prisma.internship.update({where:{id:req.params.id},data:{status:input.status},include:{company:true}});
+    if(input.status==="OPEN") await notify(internship.company.userId,"Internship approved",`Your internship posting "${internship.title}" is now visible to students.`);
+    res.json(internship);
   }));
   app.get("/api/notifications", authenticate, asyncRoute(async(req,res)=>{
     res.json(await prisma.notification.findMany({where:{userId:req.user.id},orderBy:{createdAt:"desc"},take:50}));
