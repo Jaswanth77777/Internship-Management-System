@@ -16,6 +16,21 @@ export default function App() {
   const [role, setRole] = useState("STUDENT");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const moveCards = (event) => {
+      document.querySelectorAll(".panel, .stat").forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+        card.style.setProperty("--tilt-x", inside ? `${x * 5}deg` : "0deg");
+        card.style.setProperty("--tilt-y", inside ? `${-y * 5}deg` : "0deg");
+      });
+    };
+    window.addEventListener("pointermove", moveCards, { passive: true });
+    return () => window.removeEventListener("pointermove", moveCards);
+  }, []);
+
   async function request(path, options = {}) {
     const response = await fetch(API + path, { ...options, headers: { "Content-Type": "application/json", ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}), ...options.headers } });
     const data = await response.json();
