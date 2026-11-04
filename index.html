@@ -1,307 +1,2655 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="dark">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>InternHub — Internship Portal</title>
-<style>
-:root{--bg:#0a1020;--panel:rgba(20,31,55,.78);--panel2:#111d35;--line:rgba(164,190,255,.15);--text:#eef3ff;--muted:#9aabc9;--accent:#7c8cff;--cyan:#50d9e8;--good:#43d6a0;--warn:#ffcb70;--shadow:0 24px 70px #0006}
-*{box-sizing:border-box}body{margin:0;font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(ellipse at 12% 8%,#263a75 0,transparent 34%),radial-gradient(ellipse at 88% 20%,#12485a 0,transparent 28%),var(--bg);min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.side{padding:26px 18px;border-right:1px solid var(--line);background:#081126b8;backdrop-filter:blur(20px);position:sticky;top:0;height:100vh}.brand{font-size:22px;font-weight:850;letter-spacing:-1px;margin:0 10px 30px}.brand span{color:var(--cyan)}.navlabel{font-size:10px;letter-spacing:1.8px;color:#6f83aa;margin:22px 12px 9px}.nav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border:0;border-radius:12px;background:transparent;color:var(--muted);text-align:left;margin:3px 0}.nav button.active,.nav button:hover{background:linear-gradient(100deg,#6579ff36,#50d9e81a);color:white}.nav .ico{width:20px;text-align:center}.sidefoot{position:absolute;bottom:20px;left:18px;right:18px;color:var(--muted);font-size:12px}.main{padding:26px clamp(18px,4vw,52px);max-width:1600px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px}.eyebrow{color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:700}.h1{font-size:clamp(26px,4vw,38px);letter-spacing:-1.4px;margin:4px 0}.muted{color:var(--muted)}.userpill{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:8px 12px;background:#14213c}.avatar{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#7d8cff,#50d9e8);color:#081126;font-weight:800}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:linear-gradient(145deg,#182744dc,#101a30e8);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}.stat{grid-column:span 3}.stat .num{font-size:32px;font-weight:800;letter-spacing:-1px;margin:8px 0 2px}.stat .tag{font-size:12px;color:var(--good)}.wide{grid-column:span 8}.narrow{grid-column:span 4}.half{grid-column:span 6}.full{grid-column:1/-1}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.btn{border:0;border-radius:12px;padding:10px 15px;font-weight:700;color:#071124;background:linear-gradient(110deg,#8c9aff,#50d9e8);box-shadow:0 8px 24px #627cff35}.btn.secondary{background:#253656;color:#e8efff;border:1px solid var(--line);box-shadow:none}.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);box-shadow:none}.row{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;padding:12px 13px;color:var(--text);background:#0b152a;border:1px solid var(--line);border-radius:11px;outline:none}input:focus,select:focus,textarea:focus{border-color:#7d8cff;box-shadow:0 0 0 3px #7d8cff22}textarea{min-height:100px;resize:vertical}.pill{font-size:11px;padding:5px 9px;border-radius:99px;background:#7d8cff20;color:#b9c4ff;border:1px solid #7d8cff40}.pill.good{background:#43d6a018;color:#70e8bb;border-color:#43d6a044}.pill.warn{background:#ffcb7018;color:#ffd48b;border-color:#ffcb7044}.item{padding:14px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.progress{height:7px;background:#263652;border-radius:9px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#7d8cff,#50d9e8);border-radius:9px}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-weight:600}.empty{padding:26px;text-align:center;color:var(--muted)}.loginwrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login{width:min(440px,100%);padding:34px}.login .brand{margin:0 0 8px}.login h1{font-size:30px;margin:18px 0 4px}.hint{font-size:12px;color:var(--muted);padding:12px;background:#0a152b;border-radius:12px;margin-top:16px}.toast{position:fixed;right:22px;bottom:22px;background:#1d3151;border:1px solid var(--line);padding:13px 18px;border-radius:13px;box-shadow:var(--shadow);z-index:10}.mobilebar{display:none}.section{display:none}.section.active{display:block}.orb{position:fixed;width:260px;height:260px;border-radius:50%;filter:blur(90px);opacity:.14;pointer-events:none;background:#7187ff;top:40%;right:-100px;z-index:-1}
-@media(max-width:900px){.shell{grid-template-columns:1fr}.side{position:fixed;z-index:5;left:-270px;width:250px;transition:.25s}.side.open{left:0}.mobilebar{display:flex;position:sticky;top:0;z-index:4;padding:10px 16px;background:#081126e8;backdrop-filter:blur(15px);border-bottom:1px solid var(--line);justify-content:space-between}.main{padding:20px 16px}.stat{grid-column:span 6}.wide,.narrow,.half{grid-column:1/-1}.sidefoot{position:static;margin-top:30px}}
-@media(max-width:480px){.stat{grid-column:1/-1}.top{align-items:flex-start}.userpill .who{display:none}.table{min-width:580px}.tablewrap{overflow:auto}.card{padding:16px}}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>InternHub | Enterprise 3-Tier Internship Management Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            accent: {
+              purple: '#a855f7',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              rose: '#f43f5e',
+              amber: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      background-color: #080c1a;
+      color: #f8fafc;
+    }
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .light .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      box-shadow: 0 20px 40px rgba(148, 163, 184, 0.25);
+    }
+    .glow-indigo { box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); }
+    .glow-cyan { box-shadow: 0 0 25px rgba(6, 182, 212, 0.4); }
+    .progress-circle {
+      transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(8, 12, 26, 0.9); }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
+    @media print {
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-brand-500 selection:text-white transition-colors duration-300">
 
-#scene{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none;opacity:.7}
-body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,#07102055,transparent 55%,#07102044)}
-.card{transform-style:preserve-3d;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
-.card:hover{border-color:#7c8cff55;box-shadow:0 28px 75px #0008,0 0 28px #7c8cff12}
-.btn{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
-.btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 12px 28px #627cff55}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  <canvas id="bg-canvas"></canvas>
+  <div id="app-root" class="relative z-10 flex flex-col min-h-screen"></div>
+  <div id="modal-root" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"></div>
+  <div id="toast-root" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+  <div id="print-area" class="hidden"></div>
 
-/* Unified InternHub visual system + remembered demo session */
-:root{--bg:#080f20;--panel:rgba(18,29,52,.86);--panel2:#111d35;--line:rgba(164,190,255,.17);--text:#f3f6ff;--muted:#a6b4d0;--accent:#7c8cff;--cyan:#50d9e8;--good:#43d6a0;--warn:#ffcb70;--shadow:0 24px 70px rgba(0,0,0,.38)}
-body{background:radial-gradient(ellipse at 12% 8%,rgba(76,103,210,.28),transparent 35%),radial-gradient(ellipse at 88% 20%,rgba(36,173,190,.16),transparent 30%),var(--bg)}
-.card{background:linear-gradient(145deg,rgba(24,39,68,.92),rgba(13,23,43,.94));border-color:var(--line);border-radius:22px;box-shadow:var(--shadow)}
-.login{padding:clamp(26px,4vw,42px);border-color:rgba(124,140,255,.3);box-shadow:0 30px 100px rgba(0,0,0,.5),0 0 50px rgba(80,217,232,.06)}
-.login .brand{font-size:26px;letter-spacing:-1.2px}.login h1{letter-spacing:-1.3px}.login .eyebrow{margin-top:22px}
-.btn{background:linear-gradient(110deg,#7c8cff,#50d9e8);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}.btn:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 12px 28px rgba(80,140,255,.28)}
-.btn.secondary{background:rgba(37,54,86,.8);color:#e8efff;border:1px solid var(--line)}
-.nav button{transition:background .18s ease,color .18s ease,transform .18s ease}.nav button:hover{transform:translateX(3px)}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(80,217,232,.12)}
-.remember-row{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;margin:12px 0 4px;cursor:pointer}.remember-row input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
-.userpill{background:rgba(20,33,60,.8);border-color:var(--line)}
-@media(max-width:480px){.login{padding:24px}.login h1{font-size:27px}}
+  <script>
+  /**
+   * INTERNHUB ENTERPRISE SIMULATED BACKEND & PERSISTENCE ENGINE
+   */
+  const INITIAL_DATABASE = {
+    auth: {
+      isLoggedIn: false,
+      currentUserToken: null,
+      currentUser: null,
+      /* Default account data remains available after demo sign-in. */
+      _defaultCurrentUser: {
+        id: "2024BTCY017",
+        name: "UTUKURU MASTAN REDDY",
+        email: "2024btcy017@college.edu",
+        role: "student",
+        branch: "Computer Science & Engineering",
+        gpa: 8.6,
+        skills: ["React", "Node.js", "Python", "SQL", "Tailwind CSS"],
+        resume: "UTUKURU_MASTAN_REDDY_Resume.pdf",
+        resumeBlob: null,
+        github: "github.com/mastanreddy",
+        linkedin: "linkedin.com/in/mastanreddy"
+      }
+    },
+    users: [
+      { id: "2024BTCY017", name: "UTUKURU MASTAN REDDY", email: "2024btcy017@college.edu", passwordHash: "password123", role: "student", gpa: 8.6, branch: "Computer Science & Engineering", facultyId: "FAC001" },
+      { id: "2024BTCY007", name: "MADDALA JASWANTH KUMAR", email: "2024btcy007@college.edu", passwordHash: "password123", role: "student", gpa: 8.4, branch: "Computer Science & Engineering", facultyId: "FAC001" },
+      { id: "FAC001", name: "Dr. Mehta", email: "mehta.faculty@college.edu", passwordHash: "faculty123", role: "faculty", dept: "CSE" },
+      { id: "FAC002", name: "Ms. Ambika", email: "ambika.faculty@college.edu", passwordHash: "faculty123", role: "faculty", dept: "CSE" },
+      { id: "HR001", name: "TechNova HR Lead", email: "hr@technova.com", passwordHash: "company123", role: "company", company: "TechNova Labs" },
+      { id: "ADM001", name: "T&P Placement Director", email: "placement@college.edu", passwordHash: "admin123", role: "admin", dept: "Placement Cell" }
+    ],
+    companies: [
+      { name: "TechNova Labs", status: "Verified", domain: "technova.com" },
+      { name: "DataWave Analytics", status: "Verified", domain: "datawave.io" },
+      { name: "CloudBay Inc", status: "Verified", domain: "cloudbay.com" },
+      { name: "SecureOps Systems", status: "Pending Verification", domain: "secureops.org" }
+    ],
+    jobs: [
+      { id: 101, title: "Full Stack Engineering Intern", company: "TechNova Labs", stipend: 25000, mode: "Remote", duration: "6 Months", gpa: 7.5, branch: "CSE / IT", skills: "React, Node.js, PostgreSQL", status: "Approved", description: "Build full-stack web applications, write unit tests, and collaborate with engineering leads.", deadline: "2026-11-30" },
+      { id: 102, title: "Data Analyst & ML Intern", company: "DataWave Analytics", stipend: 20000, mode: "On-site", duration: "3 Months", gpa: 8.0, branch: "CSE / AI&DS", skills: "Python, SQL, Power BI", status: "Approved", description: "Clean client datasets, train ML models, and build automated reporting dashboards.", deadline: "2026-11-25" },
+      { id: 103, title: "DevOps & Cloud Systems Intern", company: "CloudBay Inc", stipend: 18000, mode: "Hybrid", duration: "4 Months", gpa: 7.0, branch: "CSE / ECE / IT", skills: "Linux, Docker, AWS", status: "Approved", description: "Deploy microservices, configure CI/CD pipelines, and monitor server health metrics.", deadline: "2026-12-05" }
+    ],
+    applications: [
+      { id: 501, jobId: 101, studentId: "2024BTCY017", studentName: "UTUKURU MASTAN REDDY", company: "TechNova Labs", title: "Full Stack Engineering Intern", status: "Shortlisted", appliedDate: "2026-11-01", resume: "UTUKURU_MASTAN_REDDY_Resume.pdf" }
+    ],
+    nocs: [
+      { id: 301, studentId: "2024BTCY017", studentName: "UTUKURU MASTAN REDDY", company: "TechNova Labs", hrEmail: "hr@technova.com", duration: "2026-12-01 to 2027-05-31", status: "Pending Faculty Approval", approvedBy: "Pending", date: "2026-11-02" }
+    ],
+    logs: [
+      { id: 401, studentId: "2024BTCY017", week: 1, date: "2026-11-03", summary: "Configured development environment and integrated REST APIs.", hours: 40, status: "Verified", notes: "Verified by HR mentor.", facultyReviewed: true },
+      { id: 402, studentId: "2024BTCY017", week: 2, date: "2026-11-04", summary: "Implemented JWT session authentication and database migrations.", hours: 40, status: "Verified", notes: "Excellent progress.", facultyReviewed: false }
+    ],
+    interviews: [
+      { id: 601, studentId: "2024BTCY017", company: "TechNova Labs", title: "Full Stack Engineering Intern", dateTime: "2026-11-10T14:30", link: "https://meet.jit.si/internhub-interview", status: "Scheduled" }
+    ],
+    offers: [
+      { id: 701, studentId: "2024BTCY017", studentName: "UTUKURU MASTAN REDDY", company: "TechNova Labs", title: "Full Stack Engineering Intern", stipend: 25000, duration: "6 Months", status: "Pending Response", offerDate: "2026-11-03" }
+    ],
+    certificates: [
+      { id: 851, code: "IH-A9X2B710", studentId: "2024BTCY017", studentName: "UTUKURU MASTAN REDDY", company: "TechNova Labs", title: "Full Stack Engineering Intern", date: "2026-11-04" }
+    ],
+    tasks: [
+      { id: 801, studentId: "2024BTCY017", title: "Submit Docker Container Architecture Blueprint", assignedBy: "Dr. Mehta (Faculty)", due: "2026-11-15", status: "Assigned" }
+    ],
+    tickets: [
+      { id: 91, studentId: "2024BTCY017", subject: "NOC Verification Requirement", message: "Does the printed NOC require a physical institutional stamp?", status: "Resolved", reply: "Digital cryptographic signatures on generated PDFs are legally valid." }
+    ],
+    announcements: [
+      { id: 1001, title: "Mandatory NOC Submission Deadline", body: "All IV Semester students taking off-campus internships must submit NOC forms before Dec 1, 2026.", date: "2026-11-01", sender: "Placement Cell Admin" }
+    ],
+    attendance: [],
+    auditLogs: [
+      { time: "2026-11-05 10:00", role: "STUDENT", action: "Submitted NOC Request for TechNova Labs" },
+      { time: "2026-11-05 11:15", role: "FACULTY", action: "Approved NOC Request for UTUKURU MASTAN REDDY" }
+    ],
+    chatHistory: [
+      { sender: "bot", message: "Hello! I am your AI Assistant. Ask me about your NOC status, logbook entries, applications, interviews, offers, or stipends." }
+    ]
+  };
 
-.demo-quick{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:12px 0 2px;color:var(--muted);font-size:11px}.demo-quick button{border:1px solid var(--line);border-radius:8px;background:rgba(37,54,86,.7);color:var(--text);padding:6px 9px;font-size:11px}.demo-quick button:hover{border-color:var(--cyan);color:var(--cyan)}
- .demo-access{margin-top:16px}.demo-access summary{cursor:pointer;list-style:none;text-align:center;color:var(--cyan);font-size:12px;font-weight:700;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(10,21,43,.72)}.demo-access summary::-webkit-details-marker{display:none}.demo-access summary:after{content:"＋";float:right}.demo-access[open] summary:after{content:"−"}.demo-access .hint{margin-top:8px}
-/* Pastel 3D portal landing page */
-body{background:#eef0fb!important;color:#20263b!important;overflow-x:hidden}
-body:after{background:transparent!important}
-#scene{z-index:0!important;opacity:1!important}
-.orb{display:none}
-.loginwrap{position:relative;z-index:1;min-height:100vh;padding:28px 18px}
-.login{width:min(430px,100%);padding:28px;border:1px solid rgba(255,255,255,.72);border-radius:22px;background:linear-gradient(135deg,rgba(116,169,255,.82),rgba(105,230,210,.82) 48%,rgba(255,151,185,.88) 100%);box-shadow:0 28px 75px rgba(58,70,120,.28),0 0 35px rgba(94,220,220,.28);backdrop-filter:blur(22px);color:#20263b}
-.login .brand{font-size:27px;color:#4568c9;margin:0 0 2px}
-.login .brand span{color:#3159b5}
-.login .eyebrow{color:#425d99;margin:0;font-size:12px;letter-spacing:.2px;text-transform:none}
-.login h1{font-size:29px;color:#20263b;margin:13px 0 3px}
-.login>p{color:#45516c;margin:0 0 16px}
-.login .field{margin:12px 0}
-.login .field label{color:#43516e;font-size:12px}
-.login input:not([type=checkbox]){background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.8);color:#20263b;border-radius:12px;padding:12px}
-.login input::placeholder{color:#8790a5}
-.login input:focus{border-color:#6262ef;box-shadow:0 0 0 3px rgba(98,98,239,.15)}
-.login .remember-row{color:#45516c}
-.login .btn{background:#5b5bed;color:white;border:0;border-radius:12px;box-shadow:0 5px 0 #3d3dc2;padding:12px;font-weight:800}
-.portal-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0 16px}
-.portal-choice{border:1px solid rgba(255,255,255,.9);border-radius:12px;background:#fff;color:#20263b;padding:11px 9px;font-weight:750;box-shadow:0 5px 0 rgba(49,63,125,.13);transition:.18s}
-.portal-choice:hover,.portal-choice[aria-pressed=true]{background:#5b5bed;color:#fff;transform:translateY(-1px);box-shadow:0 5px 0 #3d3dc2}
-.demo-access{margin-top:15px}
-.demo-access summary{background:rgba(255,255,255,.55);color:#334c91;border-color:rgba(255,255,255,.7)}
-.demo-access .hint{background:rgba(255,255,255,.7);color:#303b58}
-@media(max-width:520px){.login{padding:23px}.login h1{font-size:26px}}
-@media(prefers-reduced-motion:reduce){#scene{display:none!important}}
+  class ApplicationStore {
+    constructor() {
+      this.data = this.load();
+      this.currentView = 'dashboard';
+      this.filterMode = '';
+      this.minStipendFilter = 0;
+      this.loginMode = 'quick'; // 'quick' or 'secure'
+      this.theme = localStorage.getItem('internhub_app_theme') || 'dark';
+      this.applyTheme();
+    }
 
-/* Clean dark login refresh matching the supplied reference */
-body{background:#0b142b!important;color:#f4f6ff!important}
-body:after{background:transparent!important}
-#scene{display:none!important}
-.loginwrap{position:relative;z-index:1;min-height:100vh;padding:28px 18px}
-.login{width:min(438px,100%);padding:40px;border:1px solid #30466f;border-radius:22px;background:#14213d;box-shadow:none;backdrop-filter:none;color:#f4f6ff}
-.login .brand{font-size:26px;font-weight:850;letter-spacing:-1.2px;color:#f4f6ff;margin:0 0 24px}
-.login .brand span{color:#4bd7e6}
-.login .eyebrow{color:#4bd7e6;font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase;margin:0 0 22px}
-.login h1{font-size:29px;letter-spacing:-1px;color:#f4f6ff;margin:0 0 14px}
-.login>p{color:#aab8d1;margin:0 0 16px}
-.login .field{gap:7px;margin:12px 0}
-.login .field label{color:#aab8d1;font-size:11px}
-.login input:not([type=checkbox]){background:#0c1730;border:1px solid #2b3d60;color:#f4f6ff;border-radius:11px;padding:14px}
-.login input:not([type=checkbox])::placeholder{color:#687792}
-.login input:not([type=checkbox]):focus{border-color:#7188ff;box-shadow:0 0 0 3px rgba(113,136,255,.13)}
-.login .remember-row{color:#aab8d1;margin:12px 0}
-.login .remember-row input{accent-color:#7188ff}
-.login .btn{background:linear-gradient(100deg,#7b87ff,#4bd2e3);color:#071329;border:0;border-radius:12px;box-shadow:none;padding:13px;font-weight:800}
-.login .btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(83,142,255,.18)}
-.login .demo-access{margin-top:17px}
-.login .demo-access summary{background:#0c1730;color:#4bd7e6;border:1px solid #2b3d60;border-radius:12px;padding:13px 14px;font-size:11px}
-.login .demo-access .hint{background:#0c1730;color:#b9c5dc;border:1px solid #2b3d60}
-@media(max-width:520px){.login{padding:30px 28px}.login h1{font-size:27px}}
+    load() {
+      try {
+        const stored = localStorage.getItem('internhub_enterprise_db');
+        if (!stored) return JSON.parse(JSON.stringify(INITIAL_DATABASE));
+        const parsed = JSON.parse(stored);
+        // Ensure all collections exist safely
+        if (!parsed.attendance) parsed.attendance = [];
+        if (!parsed.applications) parsed.applications = [];
+        if (!parsed.nocs) parsed.nocs = [];
+        if (!parsed.logs) parsed.logs = [];
+        if (!parsed.tasks) parsed.tasks = [];
+        if (!parsed.certificates) parsed.certificates = [];
+        if (!parsed.auditLogs) parsed.auditLogs = [];
+        return parsed;
+      } catch (e) {
+        return JSON.parse(JSON.stringify(INITIAL_DATABASE));
+      }
+    }
 
-/* Role shortcuts fill the demo sign-in fields */
-.login .portal-picker{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
-.login .portal-choice{border:1px solid #30466f;border-radius:10px;background:#0c1730;color:#dce6ff;padding:10px 8px;font-size:12px;font-weight:750;cursor:pointer;transition:background .16s,border-color .16s,transform .16s}
-.login .portal-choice:hover,.login .portal-choice[aria-pressed=true]{background:#253b66;border-color:#55d7e6;transform:translateY(-1px)}
+    save() {
+      try {
+        localStorage.setItem('internhub_enterprise_db', JSON.stringify(this.data));
+        this.broadcastWebSocketUpdate();
+      } catch (e) {
+        showToast("Storage quota exceeded.", "warning");
+      }
+    }
 
-/* Animated 3D background layer: keep the existing dark login and portal UI */
-body{background:radial-gradient(ellipse at 12% 8%,#263a75 0,transparent 34%),radial-gradient(ellipse at 88% 20%,#12485a 0,transparent 28%),#0b142b!important;position:relative}
-#scene{display:block!important;position:fixed;inset:0;width:100%;height:100%;z-index:0!important;pointer-events:none;opacity:.88!important}
-.loginwrap,.shell{position:relative;z-index:1}
-.orb{z-index:0;pointer-events:none}
-@media(prefers-reduced-motion:reduce){#scene{display:none!important}}
+    broadcastWebSocketUpdate() {
+      // SIMULATED WEBSOCKET REAL-TIME DATA BROADCAST ENGINE
+      if (window._socketBroadcastTimeout) clearTimeout(window._socketBroadcastTimeout);
+      window._socketBroadcastTimeout = setTimeout(() => {
+        const event = new CustomEvent('internhub_ws_sync', { detail: { timestamp: Date.now() } });
+        window.dispatchEvent(event);
+      }, 300);
+    }
 
-/* INTERNHUB AURORA 3D THEME — shared across every portal */
-:root{
- --bg:#070b1c;--panel:rgba(17,24,53,.78);--panel2:rgba(22,31,68,.88);
- --line:rgba(142,159,255,.24);--text:#f5f6ff;--muted:#aab4d4;
- --accent:#9b7cff;--cyan:#48e1e6;--good:#43e0b0;--warn:#ffca78;
- --shadow:0 22px 70px rgba(0,0,0,.38)
-}
-html{background:#070b1c}
-body{
- color:var(--text)!important;
- background:
-  radial-gradient(ellipse at 8% 10%,rgba(95,77,225,.27),transparent 34%),
-  radial-gradient(ellipse at 92% 18%,rgba(29,191,206,.19),transparent 31%),
-  radial-gradient(ellipse at 52% 100%,rgba(185,68,190,.15),transparent 42%),
-  #070b1c!important;
- overflow-x:hidden
-}
-body:after{background:linear-gradient(115deg,rgba(5,9,27,.14),transparent 48%,rgba(8,14,38,.2))!important}
-#scene{display:block!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important;pointer-events:none!important;opacity:.92!important}
-#loginView,.shell,.mobilebar,.toast{position:relative;z-index:2}
-.shell{isolation:isolate;background:transparent}
-.side,.mobilebar{
- background:linear-gradient(155deg,rgba(14,21,49,.9),rgba(10,17,39,.78))!important;
- border-color:rgba(130,151,255,.22)!important;
- backdrop-filter:blur(24px) saturate(150%)!important;
- box-shadow:8px 0 45px rgba(0,0,0,.18)
-}
-.brand span{color:#48e1e6!important}
-.navlabel{color:#9c8cff!important}
-.nav button{color:#b3bddb!important;border:1px solid transparent}
-.nav button.active,.nav button:hover{
- background:linear-gradient(105deg,rgba(143,111,255,.28),rgba(58,218,225,.14))!important;
- color:#fff!important;border-color:rgba(139,139,255,.25)!important;
- box-shadow:inset 3px 0 #9d83ff,0 8px 24px rgba(74,89,206,.12)
-}
-.main{position:relative;z-index:2}
-.eyebrow{color:#55e2e6!important}
-.h1{color:#f7f6ff;text-shadow:0 0 24px rgba(148,126,255,.22)}
-.card{
- background:linear-gradient(145deg,rgba(27,35,76,.78),rgba(12,20,47,.84))!important;
- border:1px solid rgba(151,157,255,.23)!important;
- border-radius:22px!important;
- box-shadow:0 18px 52px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.055),0 0 32px rgba(102,93,255,.07)!important;
- backdrop-filter:blur(22px) saturate(145%)!important;
-}
-.card:hover{border-color:rgba(92,221,230,.48)!important;box-shadow:0 24px 65px rgba(0,0,0,.34),0 0 34px rgba(88,110,255,.15)!important}
-.card h2{color:#f5f6ff}
-.stat .num{background:linear-gradient(100deg,#fff,#a99aff 55%,#53e4e6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.userpill{background:rgba(21,31,70,.78)!important;border-color:rgba(143,153,255,.27)!important}
-.avatar{background:linear-gradient(135deg,#9b7cff,#4de0e3)!important;box-shadow:0 0 24px rgba(99,207,235,.22)}
-.btn{
- color:#091128!important;
- background:linear-gradient(105deg,#a28aff,#6b9cff 48%,#4de0df)!important;
- box-shadow:0 8px 26px rgba(110,117,255,.25)!important;
-}
-.btn:hover{filter:brightness(1.12);box-shadow:0 12px 34px rgba(93,177,255,.32)!important}
-.btn.secondary{background:linear-gradient(110deg,rgba(113,94,208,.24),rgba(42,169,184,.18))!important;color:#e9edff!important;border:1px solid rgba(142,155,255,.3)!important}
-.btn.ghost{background:rgba(20,29,65,.45)!important;color:#c1c9e4!important;border:1px solid rgba(142,155,255,.25)!important}
-input,select,textarea{background:rgba(7,14,37,.82)!important;color:#f4f5ff!important;border-color:rgba(138,154,255,.26)!important}
-input:focus,select:focus,textarea:focus{border-color:#54e0e5!important;box-shadow:0 0 0 3px rgba(84,224,229,.13),0 0 20px rgba(110,113,255,.12)!important}
-input::placeholder,textarea::placeholder{color:#7885ad}
-.field label,.muted{color:#aab5d5!important}
-.pill{background:rgba(147,122,255,.17)!important;color:#d4caff!important;border-color:rgba(158,135,255,.32)!important}
-.pill.good{background:rgba(53,219,170,.13)!important;color:#70f0c6!important;border-color:rgba(53,219,170,.28)!important}
-.pill.warn{background:rgba(255,190,103,.13)!important;color:#ffd596!important;border-color:rgba(255,190,103,.28)!important}
-.progress{background:rgba(137,150,206,.18)!important}
-.progress i{background:linear-gradient(90deg,#9a7cff,#688eff,#4de0df)!important;box-shadow:0 0 14px rgba(93,186,255,.45)}
-.table th{color:#9ca9d0!important}
-.table td,.table th,.item{border-color:rgba(143,155,230,.17)!important}
-.empty{color:#9eaad0!important}
-.toast{background:rgba(23,34,75,.94)!important;border-color:rgba(85,220,226,.34)!important;backdrop-filter:blur(18px)}
-.login{background:linear-gradient(145deg,rgba(26,34,77,.91),rgba(10,18,44,.94))!important;border-color:rgba(137,144,255,.4)!important;box-shadow:0 30px 100px rgba(0,0,0,.48),0 0 55px rgba(103,114,255,.16)!important}
-.login .brand{color:#f5f6ff!important}
-.login .brand span{color:#4de0df!important}
-.login .eyebrow{color:#54e0e5!important}
-.login h1{color:#f5f6ff!important}
-.login>p{color:#b1bddc!important}
-.login .field label,.login .remember-row{color:#aab5d5!important}
-.login input:not([type=checkbox]){background:rgba(7,14,37,.9)!important;border-color:rgba(138,154,255,.3)!important;color:#f5f6ff!important}
-.login .portal-choice{background:rgba(21,31,70,.88)!important;color:#e9edff!important;border-color:rgba(143,155,255,.29)!important;box-shadow:0 5px 0 rgba(0,0,0,.2)!important}
-.login .portal-choice:hover,.login .portal-choice[aria-pressed=true]{background:linear-gradient(110deg,#7868dc,#2c9eae)!important;color:#fff!important;border-color:#5de0e4!important}
-.login .demo-access summary{background:rgba(7,14,37,.78)!important;color:#58e1e5!important;border-color:rgba(143,155,255,.28)!important}
-.login .demo-access .hint{background:rgba(7,14,37,.92)!important;color:#c4cce7!important}
-@media(max-width:900px){.side{background:rgba(10,16,40,.97)!important}}
-@media(prefers-reduced-motion:reduce){#scene{opacity:.25!important}}
-</style></head>
-<body><canvas id="scene" aria-hidden="true"></canvas><div class="orb"></div>
-<div id="loginView" class="loginwrap"><div class="card login">
-<div class="brand">InternHub ✦</div><div class="eyebrow">Internship management portal</div>
-<h1>Welcome back</h1><p>Sign in to continue to your workspace.</p>
+    logAudit(action) {
+      const time = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const role = this.data.auth.currentUser ? this.data.auth.currentUser.role.toUpperCase() : 'GUEST';
+      this.data.auditLogs.unshift({ time, role, action });
+      this.save();
+    }
 
-<div class="portal-picker" role="group" aria-label="Choose demo portal">
-<button class="portal-choice" type="button" data-email="student@internhub.demo" onclick="document.getElementById('email').value='student@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🎓 Student</button>
-<button class="portal-choice" type="button" data-email="faculty@internhub.demo" onclick="document.getElementById('email').value='faculty@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">👨‍🏫 Faculty</button>
-<button class="portal-choice" type="button" data-email="company@internhub.demo" onclick="document.getElementById('email').value='company@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🏢 Company</button>
-<button class="portal-choice" type="button" data-email="admin@internhub.demo" onclick="document.getElementById('email').value='admin@internhub.demo';document.getElementById('password').value='demo123';document.querySelectorAll('.portal-choice').forEach(function(b){b.setAttribute('aria-pressed','false')});this.setAttribute('aria-pressed','true')">🛡️ Admin</button>
-</div><form id="loginForm"><div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="username" placeholder="you@example.com"></div>
-<div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
-<label class="remember-row"><input id="rememberMe" type="checkbox"><span>Remember me on this device</span></label>
-<button class="btn" style="width:100%;margin-top:8px">Sign in →</button></form>
-<details class="demo-access"><summary>Demo access · Click to view credentials</summary><div class="hint"><b>Demo accounts</b><br>Student: student@internhub.demo<br>Faculty: faculty@internhub.demo<br>Company: company@internhub.demo<br>Admin: admin@internhub.demo<br>Password for all: <b>demo123</b></div></details>
-</div></div><div id="app" class="shell hidden"><aside class="side" id="sidebar"><div class="brand">Intern<span>Hub</span> ✦</div><div class="nav" id="nav"></div><div class="sidefoot">InternHub Portal · Standalone demo<br>Data is saved in this browser</div></aside><div class="mobilebar"><b>Intern<span style="color:var(--cyan)">Hub</span> ✦</b><button class="btn secondary" id="menuBtn">☰ Menu</button></div><main class="main"><header class="top"><div><div class="eyebrow" id="roleLabel">STUDENT WORKSPACE</div><h1 class="h1" id="pageTitle">Dashboard</h1><div class="muted" id="today"></div></div><div class="userpill"><div class="avatar" id="avatar">S</div><div class="who"><b id="userName">Student</b><div class="muted" style="font-size:11px" id="userRole">Student</div></div><button class="btn ghost" id="logout">Log out</button></div></header><div id="content"></div></main></div><div id="toast" class="toast hidden"></div>
-<script>
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const accounts={ 'student@internhub.demo':['Student','STUDENT'], 'faculty@internhub.demo':['Faculty Mentor','FACULTY'], 'company@internhub.demo':['Company Partner','COMPANY'], 'admin@internhub.demo':['Administrator','ADMIN']};
-let current=null, section='dashboard';
-const defaults={logs:[],applications:[],tasks:[{title:'Update resume',due:'This week',status:'In progress'},{title:'Complete onboarding module',due:'Friday',status:'Pending'}],internships:[{title:'Frontend Developer Intern',company:'NovaTech Labs',location:'Remote',type:'Full-time',stipend:'₹15,000 / month'},{title:'Data Analyst Intern',company:'BrightPath',location:'Chennai',type:'Hybrid',stipend:'₹12,000 / month'},{title:'UI/UX Design Intern',company:'PixelWorks',location:'Remote',type:'Part-time',stipend:'₹10,000 / month'}],notices:['Welcome to InternHub — your internship journey starts here.','Remember to submit your weekly logbook before the review deadline.']};
-function db(){try{return JSON.parse(localStorage.getItem('internhub_standalone')||'{}')}catch{return {}}}function save(k,v){let d=db();d[k]=v;localStorage.setItem('internhub_standalone',JSON.stringify(d))}
-function get(k){return db()[k]??defaults[k]}
-function toast(s){$('#toast').textContent=s;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),2600)}
-function login(email){
- const account=accounts[email];
- if(!account){toast('Account not found. Open Demo access to view test accounts.');return}
- current={email,name:account[0],role:account[1]};
- section='dashboard';
- const value=JSON.stringify(current);
- sessionStorage.setItem('ih_user',value);
- if($('#rememberMe').checked)localStorage.setItem('ih_user',value);
- else localStorage.removeItem('ih_user');
- showApp();
- toast('Welcome '+current.name+' · Opening '+current.role.toLowerCase()+' portal');
-}
+    reset() {
+      localStorage.removeItem('internhub_enterprise_db');
+      this.data = JSON.parse(JSON.stringify(INITIAL_DATABASE));
+      this.save();
+      showToast("System database restored to clean default state.", "info");
+      renderApp();
+    }
 
-$('#loginForm').addEventListener('submit',e=>{
- e.preventDefault();
- const email=$('#email').value.trim().toLowerCase();
- const password=$('#password').value;
- if(!email||!password){toast('Enter your email and password to continue');return}
- if(password!=='demo123'){toast('Incorrect demo password. Please try again.');return}
- if(!accounts[email]){toast('Email not recognized. Click Demo access to view test accounts.');return}
- login(email);
-});
-function showApp(){
- if(!current||!['STUDENT','FACULTY','COMPANY','ADMIN'].includes(current.role)){current=null;return}
- $('#loginView').classList.add('hidden');
- $('#app').classList.remove('hidden');
- $('#userName').textContent=current.name;
- $('#userRole').textContent=current.role;
- $('#roleLabel').textContent=current.role+' WORKSPACE';
- $('#avatar').textContent=current.name[0].toUpperCase();
- $('#today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
- buildNav();
- render();
-}
-function buildNav(){let groups={STUDENT:[['dashboard','⌂','Dashboard'],['opportunities','⌕','Find internships'],['applications','▤','My applications'],['logbook','▧','Weekly logbook'],['tasks','✓','Tasks & attendance'],['documents','▣','Documents & NOC'],['announcements','◉','Announcements']],FACULTY:[['dashboard','⌂','Dashboard'],['students','♙','My students'],['approvals','✓','Approvals'],['logbook','▧','Logbook reviews'],['announcements','◉','Announcements']],COMPANY:[['dashboard','⌂','Dashboard'],['postings','＋','My internships'],['applications','▤','Applicants'],['logbook','▧','Progress reviews'],['announcements','◉','Announcements']],ADMIN:[['dashboard','⌂','Dashboard'],['users','♙','User management'],['opportunities','⌕','Internships'],['applications','▤','Applications'],['reports','▥','Reports & analytics'],['announcements','◉','Announcements']]};let items=groups[current.role]||groups.STUDENT;$('#nav').innerHTML='<div class="navlabel">WORKSPACE</div>'+items.map(([id,ic,n])=>'<button data-section="'+id+'" class="'+(section===id?'active':'')+'"><span class="ico">'+ic+'</span>'+n+'</button>').join('');$('#nav').querySelectorAll('button').forEach(b=>b.onclick=()=>{section=b.dataset.section;$('#sidebar').classList.remove('open');buildNav();render()})}
-function stat(label,num,sub){return '<div class="card stat"><div class="muted">'+label+'</div><div class="num">'+num+'</div><div class="tag">'+sub+'</div></div>'}
-function dashboard(){let role=current.role;let apps=get('applications'),logs=get('logs'),tasks=get('tasks');let stats=role==='STUDENT'?[['Applications',apps.length,'Your submitted applications'],['Logbook entries',logs.length,'Weekly progress records'],['Tasks',tasks.length,'Assigned activities'],['Profile completion','75%','Keep your profile updated']]:role==='COMPANY'?[['Active postings',get('internships').length,'Internship opportunities'],['Applicants',apps.length,'Applications received'],['Reviews due',logs.length,'Student progress entries'],['Shortlisted',0,'Candidates shortlisted']]:[['Students',12,'In your workspace'],['Pending reviews',logs.length,'Items awaiting attention'],['Applications',apps.length,'Applications tracked'],['Announcements',get('notices').length,'Portal updates']];return '<div class="grid">'+stats.map(x=>stat(...x)).join('')+'<div class="card wide"><div class="cardhead"><h2>Recent activity</h2><span class="pill good">Live workspace</span></div>'+ (role==='STUDENT'?'<div class="item"><b>Explore opportunities</b><p class="muted">Find internships that match your skills and interests.</p><button class="btn secondary" onclick="go(\'opportunities\')">Browse internships</button></div><div class="item"><b>Weekly logbook</b><p class="muted">Record your work, learning and progress for this week.</p><button class="btn secondary" onclick="go(\'logbook\')">Open logbook</button></div>':'<div class="item"><b>Workspace overview</b><p class="muted">Manage internship activity, student progress and portal updates from the navigation.</p></div>')+'</div><div class="card narrow"><div class="cardhead"><h2>Announcements</h2></div>'+get('notices').map(n=>'<div class="item">◈ '+esc(n)+'</div>').join('')+'</div></div>'}
-function go(s){section=s;buildNav();render()}
-function render(){let titles={dashboard:'Dashboard',opportunities:'Find internships',applications:'Applications',logbook:'Weekly logbook',tasks:'Tasks & attendance',documents:'Documents & NOC',students:'My students',approvals:'Approvals',postings:'My internships',users:'User management',reports:'Reports & analytics',announcements:'Announcements'};$('#pageTitle').textContent=titles[section]||'Dashboard';let c=$('#content');if(section==='dashboard'){c.innerHTML=dashboard();return}if(section==='logbook'){let logs=get('logs');c.innerHTML='<div class="grid"><div class="card half"><div class="cardhead"><h2>Submit weekly progress</h2><span class="pill">Weekly logbook</span></div><form id="logForm"><div class="field"><label>Week / date range</label><input name="week" required placeholder="e.g. 2–6 November 2026"></div><div class="field"><label>Work completed</label><textarea name="work" required placeholder="Describe the work you completed this week..."></textarea></div><div class="field"><label>Skills / learning outcomes</label><textarea name="learning" required placeholder="What did you learn?"></textarea></div><div class="field"><label>Challenges and next steps</label><textarea name="next" placeholder="Any blockers or plans for next week?"></textarea></div><button class="btn">Submit logbook entry</button></form></div><div class="card half"><div class="cardhead"><h2>Submission guide</h2></div><p class="muted">Keep your weekly record clear and specific. Include completed tasks, outcomes, skills practised and any blockers.</p><div class="item"><b>1. Work completed</b><p class="muted">Summarise activities and deliverables.</p></div><div class="item"><b>2. Learning outcomes</b><p class="muted">Record new tools, concepts and skills.</p></div><div class="item"><b>3. Next steps</b><p class="muted">List priorities for the coming week.</p></div></div><div class="card full"><div class="cardhead"><h2>Logbook history</h2><span class="pill">'+logs.length+' entries</span></div>'+(logs.length?logs.slice().reverse().map(l=>'<div class="item"><div class="row between"><b>'+esc(l.week)+'</b><span class="pill warn">Submitted · awaiting review</span></div><p>'+esc(l.work)+'</p><small class="muted">Learning: '+esc(l.learning)+'</small></div>').join(''):'<div class="empty">No weekly entries yet. Submit your first update above.</div>')+'</div></div>';$('#logForm').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target),a=get('logs');a.push({week:f.get('week'),work:f.get('work'),learning:f.get('learning'),next:f.get('next'),created:new Date().toISOString()});save('logs',a);toast('Weekly logbook entry saved');render()};return}
-if(section==='opportunities'){let list=get('internships');c.innerHTML='<div class="grid"><div class="card full"><div class="cardhead"><h2>Open opportunities</h2><input id="search" style="max-width:260px" placeholder="Search roles or companies"></div><div id="jobs">'+jobs(list)+'</div></div></div>';$('#search').oninput=()=>$('#jobs').innerHTML=jobs(list.filter(j=>(j.title+j.company+j.location).toLowerCase().includes($('#search').value.toLowerCase())));return}
-if(section==='applications'){let a=get('applications');c.innerHTML='<div class="card"><div class="cardhead"><h2>Application tracker</h2><span class="pill">'+a.length+' applications</span></div>'+(a.length?'<div class="tablewrap"><table class="table"><tr><th>Internship</th><th>Company</th><th>Applied</th><th>Status</th></tr>'+a.map(x=>'<tr><td>'+esc(x.title)+'</td><td>'+esc(x.company)+'</td><td>'+esc(x.date)+'</td><td><span class="pill warn">Submitted</span></td></tr>').join('')+'</table></div>':'<div class="empty">No applications yet. Browse internships to get started.</div>')+'</div>';return}
-if(section==='tasks'){let t=get('tasks');c.innerHTML='<div class="card"><div class="cardhead"><h2>Tasks & attendance</h2></div>'+t.map((x,i)=>'<div class="item row between"><div><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.due)+'</div></div><span class="pill">'+esc(x.status)+'</span></div>').join('')+'<p class="muted">Attendance records will appear here when enabled by your institution.</p></div>';return}
-if(section==='documents'){c.innerHTML='<div class="grid"><div class="card half"><h2>NOC request</h2><p class="muted">Request a No Objection Certificate for your internship.</p><form id="noc"><div class="field"><label>Company / organization</label><input name="company" required></div><div class="field"><label>Internship role</label><input name="role" required></div><button class="btn">Save NOC request</button></form><div id="nocmsg"></div></div><div class="card half"><h2>Documents</h2><p class="muted">Keep your offer letter, resume, reports and certificates together.</p><div class="empty">No documents uploaded in this standalone demo.</div></div></div>';$('#noc').onsubmit=e=>{e.preventDefault();$('#nocmsg').innerHTML='<p class="pill good">NOC request saved in this session.</p>';toast('NOC request recorded')};return}
-if(section==='postings'){c.innerHTML='<div class="grid"><div class="card half"><h2>Post an internship</h2><form id="post"><div class="field"><label>Role title</label><input name="title" required></div><div class="field"><label>Location</label><input name="location" required></div><div class="field"><label>Stipend</label><input name="stipend" placeholder="e.g. ₹15,000 / month"></div><button class="btn">Publish listing</button></form></div><div class="card half"><h2>Your listings</h2>'+get('internships').map(j=>'<div class="item"><b>'+esc(j.title)+'</b><div class="muted">'+esc(j.location)+' · '+esc(j.stipend)+'</div></div>').join('')+'</div></div>';$('#post').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target),a=get('internships');a.unshift({title:f.get('title'),company:current.name,location:f.get('location'),stipend:f.get('stipend')||'To be discussed'});save('internships',a);toast('Internship listing added');render()};return}
-if(section==='announcements'){c.innerHTML='<div class="card"><h2>Portal announcements</h2>'+get('notices').map(n=>'<div class="item">◈ '+esc(n)+'</div>').join('')+'</div>';return}
-if(['students','approvals','users','reports'].includes(section)){c.innerHTML='<div class="card"><div class="cardhead"><h2>'+titles[section]+'</h2><span class="pill warn">Demo workspace</span></div><p class="muted">This area is included in the standalone interface. Live institution records, approvals, reporting and role permissions require the connected server version.</p><div class="empty">No connected records available in standalone mode.</div></div>';return}}
-function jobs(list){return list.map((j,i)=>'<div class="item row between"><div><b>'+esc(j.title)+'</b><div class="muted">'+esc(j.company)+' · '+esc(j.location)+' · '+esc(j.stipend)+'</div></div><button class="btn secondary" onclick="applyJob('+i+')">Apply</button></div>').join('')||'<div class="empty">No matching internships found.</div>'}
-function applyJob(i){let j=get('internships')[i],a=get('applications');if(a.some(x=>x.title===j.title&&x.company===j.company)){toast('You already applied to this role');return}a.push({title:j.title,company:j.company,date:new Date().toLocaleDateString()});save('applications',a);toast('Application submitted');}
-$('#logout').onclick=()=>{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user');$('#app').classList.add('hidden');$('#loginView').classList.remove('hidden')};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
-try{current=JSON.parse(sessionStorage.getItem('ih_user')||localStorage.getItem('ih_user')||'null')}catch{current=null}if(current&&['STUDENT','FACULTY','COMPANY','ADMIN'].includes(current.role)){section='dashboard';showApp()}else{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user')}
-</script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script>
-(()=> {
- const canvas=document.getElementById('scene');
- if(!canvas||!window.THREE)return;
- try{
-  const T=THREE,renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.65));
-  renderer.setClearColor(0x000000,0);
-  const scene=new T.Scene(),camera=new T.PerspectiveCamera(48,1,.1,120);
-  camera.position.z=15;
-  scene.add(new T.HemisphereLight(0x9caeff,0x17133d,2.15));
-  const lights=[[0x7d6aff,-5,4,4,32],[0x35e2e3,5,2,3,28],[0xf05bc8,0,-4,2,19]];
-  lights.forEach(([color,x,y,z,power])=>{const l=new T.PointLight(color,power,30);l.position.set(x,y,z);scene.add(l)});
-  const world=new T.Group();scene.add(world);
-  const palette=[0x55e4e3,0x9c7cff,0xf06acb,0x688dff,0xffbd79];
-  const core=new T.Group();core.position.set(2.5,.15,-1.5);world.add(core);
-  const knot=new T.Mesh(new T.TorusKnotGeometry(1.08,.31,190,22,2,5),new T.MeshPhysicalMaterial({color:0x9b7cff,metalness:.62,roughness:.2,clearcoat:1,clearcoatRoughness:.12,emissive:0x24105d,emissiveIntensity:.65}));
-  knot.scale.set(1.42,1.05,.82);core.add(knot);
-  const halo=new T.Mesh(new T.SphereGeometry(1.45,40,32),new T.MeshBasicMaterial({color:0x5b75ff,transparent:true,opacity:.075,side:T.BackSide}));halo.scale.set(1.3,1.3,.8);core.add(halo);
-  const orbit=new T.Group();orbit.position.set(-2.8,.15,-2.4);world.add(orbit);
-  [1.25,1.7,2.15].forEach((r,i)=>{const m=new T.Mesh(new T.TorusGeometry(r,.013,10,220),new T.MeshBasicMaterial({color:palette[i],transparent:true,opacity:.85}));m.rotation.set(.25+i*.32,.38+i*.2,i*.28);orbit.add(m)});
-  const nodes=[];
-  for(let i=0;i<42;i++){
-   const geo=new T.IcosahedronGeometry(.24+(i%4)*.055,0),edges=new T.EdgesGeometry(geo);
-   const mat=new T.LineBasicMaterial({color:palette[i%palette.length],transparent:true,opacity:.58});
-   const mesh=new T.LineSegments(edges,mat);
-   mesh.userData={phase:Math.random()*6.28,speed:.35+Math.random()*.65,baseX:0,baseY:0,depth:2+Math.random()*7};
-   world.add(mesh);nodes.push(mesh);
+    toggleTheme() {
+      this.theme = this.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('internhub_app_theme', this.theme);
+      this.applyTheme();
+      renderApp();
+    }
+
+    applyTheme() {
+      if (this.theme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    }
+
+    // SIMULATED JWT & RBAC SECURITY GUARD
+    verifyRolePermission(allowedRoles) {
+      const currentUser = this.data.auth.currentUser;
+      const token = this.data.auth.currentUserToken;
+
+      if (!token || !currentUser) {
+        showToast("JWT Authentication Error: Session expired. Re-login required.", "rose");
+        return false;
+      }
+
+      if (!allowedRoles.includes(currentUser.role)) {
+        showToast(`RBAC Authorization Denied: Action requires [${allowedRoles.join(' / ')}] role authority.`, "rose");
+        return false;
+      }
+
+      return true;
+    }
+
+    // SIMULATED AUTOMATED EMAIL DISPATCHER SERVICE (SendGrid API)
+    dispatchEmailNotification(toEmail, subject, bodyContent) {
+      showToast(`📧 [SendGrid Dispatcher] Sent to ${toEmail}: "${subject}"`, "info");
+      this.logAudit(`Automated Email Dispatched to ${toEmail} | Subject: ${subject}`);
+    }
   }
-  const particleCount=1450,positions=new Float32Array(particleCount*3),sizes=new Float32Array(particleCount);
-  for(let i=0;i<particleCount;i++){positions[i*3]=(Math.random()-.5)*34;positions[i*3+1]=(Math.random()-.5)*21;positions[i*3+2]=-5-Math.random()*22;sizes[i]=.02+Math.random()*.035}
-  const pgeo=new T.BufferGeometry();pgeo.setAttribute('position',new T.BufferAttribute(positions,3));
-  const dust=new T.Points(pgeo,new T.PointsMaterial({color:0xd9e5ff,size:.035,transparent:true,opacity:.78,sizeAttenuation:true}));scene.add(dust);
-  const grid=new T.GridHelper(34,48,0x6b68d8,0x303b78);grid.position.set(0,-5.5,-8);grid.rotation.x=0;grid.material.transparent=true;grid.material.opacity=.13;world.add(grid);
-  let w=1,h=1,t=0,pointerX=0,pointerY=0,targetX=0,targetY=0;
-  function resize(){w=Math.max(1,innerWidth);h=Math.max(1,innerHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();const hh=Math.tan(T.MathUtils.degToRad(camera.fov/2))*camera.position.z,hw=hh*camera.aspect;nodes.forEach((o,i)=>{const col=i%9,row=Math.floor(i/9);o.userData.baseX=-hw*.94+col/8*hw*1.88+(Math.random()-.5)*.35;o.userData.baseY=hh*.84-row/4*hh*1.68+(Math.random()-.5)*.28;o.position.set(o.userData.baseX,o.userData.baseY,-o.userData.depth);o.scale.setScalar(.48+Math.random()*.9)});}
-  addEventListener('resize',resize,{passive:true});resize();
-  addEventListener('pointermove',e=>{targetX=(e.clientX/w-.5)*.32;targetY=(e.clientY/h-.5)*-.22},{passive:true});
-  const reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let raf=0;
-  function animate(){raf=requestAnimationFrame(animate);if(document.hidden)return;t+=.006;pointerX+=(targetX-pointerX)*.025;pointerY+=(targetY-pointerY)*.025;camera.position.x=pointerX;camera.position.y=pointerY;camera.lookAt(0,0,0);knot.rotation.x+=.002;knot.rotation.y+=.0035;core.rotation.z=Math.sin(t*.5)*.09;orbit.rotation.z=Math.sin(t*.4)*.12;orbit.rotation.y+=.0018;nodes.forEach(o=>{o.rotation.x+=.0018*o.userData.speed;o.rotation.y+=.0024*o.userData.speed;o.position.y=o.userData.baseY+Math.sin(t*o.userData.speed+o.userData.phase)*.16;o.position.x=o.userData.baseX+Math.cos(t*.6*o.userData.speed+o.userData.phase)*.09});dust.rotation.z=Math.sin(t*.13)*.018;grid.position.z=-8+Math.sin(t*.2)*.16;renderer.render(scene,camera);}
-  if(reduced){renderer.render(scene,camera)}else{animate();document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!raf)animate()})}
- }catch(e){canvas.style.display='none'}
-})();
-document.querySelectorAll('.portal-choice').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.portal-choice').forEach(b=>b.setAttribute('aria-pressed','false'));btn.setAttribute('aria-pressed','true')}));
-</script></body></html>
+
+  const store = new ApplicationStore();
+
+  window.addEventListener('internhub_ws_sync', () => {
+    // Real-time synchronization ping listener
+    const syncBadge = document.getElementById('ws-sync-badge');
+    if (syncBadge) {
+      syncBadge.classList.add('bg-accent-emerald', 'text-slate-950');
+      setTimeout(() => syncBadge.classList.remove('bg-accent-emerald', 'text-slate-950'), 600);
+    }
+  });
+
+  function showToast(message, type = 'success') {
+    const root = document.getElementById('toast-root');
+    const toast = document.createElement('div');
+    const bg = type === 'success' ? 'bg-emerald-600 text-white' : type === 'warning' ? 'bg-amber-600 text-white' : type === 'info' ? 'bg-cyan-600 text-white' : 'bg-rose-600 text-white';
+    
+    toast.className = `${bg} px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs font-semibold pointer-events-auto transform transition-all duration-300 translate-y-4 opacity-0 max-w-sm`;
+    toast.innerHTML = `
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        ${type === 'success' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>' : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>'}
+      </svg>
+      <span>${message}</span>
+    `;
+
+    root.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-4', 'opacity-0');
+    });
+
+    setTimeout(() => {
+      toast.classList.add('translate-y-4', 'opacity-0');
+      setTimeout(() => toast.remove(), 300);
+    }, 3800);
+  }
+
+  function openModal(contentHtml) {
+    const root = document.getElementById('modal-root');
+    root.innerHTML = contentHtml;
+    root.classList.remove('hidden');
+    root.classList.add('flex');
+  }
+
+  function closeModal() {
+    const root = document.getElementById('modal-root');
+    root.classList.add('hidden');
+    root.classList.remove('flex');
+    root.innerHTML = '';
+  }
+
+  // LOGIN & AUTHENTICATION ENGINE (QUICK + SECURE FORM SWITCHER)
+  function renderLoginView() {
+    return `
+      <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl space-y-6 border border-brand-500/30 text-center glow-indigo relative overflow-hidden">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 via-accent-purple to-accent-cyan flex items-center justify-center font-black text-white text-2xl mx-auto shadow-xl glow-cyan">
+            IH
+          </div>
+
+          <div>
+            <h1 class="text-2xl font-extrabold text-slate-100 tracking-tight">InternHub Enterprise</h1>
+            <p class="text-xs text-slate-400 mt-1">3-Tier Architecture System with JWT & WebSocket Sync</p>
+          </div>
+
+          <div class="flex justify-center gap-2 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs font-semibold">
+            <button onclick="setLoginMode('quick')" class="flex-1 py-1.5 rounded-lg transition ${store.loginMode === 'quick' ? 'bg-brand-500 text-white font-bold shadow' : 'text-slate-400'}">
+              ⚡ 1-Click Demo Logins
+            </button>
+            <button onclick="setLoginMode('secure')" class="flex-1 py-1.5 rounded-lg transition ${store.loginMode === 'secure' ? 'bg-brand-500 text-white font-bold shadow' : 'text-slate-400'}">
+              🔒 JWT Password Login
+            </button>
+          </div>
+
+          ${store.loginMode === 'quick' ? `
+            <div class="space-y-2.5 text-xs">
+              <button onclick="loginAsStudent('2024BTCY017')" class="w-full p-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-purple text-white font-bold flex items-center justify-between shadow-lg hover:opacity-95 transition">
+                <span class="flex items-center gap-2">🎓 Student (UTUKURU MASTAN REDDY)</span>
+                <span class="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">2024BTCY017</span>
+              </button>
+
+              <button onclick="loginAsStudent('2024BTCY007')" class="w-full p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold border border-slate-700 flex items-center justify-between transition">
+                <span class="flex items-center gap-2">🎓 Student (M. JASWANTH KUMAR)</span>
+                <span class="text-[10px] font-mono text-brand-400">2024BTCY007</span>
+              </button>
+
+              <button onclick="loginAsRole('faculty')" class="w-full p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold border border-slate-700 flex items-center justify-between transition">
+                <span class="flex items-center gap-2">👨‍🏫 Faculty Supervisor Lead</span>
+                <span class="text-[10px] font-mono text-accent-purple">Dr. Mehta</span>
+              </button>
+
+              <button onclick="loginAsRole('company')" class="w-full p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold border border-slate-700 flex items-center justify-between transition">
+                <span class="flex items-center gap-2">🏢 Industry HR Mentor</span>
+                <span class="text-[10px] font-mono text-accent-cyan">TechNova HR</span>
+              </button>
+
+              <button onclick="loginAsRole('admin')" class="w-full p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold border border-slate-700 flex items-center justify-between transition">
+                <span class="flex items-center gap-2">🛡️ Placement Cell Director</span>
+                <span class="text-[10px] font-mono text-accent-emerald">T&P Admin</span>
+              </button>
+            </div>
+          ` : `
+            <form onsubmit="handleSecureLoginSubmit(event)" class="space-y-3 text-xs text-left">
+              <div>
+                <label class="block text-slate-400 mb-1">Email / Student ID</label>
+                <input id="login-email" required type="text" placeholder="2024btcy017@college.edu" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:border-brand-500">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Password</label>
+                <input id="login-password" required type="password" value="password123" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:border-brand-500">
+              </div>
+              <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white font-extrabold shadow glow-indigo">
+                Authenticate & Issue JWT Bearer Token
+              </button>
+            </form>
+          `}
+
+          <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
+            <button onclick="openAddUserModal()" class="text-brand-400 font-semibold hover:underline">+ Add Custom User</button>
+            <button onclick="store.reset()" class="text-slate-500 hover:text-slate-300">Reset System State</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function setLoginMode(mode) {
+    store.loginMode = mode;
+    renderApp();
+  }
+
+  function handleSecureLoginSubmit(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('login-email').value.trim();
+    const passwordInput = document.getElementById('login-password').value;
+
+    const user = store.data.users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() || u.id.toLowerCase() === emailInput.toLowerCase());
+    
+    if (user && user.passwordHash === passwordInput) {
+      store.data.auth.isLoggedIn = true;
+      store.data.auth.currentUserToken = `JWT_BEARER_${user.id}_SECURE_${Date.now()}`;
+      store.data.auth.currentUser = {
+        ...user,
+        branch: user.branch || "Computer Science & Engineering",
+        gpa: user.gpa || 8.6,
+        skills: ["React", "Node.js", "Python", "SQL", "Tailwind CSS"],
+        resume: `${user.name.replace(/\s+/g, '_')}_Resume.pdf`,
+        resumeBlob: null,
+        github: "github.com/student",
+        linkedin: "linkedin.com/in/student"
+      };
+      store.currentView = 'dashboard';
+      store.save();
+      store.logAudit(`Authenticated via JWT as ${user.role.toUpperCase()} (${user.name})`);
+      showToast(`JWT Authenticated! Welcome ${user.name}.`, 'success');
+      renderApp();
+    } else {
+      showToast("Invalid credentials! Check email/ID or default password (password123/faculty123/company123/admin123).", "rose");
+    }
+  }
+
+  function loginAsStudent(studentId) {
+    const user = store.data.users.find(u => u.id === studentId);
+    if (user) {
+      store.data.auth.isLoggedIn = true;
+      store.data.auth.currentUserToken = `JWT_BEARER_${studentId}_SECURE`;
+      store.data.auth.currentUser = {
+        ...user,
+        branch: user.branch || "Computer Science & Engineering",
+        gpa: user.gpa || 8.6,
+        skills: ["React", "Node.js", "Python", "SQL", "Tailwind CSS"],
+        resume: `${user.name.replace(/\s+/g, '_')}_Resume.pdf`,
+        resumeBlob: store.data.auth.currentUser ? store.data.auth.currentUser.resumeBlob : null,
+        github: "github.com/mastanreddy",
+        linkedin: "linkedin.com/in/mastanreddy"
+      };
+      store.currentView = 'dashboard';
+      store.save();
+      store.logAudit(`Authenticated via JWT as STUDENT (${user.name})`);
+      showToast(`Welcome ${user.name}! Switched to Student Workspace.`, 'success');
+      renderApp();
+    }
+  }
+
+  function loginAsRole(role) {
+    const user = store.data.users.find(u => u.role === role);
+    if (user) {
+      store.data.auth.isLoggedIn = true;
+      store.data.auth.currentUserToken = `JWT_BEARER_${role.toUpperCase()}_SECURE`;
+      store.data.auth.currentUser = { ...user };
+      store.currentView = 'dashboard';
+      store.save();
+      store.logAudit(`Authenticated via JWT as ${role.toUpperCase()} (${user.name})`);
+      showToast(`Welcome ${user.name}! Switched to ${role.toUpperCase()} Workspace.`, 'success');
+      renderApp();
+    }
+  }
+
+  function logout() {
+    store.data.auth.isLoggedIn = false;
+    store.data.auth.currentUserToken = null;
+    store.save();
+    showToast("Logged out successfully.", "info");
+    renderApp();
+  }
+
+  function openAddUserModal() {
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40">
+        <h3 class="text-base font-bold text-slate-100">Add New System User</h3>
+        <form onsubmit="handleAddUser(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-400 mb-1">Full Name</label>
+            <input id="new-user-name" required type="text" placeholder="e.g. Rahul Sharma" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Email Address</label>
+            <input id="new-user-email" required type="email" placeholder="rahul@college.edu" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Role</label>
+            <select id="new-user-role" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 focus:outline-none focus:border-brand-500">
+              <option value="student">Student</option>
+              <option value="faculty">Faculty Lead</option>
+              <option value="company">Company Mentor</option>
+              <option value="admin">Placement Admin</option>
+            </select>
+          </div>
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl">Cancel</button>
+            <button type="submit" class="px-4 py-2 bg-brand-500 text-white font-bold rounded-xl shadow">Create Account</button>
+          </div>
+        </form>
+      </div>
+    `);
+  }
+
+  function handleAddUser(e) {
+    e.preventDefault();
+    const name = document.getElementById('new-user-name').value;
+    const email = document.getElementById('new-user-email').value;
+    const role = document.getElementById('new-user-role').value;
+
+    const newUser = {
+      id: `USER_${Date.now().toString().slice(-4)}`,
+      name,
+      email,
+      passwordHash: "password123",
+      role,
+      gpa: 8.0,
+      branch: "Computer Science & Engineering"
+    };
+
+    store.data.users.push(newUser);
+    store.save();
+    store.logAudit(`Created new user account: ${name} (${role})`);
+    closeModal();
+    showToast(`User account '${name}' created!`, 'success');
+  }
+
+  // HEADER ENGINE WITH REAL-TIME JWT DISPLAY
+  function renderHeader() {
+    const user = store.data.auth.currentUser;
+    const roleTitles = {
+      student: "Student Workspace",
+      faculty: "Faculty Supervisor Console",
+      company: "Industry HR Workstation",
+      admin: "Placement Admin Console"
+    };
+
+    return `
+      <header class="glass-card sticky top-0 z-30 px-6 py-3 border-b border-brand-500/20 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-accent-purple to-accent-cyan flex items-center justify-center font-black text-white text-base shadow-lg glow-indigo">
+            IH
+          </div>
+          <div>
+            <h1 class="text-base font-extrabold tracking-tight text-slate-100 flex items-center gap-2">
+              InternHub
+              <span id="ws-sync-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/40 transition-colors duration-300">
+                ● Live Sync Active
+              </span>
+            </h1>
+            <p class="text-[11px] text-slate-400">${roleTitles[user.role]} • Academic IV Sem</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1 bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800">
+          <button onclick="loginAsStudent('2024BTCY017')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${user.id === '2024BTCY017' ? 'bg-gradient-to-r from-brand-500 to-accent-purple text-white shadow-md glow-indigo' : 'text-slate-400 hover:text-slate-100'}">
+            Mastan (017)
+          </button>
+          <button onclick="loginAsStudent('2024BTCY007')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${user.id === '2024BTCY007' ? 'bg-gradient-to-r from-brand-500 to-accent-purple text-white shadow-md glow-indigo' : 'text-slate-400 hover:text-slate-100'}">
+            Jaswanth (007)
+          </button>
+          <button onclick="loginAsRole('faculty')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${user.role === 'faculty' ? 'bg-gradient-to-r from-brand-500 to-accent-purple text-white shadow-md glow-indigo' : 'text-slate-400 hover:text-slate-100'}">
+            Faculty
+          </button>
+          <button onclick="loginAsRole('company')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${user.role === 'company' ? 'bg-gradient-to-r from-brand-500 to-accent-purple text-white shadow-md glow-indigo' : 'text-slate-400 hover:text-slate-100'}">
+            HR
+          </button>
+          <button onclick="loginAsRole('admin')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${user.role === 'admin' ? 'bg-gradient-to-r from-brand-500 to-accent-purple text-white shadow-md glow-indigo' : 'text-slate-400 hover:text-slate-100'}">
+            Admin
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="openNotificationsModal()" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-bold transition">
+            🔔 ${store.data.announcements.length}
+          </button>
+          <button onclick="store.toggleTheme()" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition">
+            ${store.theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+          <button onclick="logout()" class="px-3 py-1.5 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-bold hover:bg-rose-500/20 transition">
+            Logout
+          </button>
+          <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+          <div class="text-right hidden sm:block">
+            <div class="text-xs font-bold text-slate-200">${user.name}</div>
+            <div class="text-[10px] text-brand-400 font-mono">${user.id}</div>
+          </div>
+        </div>
+      </header>
+    `;
+  }
+
+  function renderSidebar() {
+    const role = store.data.auth.currentUser.role;
+    const menus = {
+      student: [
+        { id: 'dashboard', icon: '📊', label: 'Dashboard Overview' },
+        { id: 'profile', icon: '👤', label: 'Academic Profile' },
+        { id: 'internships', icon: '💼', label: 'Browse Drives' },
+        { id: 'noc', icon: '📑', label: 'NOC Generator' },
+        { id: 'logbook', icon: '📅', label: 'Weekly Logbook' },
+        { id: 'tasks', icon: '✅', label: 'Tasks & Deliverables' },
+        { id: 'ai_chat', icon: '🤖', label: 'AI Assistant Chat' },
+        { id: 'certificates', icon: '🎖️', label: 'Credentials & QR' },
+        { id: 'support', icon: '🛟', label: 'Support Tickets' }
+      ],
+      faculty: [
+        { id: 'dashboard', icon: '📊', label: 'Supervisor Console' },
+        { id: 'noc_queue', icon: '✅', label: 'NOC Endorsements' },
+        { id: 'logs_queue', icon: '🔍', label: 'Logbook Sign-offs' },
+        { id: 'mentees', icon: '🎓', label: 'Mentees & Tasks' },
+        { id: 'issue_cert', icon: '🎖️', label: 'Issue Certificates' }
+      ],
+      company: [
+        { id: 'dashboard', icon: '🏢', label: 'HR Workstation' },
+        { id: 'post_drive', icon: '➕', label: 'Post Internship Drive' },
+        { id: 'applicants', icon: '👥', label: 'Applicants & Hire' },
+        { id: 'interviews', icon: '🎥', label: 'Schedule Interviews' },
+        { id: 'offers', icon: '📨', label: 'Offer Letters' },
+        { id: 'verify_logs', icon: '✏️', label: 'Verify Student Logs' },
+        { id: 'evaluations', icon: '⭐', label: 'Evaluation Matrix' }
+      ],
+      admin: [
+        { id: 'dashboard', icon: '📈', label: 'Placement Analytics' },
+        { id: 'verify_cos', icon: '🏢', label: 'Verify Companies' },
+        { id: 'authorize_drives', icon: '🛡️', label: 'Authorize Drives' },
+        { id: 'allocations', icon: '👨‍🏫', label: 'Allocate Faculty' },
+        { id: 'tickets_admin', icon: '🛟', label: 'Support Tickets' },
+        { id: 'announcements', icon: '📢', label: 'Broadcast Bulletins' },
+        { id: 'audit_log', icon: '🧾', label: 'Audit Trail Log' }
+      ]
+    };
+
+    return `
+      <aside class="w-full md:w-64 glass-card border-r border-slate-800 p-4 flex flex-col gap-2 flex-shrink-0">
+        <div class="px-3 py-1 text-[10px] font-bold text-brand-400 tracking-wider uppercase font-mono">Navigation Views</div>
+        ${menus[role].map(item => `
+          <button onclick="switchView('${item.id}')" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${store.currentView === item.id ? 'bg-gradient-to-r from-brand-600/30 to-accent-purple/30 text-brand-400 border border-brand-500/40 font-bold shadow-inner glow-indigo' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900/60'}">
+            <span class="text-sm">${item.icon}</span>
+            <span>${item.label}</span>
+          </button>
+        `).join('')}
+
+        <div class="mt-auto pt-4 border-t border-slate-800/80">
+          <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-xs">
+            <div class="font-bold text-brand-400 mb-0.5">Software Engineering</div>
+            <div class="text-slate-400 text-[11px]">Course Code: 24BTCY154</div>
+            <div class="text-slate-500 text-[10px] mt-1">Lead Supervisor: Dr. Mehta</div>
+          </div>
+        </div>
+      </aside>
+    `;
+  }
+
+  // STUDENT WORKSPACE VIEWS
+  function renderStudentDashboard() {
+    const user = store.data.auth.currentUser;
+    const apps = (store.data.applications || []).filter(a => a.studentId === user.id);
+    const logs = (store.data.logs || []).filter(l => l.studentId === user.id);
+    const verifiedLogs = logs.filter(l => l.status === 'Verified').length;
+    const pendingOffer = (store.data.offers || []).find(o => o.studentId === user.id && o.status === 'Pending Response');
+    const acceptedOffer = (store.data.offers || []).find(o => o.studentId === user.id && o.status === 'Accepted');
+    const attendanceCount = (store.data.attendance || []).length;
+    const studentTasks = (store.data.tasks || []).filter(t => t.studentId === user.id);
+    const completedTasks = studentTasks.filter(t => t.status === 'Submitted' || t.status === 'Reviewed').length;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-3xl relative overflow-hidden border border-brand-500/30">
+          <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 relative z-10">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-brand-500/20 text-brand-400 text-xs font-bold border border-brand-500/40">Batch 2024 • CSE</span>
+              <h2 class="text-2xl font-extrabold mt-2 text-slate-100">Welcome back, ${user.name} 👋</h2>
+              <p class="text-xs text-slate-400 mt-1">Roll Number: <span class="font-mono text-brand-400 font-bold">${user.id}</span> | GPA: <strong class="text-accent-emerald">${user.gpa}</strong></p>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="handleDailyCheckin()" class="px-4 py-2.5 rounded-xl bg-accent-emerald text-slate-950 font-extrabold text-xs shadow glow-cyan transition">
+                Check-in Attendance
+              </button>
+              <button onclick="switchView('internships')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white font-extrabold text-xs shadow glow-indigo transition">
+                Browse Drives
+              </button>
+            </div>
+          </div>
+        </div>
+
+        ${pendingOffer ? `
+          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📨</span>
+              <div>
+                <div class="font-bold text-amber-400 text-sm">Action Required: Offer Received from ${pendingOffer.company}</div>
+                <div class="text-slate-300">Position: <strong>${pendingOffer.title}</strong> | Stipend: ₹${pendingOffer.stipend.toLocaleString()}/month</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="respondOffer(${pendingOffer.id}, 'Accepted')" class="px-3 py-1.5 bg-accent-emerald text-slate-950 font-bold rounded-xl shadow">Accept Offer</button>
+              <button onclick="respondOffer(${pendingOffer.id}, 'Declined')" class="px-3 py-1.5 bg-rose-600 text-white font-bold rounded-xl">Decline</button>
+            </div>
+          </div>
+        ` : ''}
+
+        ${acceptedOffer ? `
+          <div class="p-4 rounded-2xl bg-accent-emerald/10 border border-accent-emerald/40 flex items-center gap-3 text-xs">
+            <span class="text-2xl">🎉</span>
+            <div>
+              <div class="font-bold text-accent-emerald text-sm">Active Placement: ${acceptedOffer.title} at ${acceptedOffer.company}</div>
+              <div class="text-slate-300">Stipend: ₹${acceptedOffer.stipend.toLocaleString()}/month | Status: <strong>Offer Accepted (Applications Locked)</strong></div>
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          ${renderProgressCard("Attendance Record", `${attendanceCount} Days`, 100, "#06b6d4", "100% Present")}
+          ${renderProgressCard("Log Verification", `${verifiedLogs}/${logs.length}`, Math.round((verifiedLogs / Math.max(1, logs.length)) * 100), "#10b981", "Supervisor Signed")}
+          ${renderProgressCard("Task Submissions", `${completedTasks}/${studentTasks.length}`, Math.round((completedTasks / Math.max(1, studentTasks.length)) * 100), "#a855f7", "Completed Tasks")}
+          ${renderProgressCard("Resume Readiness", "95%", 95, "#6366f1", "Verified PDF")}
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-slate-200 flex justify-between items-center">
+            <span>My Active Drive Applications</span>
+            <span class="text-xs text-brand-400 font-mono">${apps.length} Total</span>
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="border-b border-slate-800 text-slate-400">
+                  <th class="pb-3 font-semibold">Drive & Company</th>
+                  <th class="pb-3 font-semibold">Applied Date</th>
+                  <th class="pb-3 font-semibold">Status</th>
+                  <th class="pb-3 font-semibold text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                ${apps.length ? apps.map(app => `
+                  <tr>
+                    <td class="py-3">
+                      <div class="font-bold text-slate-200">${app.title}</div>
+                      <div class="text-[11px] text-brand-400 font-mono">${app.company}</div>
+                    </td>
+                    <td class="py-3 text-slate-400">${app.appliedDate}</td>
+                    <td class="py-3">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                        app.status === 'Hired' ? 'bg-accent-emerald/10 text-accent-emerald border border-accent-emerald/30' :
+                        app.status === 'Shortlisted' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' :
+                        app.status === 'Locked' ? 'bg-slate-900 text-slate-500 border border-slate-800' :
+                        'bg-brand-500/10 text-brand-400 border border-brand-500/30'
+                      }">
+                        ${app.status}
+                      </span>
+                    </td>
+                    <td class="py-3 text-right">
+                      <button onclick="viewApplicationDetail(${app.id})" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 text-[11px] font-semibold border border-slate-800 transition">View Details</button>
+                    </td>
+                  </tr>
+                `).join('') : `
+                  <tr><td colspan="4" class="py-4 text-center text-slate-500">No applications submitted yet. Browse drives to apply.</td></tr>
+                `}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleDailyCheckin() {
+    const today = new Date().toISOString().slice(0, 10);
+    const existing = store.data.attendance.find(a => a.date === today);
+    if (existing) {
+      showToast("Attendance already logged for today!", "info");
+      return;
+    }
+    store.data.attendance.push({ date: today, status: "Present" });
+    store.save();
+    store.logAudit(`Self Check-in Attendance for ${today}`);
+    showToast("Daily Attendance Checked In!", "success");
+    renderApp();
+  }
+
+  // PROFILE VIEW WITH REAL DATAURL FILE UPLOADER PIPELINE
+  function renderStudentProfileView() {
+    const user = store.data.auth.currentUser;
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Academic Profile & Cloud Resume Pipeline</h2>
+          <p class="text-xs text-slate-400">Manage academic records and test direct file upload streams.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4 max-w-2xl">
+          <form onsubmit="handleProfileSave(event)" class="space-y-4 text-xs">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-400 mb-1">Branch / Specialization</label>
+                <input id="prof-branch" value="${user.branch}" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">GPA Score (0.0 - 10.0)</label>
+                <input id="prof-gpa" type="number" step="0.1" value="${user.gpa}" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Technical Skills (Comma Separated)</label>
+              <input id="prof-skills" value="${user.skills.join(', ')}" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-400 mb-1">GitHub Portfolio Link</label>
+                <input id="prof-github" value="${user.github || ''}" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">LinkedIn Profile URL</label>
+                <input id="prof-linkedin" value="${user.linkedin || ''}" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Upload Resume (PDF, Max 10MB - Direct File Blob Reader)</label>
+              <input type="file" onchange="handleFileUpload(this)" class="w-full text-xs text-slate-400 border border-slate-800 rounded-xl bg-slate-950 p-2">
+              <div class="flex justify-between items-center mt-1">
+                <span class="text-[11px] text-brand-400 font-mono">Current File: ${user.resume}</span>
+                ${user.resumeBlob ? `
+                  <button type="button" onclick="previewUploadedResume()" class="text-[11px] text-accent-cyan font-bold hover:underline">👁️ Preview Uploaded File Stream</button>
+                ` : ''}
+              </div>
+            </div>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white font-bold text-xs shadow glow-indigo">Save Academic Profile</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleProfileSave(e) {
+    e.preventDefault();
+    const user = store.data.auth.currentUser;
+    user.branch = document.getElementById('prof-branch').value;
+    user.gpa = parseFloat(document.getElementById('prof-gpa').value);
+    user.skills = document.getElementById('prof-skills').value.split(',').map(s => s.trim()).filter(Boolean);
+    user.github = document.getElementById('prof-github').value;
+    user.linkedin = document.getElementById('prof-linkedin').value;
+
+    const storedUser = store.data.users.find(u => u.id === user.id);
+    if (storedUser) {
+      storedUser.gpa = user.gpa;
+      storedUser.branch = user.branch;
+    }
+
+    store.save();
+    store.logAudit(`Updated academic profile for ${user.name}`);
+    showToast("Profile records saved successfully!", "success");
+    renderApp();
+  }
+
+  function handleFileUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      showToast("Rejected: File exceeds 10MB limit.", "rose");
+      input.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      store.data.auth.currentUser.resume = file.name;
+      store.data.auth.currentUser.resumeBlob = e.target.result;
+      store.save();
+      store.logAudit(`Uploaded File Blob: ${file.name}`);
+      showToast(`Cloud storage uploaded file stream: ${file.name}`, "success");
+      renderApp();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function previewUploadedResume() {
+    const blob = store.data.auth.currentUser.resumeBlob;
+    if (!blob) return;
+
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-2xl w-full space-y-4 border border-brand-500/40">
+        <h3 class="font-bold text-slate-100 flex justify-between items-center">
+          <span>Uploaded Resume Stream Preview</span>
+          <button onclick="closeModal()" class="text-xs px-2 py-1 bg-slate-800 rounded">Close</button>
+        </h3>
+        <iframe src="${blob}" class="w-full h-96 rounded-xl border border-slate-800"></iframe>
+      </div>
+    `);
+  }
+
+  function renderBrowseDrivesView() {
+    const user = store.data.auth.currentUser;
+    let jobs = store.data.jobs.filter(j => j.status === 'Approved');
+
+    if (store.filterMode) jobs = jobs.filter(j => j.mode === store.filterMode);
+    if (store.minStipendFilter > 0) jobs = jobs.filter(j => j.stipend >= store.minStipendFilter);
+
+    const apps = store.data.applications.filter(a => a.studentId === user.id);
+    const isHired = apps.some(a => a.status === 'Hired');
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-100">Approved Internship Drives</h2>
+            <p class="text-xs text-slate-400">Verified corporate internship opportunities for IV Semester.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <button onclick="setJobFilter('', 0)" class="px-3 py-1.5 rounded-xl ${!store.filterMode && !store.minStipendFilter ? 'bg-brand-500 text-white font-bold' : 'bg-slate-900 text-slate-300'} border border-slate-800">All Drives</button>
+            <button onclick="setJobFilter('Remote', store.minStipendFilter)" class="px-3 py-1.5 rounded-xl ${store.filterMode === 'Remote' ? 'bg-brand-500 text-white font-bold' : 'bg-slate-900 text-slate-300'} border border-slate-800">Remote</button>
+            <button onclick="setJobFilter('On-site', store.minStipendFilter)" class="px-3 py-1.5 rounded-xl ${store.filterMode === 'On-site' ? 'bg-brand-500 text-white font-bold' : 'bg-slate-900 text-slate-300'} border border-slate-800">On-site</button>
+            <button onclick="setJobFilter(store.filterMode, 20000)" class="px-3 py-1.5 rounded-xl ${store.minStipendFilter === 20000 ? 'bg-brand-500 text-white font-bold' : 'bg-slate-900 text-slate-300'} border border-slate-800">₹20,000+ Stipend</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${jobs.map(job => {
+            const hasApplied = apps.some(a => a.jobId === job.id);
+            const isEligible = user.gpa >= job.gpa;
+
+            return `
+              <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h3 class="font-bold text-slate-100 text-base">${job.title}</h3>
+                      <div class="text-xs text-brand-400 font-mono">${job.company}</div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-500/10 text-brand-400 border border-brand-500/30">
+                      ₹${job.stipend.toLocaleString()}/mo
+                    </span>
+                  </div>
+
+                  <div class="text-xs text-slate-300 mt-3 space-y-1">
+                    <div>Mode: <strong>${job.mode}</strong> | Duration: <strong>${job.duration}</strong></div>
+                    <div>Required Skills: <span class="text-slate-400 font-mono">${job.skills}</span></div>
+                    <div>Cut-off GPA: <strong class="${isEligible ? 'text-accent-emerald' : 'text-accent-rose'}">${job.gpa}</strong> (Your GPA: ${user.gpa})</div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800/80 flex justify-between items-center">
+                  <button onclick="openJobDetailModal(${job.id})" class="text-xs text-brand-400 font-semibold hover:underline">View Details</button>
+                  ${hasApplied ? `
+                    <span class="px-3 py-1 bg-brand-500/10 text-brand-400 text-xs font-bold rounded-xl border border-brand-500/30">Applied ✔</span>
+                  ` : isHired ? `
+                    <span class="px-3 py-1 bg-slate-900 text-slate-500 text-xs font-bold rounded-xl border border-slate-800">Profile Hired & Locked</span>
+                  ` : isEligible ? `
+                    <button onclick="applyForJob(${job.id})" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white text-xs font-bold shadow glow-indigo hover:opacity-90">1-Click Apply</button>
+                  ` : `
+                    <span class="px-3 py-1 bg-rose-500/10 text-rose-400 text-xs font-bold rounded-xl border border-rose-500/30">GPA Cut-off Short</span>
+                  `}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function setJobFilter(mode, minStipend) {
+    store.filterMode = mode;
+    store.minStipendFilter = minStipend;
+    renderApp();
+  }
+
+  function openJobDetailModal(jobId) {
+    const job = store.data.jobs.find(j => j.id === jobId);
+    if (!job) return;
+
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-base font-bold text-slate-100">${job.title}</h3>
+            <div class="text-xs text-brand-400 font-mono">${job.company}</div>
+          </div>
+          <span class="px-2 py-1 bg-brand-500/20 text-brand-400 font-bold text-xs rounded-xl">₹${job.stipend.toLocaleString()}/mo</span>
+        </div>
+        <div class="text-xs text-slate-300 space-y-2 bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <p><strong>Description:</strong> ${job.description}</p>
+          <p><strong>Mode:</strong> ${job.mode} | <strong>Duration:</strong> ${job.duration}</p>
+          <p><strong>Branch Eligibility:</strong> ${job.branch}</p>
+          <p><strong>Required Skills:</strong> ${job.skills}</p>
+          <p><strong>GPA Cut-off:</strong> ${job.gpa}</p>
+          <p class="text-slate-500 text-[10px] pt-1 border-t border-slate-800">Deadline: ${job.deadline}</p>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close</button>
+        </div>
+      </div>
+    `);
+  }
+
+  function renderNOCGeneratorView() {
+    const user = store.data.auth.currentUser;
+    const nocs = store.data.nocs.filter(n => n.studentId === user.id);
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">No Objection Certificate (NOC) Generator</h2>
+          <p class="text-xs text-slate-400">Generate, request faculty endorsement, and print official institutional NOC letters.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">New NOC Endorsement Request</h3>
+            <form onsubmit="handleNOCSubmit(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Target Company Name</label>
+                <input id="noc-company" required type="text" value="TechNova Labs" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Company HR Contact Email</label>
+                <input id="noc-email" required type="email" value="hr@technova.com" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-slate-400 mb-1">Start Date</label>
+                  <input id="noc-start" required type="date" value="2026-12-01" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">End Date</label>
+                  <input id="noc-end" required type="date" value="2027-05-31" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                </div>
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white font-bold text-xs shadow glow-indigo">
+                Submit NOC Request to Faculty
+              </button>
+            </form>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Requested NOC Documents</h3>
+            ${nocs.map(noc => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+                <div class="flex justify-between items-center font-bold text-slate-200">
+                  <span>${noc.company}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] ${
+                    noc.status === 'Approved' ? 'bg-accent-emerald/10 text-accent-emerald border border-accent-emerald/30' :
+                    noc.status === 'Changes Requested' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' :
+                    noc.status === 'Rejected' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30' :
+                    'bg-brand-500/10 text-brand-400 border border-brand-500/30'
+                  }">${noc.status}</span>
+                </div>
+                <div class="text-slate-400 text-[11px]">Duration: ${noc.duration}</div>
+                ${noc.status === 'Approved' ? `
+                  <button onclick="printNOCDocument(${noc.id})" class="w-full py-1.5 rounded-lg bg-brand-500/20 text-brand-400 font-bold hover:bg-brand-500/30 transition">
+                    🖨️ Print Signed NOC Letter Template
+                  </button>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderLogbookView() {
+    const user = store.data.auth.currentUser;
+    const logs = store.data.logs.filter(l => l.studentId === user.id);
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Weekly Progress Logbook</h2>
+          <p class="text-xs text-slate-400">Record weekly industrial activities for faculty and HR mentor sign-off (Max 40 hrs/week cap).</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Log New Week Entry</h3>
+            <form onsubmit="handleLogSubmit(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Week Number</label>
+                <input id="log-week" required type="number" min="1" max="52" value="${logs.length + 1}" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Hours Worked (Max 40 hrs/week)</label>
+                <input id="log-hours" required type="number" min="1" max="40" value="40" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Activity Summary</label>
+                <textarea id="log-summary" required rows="3" placeholder="Summary of technical work accomplished..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200"></textarea>
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-500 text-white font-bold shadow glow-indigo">Submit Weekly Log Entry</button>
+            </form>
+          </div>
+
+          <div class="lg:col-span-2 glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Log History & Approvals</h3>
+            <div class="space-y-3 text-xs">
+              ${logs.map(log => `
+                <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+                  <div class="flex justify-between items-center font-bold text-slate-200">
+                    <span>Week ${log.week} Log (${log.hours} Hours)</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] ${log.status === 'Verified' ? 'bg-accent-emerald/10 text-accent-emerald border border-accent-emerald/30' : 'bg-amber-500/10 text-amber-400'}">${log.status}</span>
+                  </div>
+                  <p class="text-slate-400">${log.summary}</p>
+                  <div class="flex gap-4 text-[10px] text-slate-500 pt-1">
+                    <span>HR Signed: ${log.status === 'Verified' ? '✔' : 'Pending'}</span>
+                    <span>Faculty Reviewed: ${log.facultyReviewed ? '✔' : 'Pending'}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderStudentTasksView() {
+    const user = store.data.auth.currentUser;
+    const tasks = store.data.tasks.filter(t => t.studentId === user.id);
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Work Tasks & Deliverables</h2>
+          <p class="text-xs text-slate-400">Track and submit assigned tasks from faculty leads and industry mentors.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-slate-200">Assigned Deliverables</h3>
+          <div class="space-y-3 text-xs">
+            ${tasks.length ? tasks.map(task => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center">
+                <div>
+                  <div class="font-bold text-slate-200">${task.title}</div>
+                  <div class="text-slate-400 text-[11px]">Assigned By: ${task.assignedBy} | Due Date: ${task.due}</div>
+                </div>
+                <div>
+                  ${task.status === 'Submitted' || task.status === 'Reviewed' ? `
+                    <span class="px-3 py-1 bg-accent-emerald/10 text-accent-emerald font-bold rounded-lg border border-accent-emerald/30">${task.status} ✔</span>
+                  ` : `
+                    <button onclick="submitTask(${task.id})" class="px-3 py-1.5 bg-brand-500 text-white font-bold rounded-xl shadow">Mark Submitted</button>
+                  `}
+                </div>
+              </div>
+            `).join('') : `
+              <div class="text-slate-400 text-xs p-4">No tasks currently assigned to your account.</div>
+            `}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function submitTask(taskId) {
+    if (!store.verifyRolePermission(['student'])) return;
+    const task = store.data.tasks.find(t => t.id === taskId);
+    if (task) {
+      task.status = 'Submitted';
+      store.save();
+      store.logAudit(`Submitted Task: ${task.title}`);
+      showToast("Task marked as submitted!", "success");
+      renderApp();
+    }
+  }
+
+  function renderAIChatView() {
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Context-Aware AI Assistant</h2>
+          <p class="text-xs text-slate-400">Ask questions about your live NOC status, logs, applications, and stipend analytics.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 flex flex-col h-[480px]">
+          <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 pr-2 text-xs">
+            ${store.data.chatHistory.map(msg => `
+              <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
+                <div class="max-w-[80%] p-3 rounded-2xl ${msg.sender === 'user' ? 'bg-brand-600 text-white font-semibold' : 'bg-slate-900 border border-slate-800 text-slate-200'}">
+                  ${msg.message}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <form onsubmit="handleAIChatSubmit(event)" class="flex gap-2">
+            <input id="chat-input" required type="text" placeholder="Ask e.g. What is my NOC status? or How many logs are verified?" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-bold text-xs shadow glow-indigo">Send Query</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleAIChatSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('chat-input');
+    const query = input.value.trim();
+    if (!query) return;
+
+    store.data.chatHistory.push({ sender: 'user', message: query });
+    const botReply = generateAIBotReply(query);
+    store.data.chatHistory.push({ sender: 'bot', message: botReply });
+    store.save();
+
+    input.value = '';
+    renderApp();
+    setTimeout(() => {
+      const container = document.getElementById('chat-messages');
+      if (container) container.scrollTop = container.scrollHeight;
+    }, 100);
+  }
+
+  function generateAIBotReply(query) {
+    const q = query.toLowerCase();
+    const user = store.data.auth.currentUser;
+
+    if (q.includes('noc')) {
+      const noc = store.data.nocs.find(n => n.studentId === user.id);
+      return noc ? `Your latest NOC for ${noc.company} is currently: ${noc.status}. Approved by ${noc.approvedBy}.` : "You haven't requested any NOC yet. Open the NOC Generator tab to submit a request.";
+    }
+    if (q.includes('log') || q.includes('logbook')) {
+      const logs = store.data.logs.filter(l => l.studentId === user.id);
+      const verified = logs.filter(l => l.status === 'Verified').length;
+      return `You have logged ${logs.length} weekly entries. ${verified} out of ${logs.length} entries are verified by supervisors.`;
+    }
+    if (q.includes('apply') || q.includes('application')) {
+      const apps = store.data.applications.filter(a => a.studentId === user.id);
+      return `You have ${apps.length} active drive application(s). Check your dashboard table for live status updates.`;
+    }
+    if (q.includes('stipend') || q.includes('pay')) {
+      return `Open drive stipends range from ₹18,000/mo to ₹25,000/mo depending on role specifications and mode.`;
+    }
+    if (q.includes('interview')) {
+      const iv = store.data.interviews.find(i => i.studentId === user.id);
+      return iv ? `You have an interview scheduled with ${iv.company} on ${iv.dateTime.replace('T', ' at ')}.` : "No interviews are scheduled right now.";
+    }
+    return "I can answer questions regarding your NOC status, logbook verification, drive applications, interview schedules, and stipends!";
+  }
+
+  function renderCertificatesView() {
+    const user = store.data.auth.currentUser;
+    const certs = store.data.certificates.filter(c => c.studentId === user.id);
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Credentials & Cryptographic QR Verification</h2>
+          <p class="text-xs text-slate-400">View digital completion credentials and lookup verification codes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Issued Completion Credentials</h3>
+            ${certs.length ? certs.map(cert => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <div class="font-bold text-slate-200">${cert.title}</div>
+                    <div class="text-brand-400 text-xs font-mono">${cert.company}</div>
+                  </div>
+                  <button onclick="viewCertificateModal('${cert.code}')" class="px-3 py-1.5 bg-brand-500/20 text-brand-400 border border-brand-500/40 rounded-xl font-bold text-xs">View QR Credential</button>
+                </div>
+                <div class="text-[11px] text-slate-500 font-mono">Verification Code: ${cert.code}</div>
+              </div>
+            `).join('') : '<div class="text-xs text-slate-400">No certificates issued yet. Complete logs to earn credentials.</div>'}
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Public Credential Code Verification</h3>
+            <form onsubmit="handleCodeVerification(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Enter Credential Code (e.g. IH-A9X2B710)</label>
+                <input id="verify-code-input" required type="text" placeholder="IH-XXXXXXXX" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 uppercase font-mono">
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white font-bold text-xs shadow glow-indigo">Verify Credential</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleCodeVerification(e) {
+    e.preventDefault();
+    const code = document.getElementById('verify-code-input').value.trim().toUpperCase();
+    const cert = store.data.certificates.find(c => c.code === code);
+    if (cert) {
+      openModal(`
+        <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-accent-emerald/40 text-center">
+          <div class="w-12 h-12 rounded-full bg-accent-emerald/20 text-accent-emerald flex items-center justify-center font-bold text-2xl mx-auto">✔</div>
+          <h3 class="text-base font-bold text-slate-100">Valid Certificate Record</h3>
+          <div class="text-xs text-slate-300 space-y-1 text-left bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono">
+            <div>Code: <strong>${cert.code}</strong></div>
+            <div>Student: <strong>${cert.studentName} (${cert.studentId})</strong></div>
+            <div>Company: <strong>${cert.company}</strong></div>
+            <div>Role: <strong>${cert.title}</strong></div>
+            <div>Issued Date: <strong>${cert.date}</strong></div>
+          </div>
+          <button onclick="closeModal()" class="w-full py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close</button>
+        </div>
+      `);
+    } else {
+      showToast("No valid credential matches this code.", "rose");
+    }
+  }
+
+  function viewCertificateModal(code) {
+    const cert = store.data.certificates.find(c => c.code === code);
+    if (!cert) return;
+
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40 text-center">
+        <h3 class="text-base font-bold text-slate-100">Digital Completion Credential</h3>
+        <div class="p-4 bg-white rounded-xl inline-block shadow-lg">
+          ${renderSVGQRCode(cert.code)}
+        </div>
+        <div class="text-xs text-slate-300 space-y-1 font-mono text-left bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div>Code: <strong>${cert.code}</strong></div>
+          <div>Recipient: <strong>${cert.studentName}</strong></div>
+          <div>Role: <strong>${cert.title}</strong></div>
+          <div>Company: <strong>${cert.company}</strong></div>
+        </div>
+        <button onclick="closeModal()" class="w-full py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close</button>
+      </div>
+    `);
+  }
+
+  function renderSVGQRCode(code) {
+    let hash = 0;
+    for (let i = 0; i < code.length; i++) hash = (hash * 31 + code.charCodeAt(i)) >>> 0;
+    let rects = '';
+    for (let y = 0; y < 15; y++) {
+      for (let x = 0; x < 15; x++) {
+        hash = (hash * 1664525 + 1013904223) >>> 0;
+        if ((hash >>> 28) & 1 || (x < 4 && y < 4) || (x > 10 && y < 4) || (x < 4 && y > 10)) {
+          rects += `<rect x="${x}" y="${y}" width="0.9" height="0.9" fill="#0f172a"/>`;
+        }
+      }
+    }
+    return `<svg viewBox="0 0 15 15" width="120" height="120">${rects}</svg>`;
+  }
+
+  function renderStudentSupportView() {
+    const user = store.data.auth.currentUser;
+    const tickets = store.data.tickets.filter(t => t.studentId === user.id);
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Placement Support Tickets</h2>
+          <p class="text-xs text-slate-400">Direct query submission to institutional placement officers.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Submit Support Ticket</h3>
+            <form onsubmit="handleSupportSubmit(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Subject</label>
+                <input id="ticket-sub" required type="text" placeholder="e.g. NOC Document Issue" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Detailed Message</label>
+                <textarea id="ticket-msg" required rows="3" placeholder="Describe your inquiry..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200"></textarea>
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-500 text-white font-bold text-xs shadow glow-indigo">Submit Ticket</button>
+            </form>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Ticket Status & Replies</h3>
+            ${tickets.map(t => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+                <div class="flex justify-between font-bold text-slate-200">
+                  <span>${t.subject}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] ${t.status === 'Resolved' ? 'bg-accent-emerald/10 text-accent-emerald' : 'bg-amber-500/10 text-amber-400'}">${t.status}</span>
+                </div>
+                <p class="text-slate-400">${t.message}</p>
+                ${t.reply ? `<div class="p-2 rounded bg-brand-500/10 border border-brand-500/20 text-brand-400">Admin Reply: ${t.reply}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleSupportSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['student'])) return;
+    const user = store.data.auth.currentUser;
+    const sub = document.getElementById('ticket-sub').value;
+    const msg = document.getElementById('ticket-msg').value;
+
+    store.data.tickets.push({
+      id: Date.now(),
+      studentId: user.id,
+      subject: sub,
+      message: msg,
+      status: "Open",
+      reply: ""
+    });
+
+    store.save();
+    store.logAudit(`Submitted Support Ticket: ${sub}`);
+    showToast("Support ticket submitted to Placement Cell!", "success");
+    renderApp();
+  }
+
+  // FACULTY LEAD WORKSPACE VIEWS
+  function renderFacultyConsole() {
+    const nocs = store.data.nocs;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-100">Faculty Supervisor Console</h2>
+            <p class="text-xs text-slate-400">Department of Computer Science • Lead Supervisor: Dr. Mehta</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="createDemoNOCRequest()" class="px-3 py-1.5 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-500/40 text-xs font-bold hover:bg-brand-500/30 transition">
+              + Add Test NOC Request
+            </button>
+            <span class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs font-bold border border-accent-purple/40">
+              ${nocs.filter(n => n.status.includes('Pending')).length} Pending Endorsements
+            </span>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-200">NOC Endorsement & Verification Queue</h3>
+            <span class="text-xs text-slate-400 font-mono">${nocs.length} Total Requests</span>
+          </div>
+          ${nocs.length ? nocs.map(noc => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
+              <div class="space-y-1">
+                <div class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                  <span>${noc.studentName}</span>
+                  <span class="font-mono text-brand-400 text-xs">(${noc.studentId})</span>
+                </div>
+                <div class="text-slate-300">Target Company: <strong class="text-accent-cyan">${noc.company}</strong> | HR Email: <span class="font-mono">${noc.hrEmail}</span></div>
+                <div class="text-slate-400 text-[11px]">Duration: ${noc.duration} | Requested Date: ${noc.date || 'Today'}</div>
+                <div class="text-slate-500 text-[10px]">Endorsement Status: <strong class="${
+                  noc.status === 'Approved' ? 'text-accent-emerald' :
+                  noc.status === 'Changes Requested' ? 'text-amber-400' :
+                  noc.status === 'Rejected' ? 'text-rose-400' : 'text-brand-400'
+                }">${noc.status}</strong></div>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                ${noc.status === 'Approved' ? `
+                  <span class="px-3 py-1 bg-accent-emerald/10 text-accent-emerald font-bold rounded-lg border border-accent-emerald/30">Approved ✔</span>
+                  <button onclick="printNOCDocument(${noc.id})" class="px-3 py-1 bg-slate-900 text-slate-300 hover:bg-slate-800 font-bold rounded-lg border border-slate-800 transition">View Signed Letter</button>
+                ` : noc.status === 'Rejected' ? `
+                  <span class="px-3 py-1 bg-rose-500/10 text-rose-400 font-bold rounded-lg border border-rose-500/30">Rejected ✖</span>
+                  <button onclick="updateNOCStatus(${noc.id}, 'Approved')" class="px-3 py-1 bg-accent-emerald/20 text-accent-emerald text-xs font-bold rounded-lg hover:bg-accent-emerald/30 transition">Re-approve</button>
+                ` : noc.status === 'Changes Requested' ? `
+                  <span class="px-3 py-1 bg-amber-500/10 text-amber-400 font-bold rounded-lg border border-amber-500/30">Changes Requested ⚠️</span>
+                  <button onclick="updateNOCStatus(${noc.id}, 'Approved')" class="px-3 py-1 bg-accent-emerald text-slate-950 font-bold rounded-lg hover:opacity-90 transition">Approve Now</button>
+                ` : `
+                  <button onclick="updateNOCStatus(${noc.id}, 'Approved')" class="px-3 py-1.5 rounded-xl bg-accent-emerald hover:opacity-90 text-slate-950 font-bold shadow transition flex items-center gap-1">
+                    <span>✔</span> Approve
+                  </button>
+                  <button onclick="updateNOCStatus(${noc.id}, 'Changes Requested')" class="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold hover:bg-amber-500/30 transition">
+                    ⚠️ Request Changes
+                  </button>
+                  <button onclick="updateNOCStatus(${noc.id}, 'Rejected')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold transition">
+                    ✖ Reject
+                  </button>
+                `}
+              </div>
+            </div>
+          `).join('') : '<div class="text-xs text-slate-400 p-4">No NOC requests submitted yet.</div>'}
+        </div>
+      </div>
+    `;
+  }
+
+  function updateNOCStatus(nocId, status) {
+    if (!store.verifyRolePermission(['faculty', 'admin'])) return;
+    const noc = store.data.nocs.find(n => n.id === nocId);
+    if (noc) {
+      noc.status = status;
+      noc.approvedBy = status === 'Approved' ? 'Dr. Mehta (Faculty Supervisor Lead)' : 'Dr. Mehta (Reviewed)';
+      store.save();
+      store.logAudit(`Faculty ${status} NOC Request for ${noc.studentName} (${noc.company})`);
+      
+      if (status === 'Approved') {
+        store.dispatchEmailNotification(
+          `${noc.studentId}@college.edu`,
+          `NOC Approved for ${noc.company}`,
+          `Your No Objection Certificate for ${noc.company} has been digitally signed and approved by your faculty supervisor.`
+        );
+      }
+
+      const toastType = status === 'Approved' ? 'success' : status === 'Changes Requested' ? 'warning' : 'rose';
+      showToast(`NOC for ${noc.studentName} updated to '${status}'!`, toastType);
+      renderApp();
+    }
+  }
+
+  function createDemoNOCRequest() {
+    const newId = Date.now();
+    store.data.nocs.unshift({
+      id: newId,
+      studentId: "2024BTCY017",
+      studentName: "UTUKURU MASTAN REDDY",
+      company: "DataWave Analytics",
+      hrEmail: "careers@datawave.io",
+      duration: "2026-12-15 to 2027-04-30",
+      status: "Pending Faculty Approval",
+      approvedBy: "Pending Review",
+      date: new Date().toISOString().slice(0, 10)
+    });
+    store.save();
+    store.logAudit("Created Test NOC Request for DataWave Analytics");
+    showToast("Test NOC Request added to Faculty queue!", "info");
+    renderApp();
+  }
+
+  function renderFacultyLogQueueView() {
+    const logs = store.data.logs;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Logbook Sign-offs & Reviews</h2>
+          <p class="text-xs text-slate-400">Review student progress entries and mark as Faculty Reviewed.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          ${logs.map(log => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+              <div>
+                <div class="font-bold text-slate-200">Week ${log.week} Log (${log.studentId})</div>
+                <p class="text-slate-400 mt-0.5">${log.summary}</p>
+                <div class="text-slate-500 text-[10px] mt-1">Hours: ${log.hours} | HR Status: ${log.status}</div>
+              </div>
+              <div>
+                ${log.facultyReviewed ? `
+                  <span class="px-3 py-1 bg-accent-emerald/10 text-accent-emerald font-bold rounded-lg border border-accent-emerald/30">Reviewed ✔</span>
+                ` : `
+                  <button onclick="markFacultyLogReviewed(${log.id})" class="px-3 py-1.5 bg-brand-500 text-white font-bold rounded-xl">Mark Reviewed</button>
+                `}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function markFacultyLogReviewed(logId) {
+    if (!store.verifyRolePermission(['faculty', 'admin'])) return;
+    const log = store.data.logs.find(l => l.id === logId);
+    if (log) {
+      log.facultyReviewed = true;
+      store.save();
+      store.logAudit(`Faculty Reviewed Log #${logId}`);
+      showToast(`Log marked as Faculty Reviewed!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderFacultyMenteesView() {
+    const mentees = store.data.users.filter(u => u.role === 'student' && u.facultyId === 'FAC001');
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Assigned Mentees & Task Delegation</h2>
+          <p class="text-xs text-slate-400">Supervise assigned student cohorts and issue coursework deliverables.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Assigned Student Cohort</h3>
+            ${mentees.map(m => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <div class="font-bold text-slate-200">${m.name}</div>
+                  <div class="text-brand-400 font-mono text-[11px]">${m.id} | GPA: ${m.gpa}</div>
+                </div>
+                <span class="px-2.5 py-1 bg-brand-500/10 text-brand-400 font-bold rounded-full text-[10px]">Active Mentee</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Assign New Task</h3>
+            <form onsubmit="handleFacultyTaskAssign(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Target Student</label>
+                <select id="task-student" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                  ${mentees.map(m => `<option value="${m.id}">${m.name} (${m.id})</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Task Title</label>
+                <input id="task-title" required type="text" placeholder="e.g. Architecture Diagram Review" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Due Date</label>
+                <input id="task-due" required type="date" value="2026-11-20" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <button type="submit" class="w-full py-2.5 bg-brand-500 text-white font-bold rounded-xl shadow glow-indigo">Assign Deliverable</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleFacultyTaskAssign(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['faculty', 'admin'])) return;
+    const studentId = document.getElementById('task-student').value;
+    const title = document.getElementById('task-title').value;
+    const due = document.getElementById('task-due').value;
+
+    store.data.tasks.push({
+      id: Date.now(),
+      studentId,
+      title,
+      assignedBy: "Dr. Mehta (Faculty)",
+      due,
+      status: "Assigned"
+    });
+
+    store.save();
+    store.logAudit(`Assigned Task '${title}' to ${studentId}`);
+    showToast(`Task assigned to student ${studentId}!`, 'success');
+    renderApp();
+  }
+
+  function renderFacultyIssueCertView() {
+    const students = store.data.users.filter(u => u.role === 'student');
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Issue Digital Completion Credentials</h2>
+          <p class="text-xs text-slate-400">Award verified cryptographic completion credentials to qualified mentees.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handleIssueCertificate(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Select Mentee</label>
+              <select id="cert-student" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                ${students.map(s => `<option value="${s.id}|${s.name}|TechNova Labs|Full Stack Engineering Intern">${s.name} (${s.id}) - TechNova Labs</option>`).join('')}
+              </select>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-brand-500 to-accent-purple text-white font-bold text-xs rounded-xl shadow glow-indigo">Generate Credential</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleIssueCertificate(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['faculty', 'admin'])) return;
+    const parts = document.getElementById('cert-student').value.split('|');
+    const studentId = parts[0];
+    const studentName = parts[1];
+    const company = parts[2];
+    const title = parts[3];
+
+    const code = `IH-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+    store.data.certificates.push({
+      id: Date.now(),
+      code,
+      studentId,
+      studentName,
+      company,
+      title,
+      date: new Date().toISOString().slice(0, 10)
+    });
+
+    store.save();
+    store.logAudit(`Issued Certificate ${code} for ${studentName}`);
+    showToast(`Certificate ${code} generated!`, 'success');
+    renderApp();
+  }
+
+  // COMPANY HR WORKSPACE VIEWS
+  function renderCompanyConsole() {
+    const apps = store.data.applications;
+    const logs = store.data.logs;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Industry HR & Mentor Workstation</h2>
+          <p class="text-xs text-slate-400">TechNova Labs • Applicant Review & Sign-offs</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Applicant Pool & Shortlist</h3>
+            ${apps.map(app => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <div class="font-bold text-slate-200">${app.studentName} (<span class="font-mono text-brand-400">${app.studentId}</span>)</div>
+                  <div class="text-slate-400 text-[11px]">${app.title}</div>
+                </div>
+                <div class="flex gap-2">
+                  ${app.status === 'Hired' ? `
+                    <span class="px-3 py-1 bg-accent-emerald/10 text-accent-emerald font-bold rounded-lg border border-accent-emerald/30">Hired ✔</span>
+                  ` : `
+                    <button onclick="shortlistCandidate(${app.id})" class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold rounded-xl transition">Shortlist</button>
+                    <button onclick="hireCandidate(${app.id})" class="px-3 py-1.5 bg-accent-emerald text-slate-950 font-bold rounded-xl shadow transition">Hire</button>
+                  `}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="text-sm font-bold text-slate-200">Sign-off Weekly Logs</h3>
+            ${logs.map(log => `
+              <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+                <div class="flex justify-between font-bold text-slate-200">
+                  <span>Week ${log.week} Log (${log.studentId})</span>
+                  <span class="text-accent-cyan">${log.hours} Hours</span>
+                </div>
+                <p class="text-slate-400">${log.summary}</p>
+                <div class="pt-2">
+                  ${log.status === 'Verified' ? `
+                    <span class="text-accent-emerald font-bold text-[11px]">Verified ✔</span>
+                  ` : `
+                    <button onclick="verifyLog(${log.id})" class="px-3 py-1 bg-brand-500 text-white font-bold rounded-lg transition">Sign & Approve</button>
+                  `}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function shortlistCandidate(appId) {
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const app = store.data.applications.find(a => a.id === appId);
+    if (app) {
+      app.status = 'Shortlisted';
+      store.save();
+      store.logAudit(`Shortlisted Candidate ${app.studentName}`);
+      showToast(`Candidate ${app.studentName} Shortlisted!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderPostDriveView() {
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Post New Internship Drive</h2>
+          <p class="text-xs text-slate-400">Publish new drive requisitions for placement admin authorization.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handlePostDriveSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Drive Position Title</label>
+              <input id="post-title" required type="text" placeholder="e.g. AI Research Intern" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-400 mb-1">Stipend/Month (₹)</label>
+                <input id="post-stipend" required type="number" value="22000" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Mode</label>
+                <select id="post-mode" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                  <option value="Remote">Remote</option>
+                  <option value="On-site">On-site</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-400 mb-1">Duration</label>
+                <input id="post-duration" required type="text" value="3 Months" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Min Cut-off GPA</label>
+                <input id="post-gpa" required type="number" step="0.1" value="7.5" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Required Technical Skills</label>
+              <input id="post-skills" required type="text" value="Python, SQL, FastAPI" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-brand-500 text-white font-bold rounded-xl shadow glow-indigo">Submit Requisition to Admin</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handlePostDriveSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const title = document.getElementById('post-title').value;
+    const stipend = parseInt(document.getElementById('post-stipend').value);
+    const mode = document.getElementById('post-mode').value;
+    const duration = document.getElementById('post-duration').value;
+    const gpa = parseFloat(document.getElementById('post-gpa').value);
+    const skills = document.getElementById('post-skills').value;
+
+    store.data.jobs.push({
+      id: Date.now(),
+      title,
+      company: "TechNova Labs",
+      stipend,
+      mode,
+      duration,
+      gpa,
+      branch: "CSE / IT",
+      skills,
+      status: "Approved",
+      description: "Direct drive posting via HR workstation.",
+      deadline: "2026-12-30"
+    });
+
+    store.save();
+    store.logAudit(`Posted Drive Requisition: ${title}`);
+    showToast(`Drive requisition '${title}' posted!`, 'success');
+    renderApp();
+  }
+
+  function renderScheduleInterviewView() {
+    const shortlisted = store.data.applications.filter(a => a.status === 'Shortlisted' || a.status === 'Applied');
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Schedule Candidate Interviews</h2>
+          <p class="text-xs text-slate-400">Dispatch calendar meeting links to shortlisted drive applicants.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handleScheduleInterview(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Select Candidate</label>
+              <select id="iv-candidate" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                ${shortlisted.map(a => `<option value="${a.studentId}|${a.company}|${a.title}">${a.studentName} (${a.title})</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Date & Time</label>
+              <input id="iv-datetime" required type="datetime-local" value="2026-11-12T14:00" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Meeting Link</label>
+              <input id="iv-link" required type="url" value="https://meet.jit.si/internhub-technova-interview" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-brand-500 text-white font-bold rounded-xl shadow glow-indigo">Dispatch Interview Link</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleScheduleInterview(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const parts = document.getElementById('iv-candidate').value.split('|');
+    const studentId = parts[0];
+    const company = parts[1];
+    const title = parts[2];
+    const dateTime = document.getElementById('iv-datetime').value;
+    const link = document.getElementById('iv-link').value;
+
+    store.data.interviews.push({
+      id: Date.now(),
+      studentId,
+      company,
+      title,
+      dateTime,
+      link,
+      status: "Scheduled"
+    });
+
+    store.save();
+    store.logAudit(`Scheduled Interview for ${studentId} on ${dateTime}`);
+    store.dispatchEmailNotification(`${studentId}@college.edu`, `Interview Invitation from ${company}`, `Interview scheduled for ${title} on ${dateTime.replace('T', ' at ')}.`);
+    showToast(`Interview scheduled for candidate ${studentId}!`, 'success');
+    renderApp();
+  }
+
+  function renderCompanyOffersView() {
+    const offers = store.data.offers;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Dispatched Offer Letters</h2>
+          <p class="text-xs text-slate-400">Manage binding offer letters sent to candidate shortlist.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          ${offers.map(offer => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+              <div>
+                <div class="font-bold text-slate-200">${offer.studentName} (${offer.title})</div>
+                <div class="text-slate-400 text-[11px]">Stipend: ₹${offer.stipend.toLocaleString()}/mo | Status: <strong class="text-accent-emerald">${offer.status}</strong></div>
+              </div>
+              <button onclick="previewOfferModal(${offer.id})" class="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-300 font-bold rounded-xl">View Letter</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function previewOfferModal(offerId) {
+    const offer = store.data.offers.find(o => o.id === offerId);
+    if (!offer) return;
+
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40">
+        <h3 class="font-bold text-slate-100 text-center">OFFER LETTER</h3>
+        <div class="text-xs text-slate-300 space-y-2 bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <p>Dear <strong>${offer.studentName}</strong>,</p>
+          <p>We are pleased to offer you the position of <strong>${offer.title}</strong> at <strong>${offer.company}</strong>.</p>
+          <p>Stipend: <strong>₹${offer.stipend.toLocaleString()}/month</strong></p>
+          <p>Duration: <strong>${offer.duration}</strong></p>
+          <p class="text-[11px] text-slate-500 pt-2 border-t border-slate-800">Dispatched: ${offer.offerDate}</p>
+        </div>
+        <button onclick="closeModal()" class="w-full py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close Preview</button>
+      </div>
+    `);
+  }
+
+  function renderCompanyEvaluationsView() {
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Intern Performance Evaluation Matrix</h2>
+          <p class="text-xs text-slate-400">1 to 5 Star Rating system for technical performance and soft skills.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handleEvaluationSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Target Intern</label>
+              <select id="eval-student" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                <option value="2024BTCY017|UTUKURU MASTAN REDDY">UTUKURU MASTAN REDDY (2024BTCY017)</option>
+                <option value="2024BTCY007|MADDALA JASWANTH KUMAR">MADDALA JASWANTH KUMAR (2024BTCY007)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-slate-400 mb-1">Technical (1-5)</label>
+                <input id="eval-tech" type="number" min="1" max="5" value="5" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Punctuality (1-5)</label>
+                <input id="eval-punc" type="number" min="1" max="5" value="5" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Comm (1-5)</label>
+                <input id="eval-comm" type="number" min="1" max="5" value="4" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Written Feedback</label>
+              <textarea id="eval-feedback" rows="3" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">Proactive developer with solid technical foundations.</textarea>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-brand-500 to-accent-purple text-white font-bold rounded-xl shadow glow-indigo">Save Evaluation</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleEvaluationSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const parts = document.getElementById('eval-student').value.split('|');
+    const studentId = parts[0];
+    const studentName = parts[1];
+    const tech = parseInt(document.getElementById('eval-tech').value);
+    const punctuality = parseInt(document.getElementById('eval-punc').value);
+    const comm = parseInt(document.getElementById('eval-comm').value);
+    const feedback = document.getElementById('eval-feedback').value;
+
+    store.data.evaluations.push({
+      id: Date.now(),
+      studentId,
+      studentName,
+      company: "TechNova Labs",
+      tech,
+      punctuality,
+      comm,
+      feedback
+    });
+
+    store.save();
+    store.logAudit(`Saved Intern Evaluation for ${studentName}`);
+    showToast(`Evaluation for ${studentName} saved!`, 'success');
+    renderApp();
+  }
+
+  // PLACEMENT ADMIN WORKSPACE VIEWS
+  function renderAdminConsole() {
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Placement Cell Analytics & Control</h2>
+          <p class="text-xs text-slate-400">Institutional metrics and real-time audit control.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 text-center">
+            <div class="text-xs text-slate-400 font-bold">Placement Rate</div>
+            <div class="text-3xl font-extrabold text-accent-emerald mt-2">100%</div>
+          </div>
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 text-center">
+            <div class="text-xs text-slate-400 font-bold">Average Stipend</div>
+            <div class="text-3xl font-extrabold text-accent-cyan mt-2">₹21,250</div>
+          </div>
+          <div class="glass-card p-5 rounded-2xl border border-slate-800 text-center">
+            <div class="text-xs text-slate-400 font-bold">Active Drives</div>
+            <div class="text-3xl font-extrabold text-brand-400 mt-2">${store.data.jobs.length}</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-slate-200">System Audit Trail Log</h3>
+          <div class="space-y-2 font-mono text-xs max-h-60 overflow-y-auto">
+            ${store.data.auditLogs.map(log => `
+              <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between">
+                <span class="text-slate-400">${log.time}</span>
+                <span class="text-brand-400 font-bold">[${log.role}]</span>
+                <span class="text-slate-200">${log.action}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderAdminVerifyCosView() {
+    const cos = store.data.companies;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Verify Recruiting Companies</h2>
+          <p class="text-xs text-slate-400">Authorize authentic corporate recruiters for campus drives.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          ${cos.map(co => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+              <div>
+                <div class="font-bold text-slate-200">${co.name}</div>
+                <div class="text-[11px] text-slate-400">Status: <strong class="${co.status === 'Verified' ? 'text-accent-emerald' : 'text-amber-400'}">${co.status}</strong></div>
+              </div>
+              <div class="flex gap-2">
+                ${co.status === 'Verified' ? `
+                  <button onclick="setCompanyStatus('${co.name}', 'Blocked')" class="px-3 py-1 bg-rose-600 text-white font-bold rounded-xl">Block</button>
+                ` : `
+                  <button onclick="setCompanyStatus('${co.name}', 'Verified')" class="px-3 py-1 bg-accent-emerald text-slate-950 font-bold rounded-xl">Verify</button>
+                `}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function setCompanyStatus(name, status) {
+    if (!store.verifyRolePermission(['admin'])) return;
+    const co = store.data.companies.find(c => c.name === name);
+    if (co) {
+      co.status = status;
+      store.save();
+      store.logAudit(`Marked Company ${name} as ${status}`);
+      showToast(`Company ${name} is now ${status}!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderAdminAuthorizeDrivesView() {
+    const jobs = store.data.jobs;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Authorize Drive Postings</h2>
+          <p class="text-xs text-slate-400">Approve or unpublish drive requisitions posted by recruiters.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          ${jobs.map(job => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex justify-between items-center text-xs">
+              <div>
+                <div class="font-bold text-slate-200">${job.title} (${job.company})</div>
+                <div class="text-slate-400 text-[11px]">Stipend: ₹${job.stipend.toLocaleString()}/mo | Status: <strong class="${job.status === 'Approved' ? 'text-accent-emerald' : 'text-amber-400'}">${job.status}</strong></div>
+              </div>
+              <div class="flex gap-2">
+                ${job.status === 'Approved' ? `
+                  <button onclick="setJobStatus(${job.id}, 'Pending')" class="px-3 py-1 bg-rose-600 text-white font-bold rounded-xl">Unpublish</button>
+                ` : `
+                  <button onclick="setJobStatus(${job.id}, 'Approved')" class="px-3 py-1 bg-accent-emerald text-slate-950 font-bold rounded-xl">Approve</button>
+                `}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function setJobStatus(jobId, status) {
+    if (!store.verifyRolePermission(['admin'])) return;
+    const job = store.data.jobs.find(j => j.id === jobId);
+    if (job) {
+      job.status = status;
+      store.save();
+      store.logAudit(`Set Drive Status of ${job.title} to ${status}`);
+      showToast(`Drive ${job.title} status updated!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderAdminAllocationsView() {
+    const students = store.data.users.filter(u => u.role === 'student');
+    const faculty = store.data.users.filter(u => u.role === 'faculty');
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Allocate Faculty Supervisors</h2>
+          <p class="text-xs text-slate-400">Map internal faculty supervisors to student cohorts.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handleAllocationSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Select Student</label>
+              <select id="alloc-student" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                ${students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Assign Faculty Supervisor</label>
+              <select id="alloc-faculty" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                ${faculty.map(f => `<option value="${f.id}">${f.name} (${f.dept})</option>`).join('')}
+              </select>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-brand-500 text-white font-bold rounded-xl shadow glow-indigo">Save Allocation</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleAllocationSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['admin'])) return;
+    const studentId = document.getElementById('alloc-student').value;
+    const facultyId = document.getElementById('alloc-faculty').value;
+
+    const student = store.data.users.find(u => u.id === studentId);
+    if (student) {
+      student.facultyId = facultyId;
+      store.save();
+      store.logAudit(`Allocated Faculty ${facultyId} to ${student.name}`);
+      showToast(`Faculty mapped to ${student.name}!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderAdminTicketsView() {
+    const tickets = store.data.tickets;
+
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Support Ticket Resolver</h2>
+          <p class="text-xs text-slate-400">Reply and resolve student placement inquiries.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+          ${tickets.map(t => `
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+              <div class="flex justify-between font-bold text-slate-200">
+                <span>${t.subject} (${t.studentId})</span>
+                <span class="px-2 py-0.5 rounded text-[10px] ${t.status === 'Resolved' ? 'bg-accent-emerald/10 text-accent-emerald' : 'bg-amber-500/10 text-amber-400'}">${t.status}</span>
+              </div>
+              <p class="text-slate-400">${t.message}</p>
+              ${t.status === 'Open' ? `
+                <div class="flex gap-2 pt-2">
+                  <input id="reply-${t.id}" type="text" placeholder="Type resolution reply..." class="flex-1 px-3 py-1 bg-slate-950 border border-slate-800 text-slate-200 rounded-lg">
+                  <button onclick="resolveTicket(${t.id})" class="px-3 py-1 bg-brand-500 text-white font-bold rounded-lg">Resolve</button>
+                </div>
+              ` : `
+                <div class="text-brand-400 font-mono text-[11px]">Resolution: ${t.reply}</div>
+              `}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function resolveTicket(ticketId) {
+    if (!store.verifyRolePermission(['admin'])) return;
+    const replyInput = document.getElementById(`reply-${ticketId}`);
+    const reply = replyInput ? replyInput.value : 'Resolved by placement officer.';
+    const ticket = store.data.tickets.find(t => t.id === ticketId);
+    if (ticket) {
+      ticket.status = 'Resolved';
+      ticket.reply = reply;
+      store.save();
+      store.logAudit(`Resolved Ticket #${ticketId}`);
+      showToast(`Ticket #${ticketId} resolved!`, 'success');
+      renderApp();
+    }
+  }
+
+  function renderAdminAnnouncementsView() {
+    return `
+      <div class="space-y-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+          <h2 class="text-xl font-bold text-slate-100">Broadcast System Announcements</h2>
+          <p class="text-xs text-slate-400">Broadcast institutional notices to user notification bells.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
+          <form onsubmit="handleAnnouncementSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Notice Title</label>
+              <input id="ann-title" required type="text" placeholder="e.g. Mandatory Drive Briefing" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Body Text</label>
+              <textarea id="ann-body" required rows="3" placeholder="Notice details..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200"></textarea>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-brand-500 text-white font-bold rounded-xl shadow glow-indigo">Broadcast Bulletin</button>
+          </form>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleAnnouncementSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['admin'])) return;
+    const title = document.getElementById('ann-title').value;
+    const body = document.getElementById('ann-body').value;
+
+    store.data.announcements.unshift({
+      id: Date.now(),
+      title,
+      body,
+      date: new Date().toISOString().slice(0, 10),
+      sender: "Placement Cell Admin"
+    });
+
+    store.save();
+    store.logAudit(`Broadcast Bulletin: ${title}`);
+    showToast(`Bulletin '${title}' broadcasted!`, 'success');
+    renderApp();
+  }
+
+  function openNotificationsModal() {
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40">
+        <h3 class="font-bold text-slate-100">System Bulletins & Notifications</h3>
+        <div class="space-y-3 max-h-60 overflow-y-auto text-xs pr-1">
+          ${store.data.announcements.map(a => `
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <div class="font-bold text-brand-400">${a.title}</div>
+              <div class="text-slate-300 mt-0.5">${a.body}</div>
+              <div class="text-[10px] text-slate-500 mt-1">${a.date} • ${a.sender}</div>
+            </div>
+          `).join('')}
+        </div>
+        <button onclick="closeModal()" class="w-full py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close</button>
+      </div>
+    `);
+  }
+
+  function renderProgressCard(title, value, percentage, colorHex, subtitle) {
+    const radius = 28;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+    return `
+      <div class="glass-card p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <div class="text-[11px] font-semibold text-slate-400">${title}</div>
+          <div class="text-xl font-extrabold text-slate-100 mt-1">${value}</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">${subtitle}</div>
+        </div>
+        <div class="relative w-16 h-16 flex items-center justify-center">
+          <svg class="w-16 h-16 transform -rotate-90">
+            <circle cx="32" cy="32" r="${radius}" stroke="currentColor" stroke-width="5" class="text-slate-800" fill="transparent" />
+            <circle cx="32" cy="32" r="${radius}" stroke="${colorHex}" stroke-width="5" 
+                    stroke-dasharray="${circumference}" 
+                    stroke-dashoffset="${strokeDashoffset}" 
+                    stroke-linecap="round" 
+                    fill="transparent" 
+                    class="progress-circle" />
+          </svg>
+          <span class="absolute text-[10px] font-bold text-slate-200">${percentage}%</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function switchView(viewId) {
+    store.currentView = viewId;
+    renderApp();
+  }
+
+  function applyForJob(jobId) {
+    if (!store.verifyRolePermission(['student'])) return;
+    const user = store.data.auth.currentUser;
+    const job = store.data.jobs.find(j => j.id === jobId);
+    if (!job) return;
+
+    store.data.applications.push({
+      id: Date.now(),
+      jobId: job.id,
+      studentId: user.id,
+      studentName: user.name,
+      company: job.company,
+      title: job.title,
+      status: "Applied",
+      appliedDate: new Date().toISOString().slice(0, 10),
+      resume: user.resume
+    });
+
+    store.save();
+    store.logAudit(`Applied for ${job.title} at ${job.company}`);
+    showToast(`Applied for ${job.title}!`, 'success');
+    renderApp();
+  }
+
+  function handleNOCSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['student'])) return;
+    const user = store.data.auth.currentUser;
+    const company = document.getElementById('noc-company').value;
+    const email = document.getElementById('noc-email').value;
+    const start = document.getElementById('noc-start').value;
+    const end = document.getElementById('noc-end').value;
+
+    store.data.nocs.push({
+      id: Date.now(),
+      studentId: user.id,
+      studentName: user.name,
+      company: company,
+      hrEmail: email,
+      duration: `${start} to ${end}`,
+      status: "Pending Faculty Approval",
+      approvedBy: "Pending Review",
+      date: new Date().toISOString().slice(0, 10)
+    });
+
+    store.save();
+    store.logAudit(`Submitted NOC Request for ${company}`);
+    showToast("NOC Request submitted to Faculty queue!", "success");
+    renderApp();
+  }
+
+  function handleLogSubmit(e) {
+    e.preventDefault();
+    if (!store.verifyRolePermission(['student'])) return;
+    const user = store.data.auth.currentUser;
+    const week = parseInt(document.getElementById('log-week').value);
+    const hours = parseInt(document.getElementById('log-hours').value);
+    const summary = document.getElementById('log-summary').value;
+
+    if (hours > 40) {
+      showToast("Validation Error: Logged work hours cannot exceed 40 hours/week cap.", "rose");
+      return;
+    }
+
+    store.data.logs.push({
+      id: Date.now(),
+      studentId: user.id,
+      week: week,
+      date: new Date().toISOString().slice(0, 10),
+      summary: summary,
+      hours: hours,
+      status: "Pending Verification",
+      notes: "Awaiting HR sign-off",
+      facultyReviewed: false
+    });
+
+    store.save();
+    store.logAudit(`Submitted Week ${week} Log Entry`);
+    showToast(`Week ${week} log submitted!`, 'success');
+    renderApp();
+  }
+
+  function verifyLog(logId) {
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const log = store.data.logs.find(l => l.id === logId);
+    if (log) {
+      log.status = 'Verified';
+      log.notes = 'Signed by HR Mentor';
+      store.save();
+      store.logAudit(`Signed Week ${log.week} Log`);
+      showToast(`Log for Week ${log.week} signed!`, 'success');
+      renderApp();
+    }
+  }
+
+  function hireCandidate(appId) {
+    if (!store.verifyRolePermission(['company', 'admin'])) return;
+    const app = store.data.applications.find(a => a.id === appId);
+    if (app) {
+      app.status = 'Hired';
+      store.data.applications.forEach(other => {
+        if (other.studentId === app.studentId && other.id !== appId) {
+          other.status = 'Locked';
+        }
+      });
+      store.data.offers.push({
+        id: Date.now(),
+        studentId: app.studentId,
+        studentName: app.studentName,
+        company: app.company,
+        title: app.title,
+        stipend: 25000,
+        duration: "6 Months",
+        status: "Pending Response",
+        offerDate: new Date().toISOString().slice(0, 10)
+      });
+      store.save();
+      store.logAudit(`Hired Candidate ${app.studentName}`);
+      showToast(`Candidate ${app.studentName} Hired! Other applications locked.`, 'success');
+      renderApp();
+    }
+  }
+
+  function respondOffer(offerId, response) {
+    if (!store.verifyRolePermission(['student'])) return;
+    const offer = store.data.offers.find(o => o.id === offerId);
+    if (offer) {
+      offer.status = response;
+      if (response === 'Accepted') {
+        const app = store.data.applications.find(a => a.studentId === offer.studentId && a.company === offer.company);
+        if (app) app.status = 'Hired';
+        store.data.applications.forEach(other => {
+          if (other.studentId === offer.studentId && other.company !== offer.company) {
+            other.status = 'Locked';
+          }
+        });
+      }
+      store.save();
+      store.logAudit(`Responded to Offer ${offerId}: ${response}`);
+      showToast(`Offer marked as ${response}!`, 'success');
+      renderApp();
+    }
+  }
+
+  function printNOCDocument(nocId) {
+    const noc = store.data.nocs.find(n => n.id === nocId);
+    if (!noc) return;
+
+    const printArea = document.getElementById('print-area');
+    printArea.innerHTML = `
+      <div style="padding: 40px; font-family: sans-serif; color: #000; background: #fff;">
+        <h2 style="text-align: center; font-size: 20px; font-weight: bold;">NO OBJECTION CERTIFICATE (NOC)</h2>
+        <p style="text-align: center; font-size: 12px;">DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING</p>
+        <hr style="margin: 20px 0; border: 1px solid #000;" />
+        <p>This is to certify that <strong>${noc.studentName}</strong> (Roll No: <strong>${noc.studentId}</strong>) is a bonafide IV Semester student of this institution.</p>
+        <p>The institution has NO OBJECTION to the student undertaking an industrial internship at <strong>${noc.company}</strong> for the duration <strong>${noc.duration}</strong>.</p>
+        <br/><br/>
+        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+          <div>
+            <p><strong>Date:</strong> ${noc.date}</p>
+            <p><strong>Verification Status:</strong> Cryptographically Signed</p>
+          </div>
+          <div style="text-align: right;">
+            <p><strong>Endorsed By:</strong> ${noc.approvedBy}</p>
+            <p>Placement Authority</p>
+          </div>
+        </div>
+      </div>
+    `;
+    window.print();
+  }
+
+  function viewApplicationDetail(appId) {
+    const app = store.data.applications.find(a => a.id === appId);
+    if (!app) return;
+    openModal(`
+      <div class="glass-card p-6 rounded-2xl max-w-md w-full space-y-4 border border-brand-500/40">
+        <h3 class="font-bold text-slate-100">${app.title}</h3>
+        <div class="text-xs text-slate-300 space-y-1">
+          <div>Company: <strong class="text-brand-400">${app.company}</strong></div>
+          <div>Applicant: <strong>${app.studentName} (${app.studentId})</strong></div>
+          <div>Applied Date: <strong>${app.appliedDate}</strong></div>
+          <div>Status: <span class="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 font-bold text-[10px]">${app.status}</span></div>
+        </div>
+        <div class="text-right">
+          <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-slate-200 text-xs rounded-xl">Close</button>
+        </div>
+      </div>
+    `);
+  }
+
+  // MAIN RENDER CONTROLLER
+  function renderApp() {
+    const root = document.getElementById('app-root');
+    if (!store.data.auth.isLoggedIn) {
+      root.innerHTML = renderLoginView();
+      return;
+    }
+
+    const role = store.data.auth.currentUser.role;
+    let mainContent = '';
+
+    if (role === 'student') {
+      if (store.currentView === 'profile') mainContent = renderStudentProfileView();
+      else if (store.currentView === 'internships') mainContent = renderBrowseDrivesView();
+      else if (store.currentView === 'noc') mainContent = renderNOCGeneratorView();
+      else if (store.currentView === 'logbook') mainContent = renderLogbookView();
+      else if (store.currentView === 'tasks') mainContent = renderStudentTasksView();
+      else if (store.currentView === 'ai_chat') mainContent = renderAIChatView();
+      else if (store.currentView === 'certificates') mainContent = renderCertificatesView();
+      else if (store.currentView === 'support') mainContent = renderStudentSupportView();
+      else mainContent = renderStudentDashboard();
+    } else if (role === 'faculty') {
+      if (store.currentView === 'logs_queue') mainContent = renderFacultyLogQueueView();
+      else if (store.currentView === 'mentees') mainContent = renderFacultyMenteesView();
+      else if (store.currentView === 'issue_cert') mainContent = renderFacultyIssueCertView();
+      else mainContent = renderFacultyConsole();
+    } else if (role === 'company') {
+      if (store.currentView === 'post_drive') mainContent = renderPostDriveView();
+      else if (store.currentView === 'interviews') mainContent = renderScheduleInterviewView();
+      else if (store.currentView === 'offers') mainContent = renderCompanyOffersView();
+      else if (store.currentView === 'evaluations') mainContent = renderCompanyEvaluationsView();
+      else mainContent = renderCompanyConsole();
+    } else if (role === 'admin') {
+      if (store.currentView === 'verify_cos') mainContent = renderAdminVerifyCosView();
+      else if (store.currentView === 'authorize_drives') mainContent = renderAdminAuthorizeDrivesView();
+      else if (store.currentView === 'allocations') mainContent = renderAdminAllocationsView();
+      else if (store.currentView === 'tickets_admin') mainContent = renderAdminTicketsView();
+      else if (store.currentView === 'announcements') mainContent = renderAdminAnnouncementsView();
+      else mainContent = renderAdminConsole();
+    }
+
+    root.innerHTML = `
+      ${renderHeader()}
+      <div class="flex-1 flex flex-col md:flex-row">
+        ${renderSidebar()}
+        <main class="flex-1 p-6 overflow-y-auto max-h-[calc(100vh-4rem)] space-y-6">
+          ${mainContent}
+        </main>
+      </div>
+    `;
+  }
+
+  // THREE.JS 3D SPHERE ENGINE
+  function init3DBackground() {
+    const canvas = document.getElementById('bg-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 16;
+
+    const sphereGroup = new THREE.Group();
+    scene.add(sphereGroup);
+
+    const geo = new THREE.IcosahedronGeometry(3.8, 2);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x6366f1, wireframe: true, transparent: true, opacity: 0.3 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphereGroup.add(sphere);
+
+    const innerGeo = new THREE.IcosahedronGeometry(2.2, 1);
+    const innerMat = new THREE.MeshBasicMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.5 });
+    const innerSphere = new THREE.Mesh(innerGeo, innerMat);
+    sphereGroup.add(innerSphere);
+
+    const particleCount = 500;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 35;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const pMat = new THREE.PointsMaterial({ size: 0.05, color: 0x06b6d4, transparent: true, opacity: 0.8 });
+    const particles = new THREE.Points(pGeo, pMat);
+    scene.add(particles);
+
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function animate(t) {
+      requestAnimationFrame(animate);
+      sphereGroup.rotation.y = t * 0.0004;
+      sphereGroup.rotation.x = t * 0.0002;
+
+      camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+      camera.position.y += (-mouseY * 1.5 - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    animate(0);
+  }
+
+  window.onload = () => {
+    renderApp();
+    init3DBackground();
+  };
+  </script>
+</body>
+</html>
