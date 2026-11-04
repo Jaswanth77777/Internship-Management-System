@@ -184,6 +184,7 @@ export default function SpatialScene({ role = "STUDENT" }) {
       const elapsed = clock.getElapsedTime();
       gridMaterial.uniforms.uTime.value = elapsed;
       grid.position.z = -8 + ((elapsed * 0.35) % 2);
+      grid.position.z = -8 + ((elapsed * 0.35) % 2);
       gridMaterial.uniforms.uColor.value.setHex(0x00dff5);
       const activeColor = ROLE_COLORS[roleRef.current] || ROLE_COLORS.STUDENT;
       ambient.color.setHex(activeColor);
