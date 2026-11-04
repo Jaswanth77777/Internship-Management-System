@@ -27,10 +27,16 @@ export default function SpatialScene({ role = "STUDENT" }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.65));
     renderer.setSize(root.clientWidth, root.clientHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
     root.appendChild(renderer.domElement);
 
     const ambient = new THREE.AmbientLight(0x829aff, 0.65);
     scene.add(ambient);
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(root.clientWidth, root.clientHeight), 0.72, 0.65, 0.12));
+    composer.addPass(new OutputPass());
     const point = new THREE.PointLight(0x00eaff, 2.4, 28);
     point.position.set(2, 4, 4);
     scene.add(point);
