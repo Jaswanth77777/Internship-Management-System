@@ -173,6 +173,90 @@ function applyJob(i){let j=get('internships')[i],a=get('applications');if(a.some
 $('#logout').onclick=()=>{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user');$('#app').classList.add('hidden');$('#loginView').classList.remove('hidden')};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
 try{current=JSON.parse(sessionStorage.getItem('ih_user')||localStorage.getItem('ih_user')||'null')}catch{current=null}if(current&&['STUDENT','FACULTY','COMPANY','ADMIN'].includes(current.role)){section='dashboard';showApp()}else{current=null;sessionStorage.removeItem('ih_user');localStorage.removeItem('ih_user')}
 </script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(()=> {
+ const canvas=document.getElementById('scene');
+ if(!canvas||!window.THREE)return;
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ try{
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
+  renderer.setClearColor(0x000000,0);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(48,1,.1,100);
+  camera.position.z=15;
+  scene.add(new THREE.HemisphereLight(0xffffff,0x6677bb,2.0));
+  const keyLight=new THREE.PointLight(0xffffff,26);
+  keyLight.position.set(3,5,8);scene.add(keyLight);
+  const world=new THREE.Group();scene.add(world);
+  const colors=[0x53d9d0,0xff83ae,0xffbd62,0x8b83ff];
+  const objects=[];
+  const knot=new THREE.Mesh(
+   new THREE.TorusKnotGeometry(1.05,.27,140,16,2,3),
+   new THREE.MeshStandardMaterial({color:0x8d72ef,roughness:.32,metalness:.08,transparent:true,opacity:.62,wireframe:false})
+  );
+  knot.position.set(.34,-.05,-1.7);knot.scale.set(1.55,1.05,.8);world.add(knot);
+  const ringGroup=new THREE.Group();ringGroup.position.set(-.36,.05,-2.8);world.add(ringGroup);
+  [2.0,1.55,1.1].forEach((radius,i)=>{
+   const ring=new THREE.Mesh(new THREE.TorusGeometry(radius,.014,8,180),new THREE.MeshBasicMaterial({color:colors[i],transparent:true,opacity:.7}));
+   ring.rotation.y=.28+i*.12;ring.rotation.x=.18;ringGroup.add(ring);
+  });
+  const geo=new THREE.IcosahedronGeometry(.42,0),edges=new THREE.EdgesGeometry(geo);
+  for(let i=0;i<34;i++){
+   const mat=new THREE.LineBasicMaterial({color:colors[i%colors.length],transparent:true,opacity:.48+Math.random()*.25});
+   const mesh=new THREE.LineSegments(edges,mat);
+   mesh.userData={phase:Math.random()*Math.PI*2,speed:.18+Math.random()*.22,baseY:0,baseX:0};
+   world.add(mesh);objects.push(mesh);
+  }
+  const particleCount=950,positions=new Float32Array(particleCount*3);
+  for(let i=0;i<particleCount;i++){
+   positions[i*3]=(Math.random()-.5)*30;
+   positions[i*3+1]=(Math.random()-.5)*18;
+   positions[i*3+2]=-8-Math.random()*14;
+  }
+  const starGeometry=new THREE.BufferGeometry();
+  starGeometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+  const stars=new THREE.Points(starGeometry,new THREE.PointsMaterial({color:0xffffff,size:.028,transparent:true,opacity:.72}));
+  scene.add(stars);
+  let width=innerWidth,height=innerHeight,clock=0;
+  function layout(){
+   width=Math.max(1,innerWidth);height=Math.max(1,innerHeight);
+   renderer.setSize(width,height,false);
+   camera.aspect=width/height;camera.updateProjectionMatrix();
+   const halfH=Math.tan(THREE.MathUtils.degToRad(camera.fov/2))*camera.position.z;
+   const halfW=halfH*camera.aspect;
+   objects.forEach((o,i)=>{
+    const col=(i%7),row=Math.floor(i/7);
+    o.userData.baseX=-halfW*.92+(col/6)*halfW*1.84+(Math.random()-.5)*.5;
+    o.userData.baseY=halfH*.82-(row/4)*halfH*1.64+(Math.random()-.5)*.35;
+    o.position.set(o.userData.baseX,o.userData.baseY,-1-(i%5)*.85);
+    o.scale.setScalar(.38+Math.random()*.62);
+   });
+   world.scale.setScalar(width<620?.82:1);
+  }
+  window.addEventListener('resize',layout,{passive:true});layout();
+  if(reduced){renderer.render(scene,camera);return}
+  let raf=0;
+  function animate(){
+   raf=requestAnimationFrame(animate);
+   if(document.hidden)return;
+   clock+=.006;
+   knot.rotation.x+=.0012;knot.rotation.y+=.002;
+   ringGroup.rotation.z=Math.sin(clock*.45)*.045;
+   objects.forEach(o=>{
+    o.rotation.x+=.001*o.userData.speed*4;
+    o.rotation.y+=.0015*o.userData.speed*4;
+    o.position.y=o.userData.baseY+Math.sin(clock*o.userData.speed+o.userData.phase)*.13;
+    o.position.x=o.userData.baseX+Math.cos(clock*o.userData.speed*.65+o.userData.phase)*.08;
+   });
+   stars.rotation.z=Math.sin(clock*.12)*.012;
+   renderer.render(scene,camera);
+  }
+  animate();
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!raf)animate()});
+ }catch(error){canvas.style.display='none';}
+})();
+</script>
 <script>(()=>{const canvas=document.getElementById('scene');if(!canvas||!window.THREE||matchMedia('(prefers-reduced-motion: reduce)').matches)return;try{
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,100);camera.position.z=10;
