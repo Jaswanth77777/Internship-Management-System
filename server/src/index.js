@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import rateLimit from "express-rate-limit";
 import { registerWorkflowRoutes } from "./workflows.js";
 
 const app = express();
@@ -15,7 +16,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) throw new Error("JWT_SECRET is required. Copy .env.example to .env and set a secret.");
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || "http://localhost:5173" }));
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:5173").split(",").map(value => value.trim());
+app.use(cors({ origin: (origin, callback) => !origin || allowedOrigins.includes(origin) ? callback(null, true) : callback(new Error("Origin not allowed by CORS")) }));
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: "draft-7", legacyHeaders: false });
 app.use(express.json({ limit: "1mb" }));
 
 const asyncRoute = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
@@ -38,7 +41,7 @@ app.get("/api/health", (_req, res) => res.json({ status: "ok", service: "InternH
 
 registerWorkflowRoutes(app, { prisma, authenticate, allow, asyncRoute });
 
-app.post("/api/auth/register", asyncRoute(async (req, res) => {
+app.post("/api/auth/register", authLimiter, asyncRoute(async (req, res) => {
   const input = z.object({
     name: z.string().min(2), email: z.string().email(),
     password: z.string().min(8), role: z.enum(["STUDENT", "FACULTY", "COMPANY"])
@@ -56,7 +59,7 @@ app.post("/api/auth/register", asyncRoute(async (req, res) => {
   res.status(201).json({ token: signToken(user), user: { id: user.id, name: user.name, email: user.email, role: user.role } });
 }));
 
-app.post("/api/auth/login", asyncRoute(async (req, res) => {
+app.post("/api/auth/login", authLimiter, asyncRoute(async (req, res) => {
   const input = z.object({ email: z.string().email(), password: z.string().min(1) }).parse(req.body);
   const user = await prisma.user.findUnique({ where: { email: input.email.toLowerCase() } });
   if (!user || !user.isActive || !(await bcrypt.compare(input.password, user.passwordHash))) return res.status(401).json({ error: "Invalid email or password" });
