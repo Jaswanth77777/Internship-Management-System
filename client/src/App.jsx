@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SpatialScene from "./SpatialScene.jsx";
 import { Activity, BriefcaseBusiness, ClipboardList, GraduationCap, LogOut, Search, ShieldCheck, Users, Bell, FileCheck, Building2, LayoutDashboard, Plus } from "lucide-react";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
@@ -30,7 +31,7 @@ export default function App() {
     } catch (e) { setError(e.message); }
   }
   function logout() { localStorage.removeItem("internhub-session"); setSession(null); }
-  if (!session) return <main className="login-shell"><div className="orb orb-a"/><div className="orb orb-b"/><motion.form initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="login-card" onSubmit={login}>
+  if (!session) return <main className="login-shell"><SpatialScene role={role}/><div className="orb orb-a"/><div className="orb orb-b"/><motion.form initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="login-card" onSubmit={login}>
     <div className="brand-mark">IH</div><p className="eyebrow">INTERNSHIP MANAGEMENT PLATFORM</p><h1>Welcome to <span>InternHub</span></h1><p className="muted">One workspace for students, faculty and industry.</p>
     <label>Portal</label><select value={role} onChange={e=>{setRole(e.target.value);setEmail(demo[e.target.value]);}}>{roles.map(r=><option key={r}>{r}</option>)}</select>
     <label>Email address</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} required/>
@@ -86,10 +87,10 @@ function Workspace({user,request,logout}) {
   const adminJobs=data["Internship Approvals"]?.[0]||[];
   const notifications=data.Notifications?.[0]||[];
   const visibleInternships=(tab==="Overview"&&role==="STUDENT"?internships:data.Internships?.[0]||[]).filter(i=>(i.title+" "+i.description).toLowerCase().includes(query.toLowerCase()));
-  return <div className="app-shell"><aside className="sidebar"><div className="brand"><div className="brand-mark">IH</div><b>InternHub</b></div><div className="side-label">WORKSPACE</div>
+  return <div className="app-shell"><SpatialScene role={role}/><aside className="sidebar"><div className="brand"><div className="brand-mark">IH</div><b>InternHub</b></div><div className="side-label">WORKSPACE</div>
     {menus.map(([name,Icon])=><button key={name} className={tab===name?"nav-item active":"nav-item"} onClick={()=>setTab(name)}><Icon size={17}/>{name}</button>)}
     <div className="side-bottom"><span>{user.name}</span><small>{role}</small><button className="ghost" onClick={logout}><LogOut size={16}/> Sign out</button></div></aside>
-    <main className="content"><header><div><p className="eyebrow">{role} WORKSPACE</p><h1>{tab==="Overview"?"Good day, "+user.name.split(" ")[0]:tab}</h1><p className="muted">Manage your internship activity in one place.</p></div><div className="avatar">{user.name.slice(0,1).toUpperCase()}</div></header>
+    <main className="content" onPointerMove={e=>{const card=e.target.closest(".panel,.stat");if(!card)return;const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;card.style.setProperty("--tilt-x",(x*4).toFixed(2)+"deg");card.style.setProperty("--tilt-y",(-y*4).toFixed(2)+"deg");}} onPointerLeave={e=>{e.currentTarget.querySelectorAll(".panel,.stat").forEach(card=>{card.style.setProperty("--tilt-x","0deg");card.style.setProperty("--tilt-y","0deg");});}}><header><div><p className="eyebrow">{role} WORKSPACE</p><h1>{tab==="Overview"?"Good day, "+user.name.split(" ")[0]:tab}</h1><p className="muted">Manage your internship activity in one place.</p></div><div className="avatar">{user.name.slice(0,1).toUpperCase()}</div></header>
     {error&&<p className="error banner">{error}</p>}{message&&<p className="success banner">{message}</p>}
     {tab==="Overview"&&<><section className="stats">{role==="ADMIN"?Object.entries(overview[0]||{}).map(([k,v])=><Stat key={k} icon={<Activity/>} label={k} value={v}/>):<><Stat icon={<GraduationCap/>} label="Portal" value={role}/><Stat icon={<BriefcaseBusiness/>} label="Open internships" value={role==="STUDENT"?internships.length:role==="COMPANY"?(overview[0]?.length||0):(adminJobs.length)}/><Stat icon={<ClipboardList/>} label="Applications / Logs" value={role==="STUDENT"?(overview[1]?.length||0):role==="COMPANY"?(overview[1]?.length||0):(overview[2]?.length||0)}/></>}</section>
     {role==="STUDENT"&&<section className="panel"><h2>Explore internships</h2><div className="search"><Search size={16}/><input placeholder="Search opportunities" value={query} onChange={e=>setQuery(e.target.value)}/></div><InternshipList rows={internships} onApply={id=>act("/applications",{internshipId:id},"POST","Application submitted")}/></section>}
