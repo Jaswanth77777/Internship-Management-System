@@ -50,6 +50,7 @@ export function registerWorkflowRoutes(app, { prisma, authenticate, allow, async
     const f=await prisma.faculty.findUnique({where:{userId:req.user.id}});
     const row=await prisma.nocRequest.findUnique({where:{id:req.params.id},include:{student:true}});
     if(!f||!row)return res.status(404).json({error:"NOC request not found"});
+    if(!(await prisma.facultyAllocation.findUnique({where:{facultyId_studentId:{facultyId:f.id,studentId:row.studentId}}})))return res.status(403).json({error:"This student is not allocated to you"});
     const updated=await prisma.nocRequest.update({where:{id:row.id},data:{...input,reviewerId:f.id}});
     const owner=await prisma.user.findUnique({where:{id:row.student.userId}});
     await notify(owner.id,"NOC decision",`Your NOC request was ${input.status.toLowerCase()}.`);
