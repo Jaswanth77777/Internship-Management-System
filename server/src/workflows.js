@@ -39,8 +39,11 @@ export function registerWorkflowRoutes(app, { prisma, authenticate, allow, async
     if(!f||!(await prisma.student.findUnique({where:{id:input.studentId}})))return res.status(404).json({error:"Faculty or student profile not found"});
     res.status(201).json(await prisma.facultyAllocation.upsert({where:{facultyId_studentId:{facultyId:f.id,studentId:input.studentId}},create:{facultyId:f.id,studentId:input.studentId},update:{}}));
   }));
-  app.get("/api/faculty/nocs", authenticate, allow("FACULTY"), asyncRoute(async(_req,res)=>{
-    res.json(await prisma.nocRequest.findMany({where:{status:"PENDING"},include:{student:{include:{user:true}}},orderBy:{createdAt:"asc"}}));
+  app.get("/api/faculty/nocs", authenticate, allow("FACULTY"), asyncRoute(async(req,res)=>{
+    const f=await prisma.faculty.findUnique({where:{userId:req.user.id}});
+    if(!f)return res.status(404).json({error:"Faculty profile not found"});
+    const ids=(await prisma.facultyAllocation.findMany({where:{facultyId:f.id},select:{studentId:true}})).map(x=>x.studentId);
+    res.json(await prisma.nocRequest.findMany({where:{status:"PENDING",studentId:{in:ids}},include:{student:{include:{user:true}}},orderBy:{createdAt:"asc"}}));
   }));
   app.patch("/api/faculty/nocs/:id", authenticate, allow("FACULTY"), asyncRoute(async(req,res)=>{
     const input=z.object({status:z.enum(["APPROVED","REJECTED"]),remarks:z.string().max(1000).optional()}).parse(req.body);
